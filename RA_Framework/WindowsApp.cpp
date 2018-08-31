@@ -74,7 +74,7 @@ bool WindowsApp::Create(int const width, int const height, const std::string& ti
 	ShowWindow(s_Hwnd, SW_SHOW);
 
 	PRINTL("WINDOW CREATED..");
-	SetFullscreenMode(true);
+	//SetFullscreenMode(true);
 	SceneManager::Initialize();
 	return true;
 }

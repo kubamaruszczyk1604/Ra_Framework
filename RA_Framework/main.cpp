@@ -1,6 +1,6 @@
 #include <iostream>
 #include "WindowsApp.h"
-
+#include "BehaviourComponent.h"
 struct AtExit
 {
 	~AtExit()
@@ -10,6 +10,28 @@ struct AtExit
 } doAtExit;
 
 using namespace RA_FRAMEWORK;
+
+class TestBehaviour : public BehaviourComponent
+{
+public:
+	TestBehaviour():BehaviourComponent("testB") {}
+
+	~TestBehaviour() {}
+
+	void OnStart()
+	{
+		std::cout << "Behaviour wystartowal" << std::endl;
+	}
+	void Update(float deltaTime, float totalTime)
+	{
+		std::cout << "Behaviour update" << std::endl;
+	}
+	void OnExit()
+	{
+		std::cout << "Behaviour konczy" << std::endl;
+	}
+};
+
 
 class ExampleScene :public Scene
 {
@@ -26,6 +48,7 @@ public:
 	{
 		PRINTL("OnStart()");
 		Entity* e1 = new Entity("Test 1");
+		e1->AddComponent(std::unique_ptr<TestBehaviour>(new TestBehaviour()));
 		e1->GetTransform()->SetPositionY(10.0f);
 
 		Entity* e2 = new Entity("Test 2");

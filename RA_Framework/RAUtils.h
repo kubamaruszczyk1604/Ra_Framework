@@ -22,6 +22,17 @@
 #include "Stopwatch.h"
 
 
+//#include  <glew.h>  
+//OPENGL HEADERS
+#include "GL\glew.h"
+#include "GL\freeglut.h"
+
+
+#pragma comment(lib, "opengl32.lib")
+#pragma comment(lib, "glu32.lib")
+#pragma comment(lib, "freeglut.lib")
+#pragma comment(lib, "glew32.lib")
+
 namespace RA_FRAMEWORK
 {
 
