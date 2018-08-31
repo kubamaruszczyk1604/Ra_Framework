@@ -34,6 +34,10 @@ namespace RA_FRAMEWORK
 	using Mat4 = glm::mat4;
 	using Quat = glm::quat;
 
+	class Entity;
+	using EntityUnique = std::unique_ptr<Entity>;
+	using ListOfEntities = std::vector<EntityUnique>;
+
 #define PRINT(P) std::cout<<P<<std::endl;
 
 	//Example PREDICATE(int,Object==2)

@@ -1,7 +1,7 @@
 #include "SceneManager.h"
 #include "InputSystem.h"
 #include "EntityManager.h"
-
+#include "BehaviourManager.h"
 //#include "ResourceManager.h"
 
 namespace RA_FRAMEWORK
@@ -19,6 +19,8 @@ namespace RA_FRAMEWORK
 	{
 		if (m_upCurrentScene)
 		{
+			ListOfEntities* list = m_upCurrentScene->GetEntityManager()->GetListOfEntities();
+			BehaviourManager::TerminateAllBehaviours(list);
 			m_upCurrentScene.get()->OnExit();
 		}
 		m_upCurrentScene = std::unique_ptr<Scene>(scene);
@@ -34,6 +36,7 @@ namespace RA_FRAMEWORK
 			m_upCurrentScene->GetEntityManager()->Update(deltaTime, totalTime);
 
 			ListOfEntities* list = m_upCurrentScene->GetEntityManager()->GetListOfEntities();
+			BehaviourManager::Update(list, deltaTime, totalTime);
 
 			for (int i = 0; i < list->size(); ++i)
 			{
@@ -50,6 +53,8 @@ namespace RA_FRAMEWORK
 	{
 		if (m_upCurrentScene)
 		{
+			ListOfEntities* list = m_upCurrentScene->GetEntityManager()->GetListOfEntities();
+			BehaviourManager::TerminateAllBehaviours(list);
 			m_upCurrentScene->OnExit();
 		}
 		//ResourceManager::ReleaseResources();

@@ -92,7 +92,7 @@ public:
 int main()
 {
 	// Create application in 1280x720 window
-	WindowsApp::Create(1280, 720, "EMPTY WINDOW");
+	WindowsApp::Create(1920, 1080, "EMPTY WINDOW");
 	SceneManager::Load(new ExampleScene());
 	const int appState = WindowsApp::Run();
 	//int* i = new int(10);

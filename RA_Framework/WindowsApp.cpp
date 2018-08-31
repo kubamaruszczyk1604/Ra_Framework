@@ -7,7 +7,11 @@ using namespace RA_FRAMEWORK;
 
 int WindowsApp::s_ClientWidth{ 800 };
 int WindowsApp::s_ClientHeight{ 600 };
+bool WindowsApp::s_isFullScreen{ false };
 DWORD WindowsApp::s_WindowStyle{ WS_OVERLAPPEDWINDOW };
+DWORD WindowsApp::s_WindowStyle_FS{ WS_POPUP | WS_SYSMENU | WS_VISIBLE | CS_HREDRAW | CS_VREDRAW };
+DWORD WindowsApp::s_WindowStyle_W{ WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_OVERLAPPEDWINDOW | WS_VISIBLE | CS_HREDRAW | CS_VREDRAW };
+RECT WindowsApp::s_WindowedCoords{ 0, 0, 0, 0 };
 std::string WindowsApp::s_AppTitle{ "no title" };
 HWND WindowsApp::s_Hwnd{ nullptr };
 bool WindowsApp::s_ExitFlag{ false };
@@ -70,6 +74,7 @@ bool WindowsApp::Create(int const width, int const height, const std::string& ti
 	ShowWindow(s_Hwnd, SW_SHOW);
 
 	PRINTL("WINDOW CREATED..");
+	SetFullscreenMode(true);
 	SceneManager::Initialize();
 	return true;
 }
@@ -162,4 +167,62 @@ LRESULT WindowsApp::MsgProc(HWND const hWnd, UINT const msg, WPARAM const wParam
 	}
 
 	return LRESULT();
+}
+
+void WindowsApp::OnResize(HWND const hWnd) {
+	// Use braces to limit the scope of Rect, TmpW, etc
+	RECT r{ 0 };
+	// Store windowed coords as client data
+	::GetClientRect(hWnd, &r);
+	s_ClientWidth = r.right - r.left;
+	s_ClientHeight = r.bottom - r.top;
+	// store windowed coords loally (if not fullscreen)
+	if (!IsFullscreen) ::GetWindowRect(s_Hwnd, &s_WindowedCoords);
+	// Window size is different? true = SIZE (not a MOVE)
+	//DXRenderer::Resize(hWnd, (r.right - r.left), (r.bottom - r.top));
+}
+
+void WindowsApp::SetFullscreenMode(bool fullscreen)
+{
+
+	// Get screen resolution for fullscreen
+	const int FS_x = GetSystemMetrics(SM_CXSCREEN);
+	const int FS_y = GetSystemMetrics(SM_CYSCREEN);
+
+	// Check that we need to change screen mode from current mode
+	if (fullscreen != s_isFullScreen) {
+
+		if (fullscreen) {
+			// go fullscreen (set the window style)
+			::SetWindowLong(s_Hwnd, GWL_STYLE, s_WindowStyle_FS);
+			::SetWindowPos(
+				s_Hwnd,
+				nullptr,
+				0, 0,
+				FS_x,
+				FS_y,
+				SWP_SHOWWINDOW
+			);
+			// flag = true
+			s_isFullScreen = true;
+			OnResize(s_Hwnd);
+		}
+		else {
+			// return back from fullscreen (set window style)
+			::SetWindowLong(s_Hwnd, GWL_STYLE, s_WindowStyle_W);
+			::SetWindowPos(
+				s_Hwnd,
+				nullptr,
+				s_WindowedCoords.left,
+				s_WindowedCoords.top,
+				s_WindowedCoords.right - s_WindowedCoords.left,
+				s_WindowedCoords.bottom - s_WindowedCoords.top,
+				SWP_SHOWWINDOW
+			);
+			//
+			s_isFullScreen = false;
+			OnResize(s_Hwnd);
+		}
+
+	}
 }
