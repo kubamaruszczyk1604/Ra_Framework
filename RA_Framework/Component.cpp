@@ -1,3 +1,4 @@
+
 #include "Component.h"
 namespace RA_FRAMEWORK
 {
@@ -11,6 +12,7 @@ namespace RA_FRAMEWORK
 
 	Component::~Component()
 	{
+		//test
 	}
 
 }
