@@ -1,7 +1,7 @@
 #include "WindowsApp.h"
 #include "InputSystem.h"
 #include "SceneManager.h"
-
+#include "GLRenderer.h"
 
 using namespace RA_FRAMEWORK;
 
@@ -76,6 +76,7 @@ bool WindowsApp::Create(int const width, int const height, const std::string& ti
 	PRINTL("WINDOW CREATED..");
 	//SetFullscreenMode(true);
 	SceneManager::Initialize();
+	GLRenderer::Initialize(width, height, s_Hwnd);
 	return true;
 }
 
@@ -104,6 +105,7 @@ int WindowsApp::Run()
 			SceneManager::Update(s_FrameTimer.ElapsedTime()* s_TimeScale, s_GlobalTimer.ElapsedTime() * s_TimeScale);
 
 			//DXRenderer::SwapBuffers();
+			
 			s_FrameTimer.Stop();
 		}
 

@@ -36,9 +36,6 @@
 namespace RA_FRAMEWORK
 {
 
-
-
-
 	template<class T_KEY, class T_VAL>
 	bool QueryMap(T_KEY key, T_VAL& output, const std::unordered_map<T_KEY, T_VAL>& map)
 	{

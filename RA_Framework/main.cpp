@@ -24,7 +24,7 @@ public:
 	}
 	void Update(float deltaTime, float totalTime)
 	{
-		std::cout << "Behaviour update" << std::endl;
+		//std::cout << "Behaviour update" << std::endl;
 	}
 	void OnExit()
 	{
@@ -97,7 +97,7 @@ public:
 	}
 	void OnMouseMove(const int x, const int y)
 	{
-		//PRINTL("Mouse Move: " + ToString(x) + ", " + ToString(y));
+	//	//PRINTL("Mouse Move: " + ToString(x) + ", " + ToString(y));
 	}
 	void OnMouseButtonUp(MouseButton const button)
 	{

@@ -1,6 +1,6 @@
 /*
 *  C#-like list implementation - wrapper around std::vector container.
-*  By Kuba Maruszczyk (2016-2017).
+*  By Kuba Maruszczyk (2016-2019).
 *
 *  This file is a part of RA_FRAMEWORK.
 */

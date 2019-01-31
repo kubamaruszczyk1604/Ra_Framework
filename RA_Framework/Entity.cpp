@@ -79,6 +79,7 @@ namespace RA_FRAMEWORK
 
 	Component* Entity::GetComponentFirst(ComponentType const type)
 	{
+		 
 		for (int i = 0; i < m_pComponents.Count(); ++i)
 		{
 			if (m_pComponents[i]->GetType() == type) return m_pComponents[i].get();

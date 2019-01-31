@@ -2,6 +2,7 @@
 #include "InputSystem.h"
 #include "EntityManager.h"
 #include "BehaviourManager.h"
+#include "GLRenderer.h"
 //#include "ResourceManager.h"
 
 namespace RA_FRAMEWORK
@@ -13,6 +14,7 @@ namespace RA_FRAMEWORK
 		InputSystem::SetKeyboardCallback(SceneManager::OnKeyPressed);
 		InputSystem::SetMouseButtonCallback(SceneManager::OnMouseButtonUp, SceneManager::OnMouseButtonDown);
 		InputSystem::SetMouseMoveCallback(SceneManager::OnMouseMove);
+		
 	}
 
 	void SceneManager::Load(Scene* scene)
@@ -37,14 +39,17 @@ namespace RA_FRAMEWORK
 
 			ListOfEntities* list = m_upCurrentScene->GetEntityManager()->GetListOfEntities();
 			BehaviourManager::Update(list, deltaTime, totalTime);
-
+			GLRenderer::ClearScreen(Colour(0,0,0,0));
 			for (int i = 0; i < list->size(); ++i)
 			{
-				//Entity* e = (*list)[i].get();
+				Entity* e = (*list)[i].get();
+				GLRenderer::Render(e);
 				//PRINTL("ENTITY: " + e->GetName() + " is at position: " + ToString(e->GetTransform()->GetWorldPosition()));
 			}
 			//TODO: SYSTEMS ACT ON ENTITIES HERE
 			//DXRenderer::Update(deltaTime, totalTime);
+			
+			GLRenderer::SwapBuffers();
 			m_upCurrentScene->PostUpdate();
 		}
 	}
@@ -56,6 +61,7 @@ namespace RA_FRAMEWORK
 			ListOfEntities* list = m_upCurrentScene->GetEntityManager()->GetListOfEntities();
 			BehaviourManager::TerminateAllBehaviours(list);
 			m_upCurrentScene->OnExit();
+			GLRenderer::ShutDown();
 		}
 		//ResourceManager::ReleaseResources();
 	}
