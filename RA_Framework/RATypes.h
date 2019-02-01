@@ -3,6 +3,7 @@
 #include <exception>
 #include <string>
 #include <iostream>
+#include <vector>
 
 #include "GLM\GLM.hpp"
 #include "GLM\GTC\matrix_transform.hpp"
@@ -39,6 +40,12 @@ namespace RA_FRAMEWORK
 	class Entity;
 	using EntityUnique = std::unique_ptr<Entity>;
 	using ListOfEntities = std::vector<EntityUnique>;
+
+	enum class GfxAPI
+	{
+		D3D11 = 0,
+		GL = 1
+	};
 
 #define PRINT(P) std::cout<<P<<std::endl;
 

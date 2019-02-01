@@ -7,7 +7,7 @@ namespace RA_FRAMEWORK
 	//#define PRINT_SHADERS
 
 	GLShader::GLShader(ShaderType type) :
-		Shader(ShaderAPI::GL, type),
+		Shader(GfxAPI::GL, type),
 		m_Id(0)
 	{
 		if (type == ShaderType::VERTEX)

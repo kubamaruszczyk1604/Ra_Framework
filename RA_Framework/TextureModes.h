@@ -1,6 +1,6 @@
 #pragma once
 #include "RAUtils.h"
-#include "GLTexture.h"
+//#include "GLTexture.h"
 namespace RA_FRAMEWORK
 {
 

@@ -5,7 +5,7 @@ namespace RA_FRAMEWORK
 
 
 
-	Shader::Shader(ShaderAPI api, ShaderType type) :
+	Shader::Shader(GfxAPI api, ShaderType type) :
 		m_API{ api }, m_ShaderType{ type }
 	{
 

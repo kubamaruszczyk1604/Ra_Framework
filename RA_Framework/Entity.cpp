@@ -77,7 +77,7 @@ namespace RA_FRAMEWORK
 		m_pComponents.GetStdVectorRef().push_back(std::move(component));
 	}
 
-	Component* Entity::GetComponentFirst(ComponentType const type)
+	Component* Entity::GetFirstComponentOfType(ComponentType const type)
 	{
 		 
 		for (int i = 0; i < m_pComponents.Count(); ++i)

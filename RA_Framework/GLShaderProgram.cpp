@@ -4,6 +4,7 @@
 namespace RA_FRAMEWORK
 {
 	GLShaderProgram::GLShaderProgram(GLShader * vertexShader, GLShader * fragmentShader) :
+		ShaderProgram(GfxAPI::GL),
 		p_VertexShader{ vertexShader },
 		p_FragmentShader{ fragmentShader }
 	{

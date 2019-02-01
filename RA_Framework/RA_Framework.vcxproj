@@ -151,11 +151,13 @@
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="ModelComponent.cpp" />
-    <ClCompile Include="RenderTarget.cpp" />
+    <ClCompile Include="GLRenderTarget.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="Stopwatch.cpp" />
+    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="WindowsApp.cpp" />
   </ItemGroup>
@@ -182,11 +184,13 @@
     <ClInclude Include="RATypes.h" />
     <ClInclude Include="RAUtils.h" />
     <ClInclude Include="RendererModes.h" />
-    <ClInclude Include="RenderTarget.h" />
+    <ClInclude Include="GLRenderTarget.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="Stopwatch.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureModes.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="VBO.h" />

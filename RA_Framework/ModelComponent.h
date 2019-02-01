@@ -7,8 +7,8 @@ namespace RA_FRAMEWORK
 	class ModelComponent : public Component
 	{
 	public:
-		Mesh* m_pMesh;
-		Material* m_pMaterial;
+		Mesh* p_Mesh;
+		Material* p_Material;
 	public:
 		ModelComponent(const std::string& id, Mesh* mesh, Material* material);
 		ModelComponent() = delete;

@@ -1,8 +1,9 @@
 #pragma once
+#include "ShaderProgram.h"
 #include "GLShader.h"
 namespace RA_FRAMEWORK
 {
-	class GLShaderProgram
+	class GLShaderProgram: public ShaderProgram
 	{
 
 	private:
@@ -19,8 +20,8 @@ namespace RA_FRAMEWORK
 		GLShaderProgram& operator=(GLShaderProgram&) = delete;
 		GLShaderProgram(const GLShaderProgram&) = delete;
 
-		bool Create();
-		bool SetAsCurrent();
+		bool Create() override;
+		bool SetAsCurrent() override;
 		GLuint GetID() { return m_ProgId; }
 	};
 

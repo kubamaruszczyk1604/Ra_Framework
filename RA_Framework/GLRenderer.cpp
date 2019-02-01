@@ -1,5 +1,5 @@
 #include "GLRenderer.h"
-//#include "ModelComponent.h"
+#include "ModelComponent.h"
 #include "Entity.h"
 //#include "GLTexture.h"
 //#include <msclr\marshal_cppstd.h>
@@ -77,7 +77,7 @@ namespace RA_FRAMEWORK
 
 		s_IsRunning = true;
 		glewInit();
-		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		//LightBase::InitializeLightSystem();
 
 		return true;
@@ -88,14 +88,14 @@ namespace RA_FRAMEWORK
 		static float i = 0;
 		i += 0.01f;
 		ClearScreen(Colour(sin(i), 1, cos(i), 1));
-		//Component* c = entity->GetComponentFirst(ComponentType::MODEL_COMPONENT);
-        // if (!c) 
-			// return;
+		
+		Component* c = entity->GetFirstComponentOfType(ComponentType::MODEL_COMPONENT);
+         if (!c)  return;
 
-		//ModelComponent* mc = static_cast<ModelComponent*>(c);
-		//Material* material = const_cast<Material*>(mc->GetMaterial());
-		//if (!material) return;
-		////PRINTL("Render ENTITY: " + entity->GetName() + " is at position: " + ToString(entity->GetTransform()->GetWorldPosition()));
+		ModelComponent* mc = static_cast<ModelComponent*>(c);
+		Material* material = const_cast<Material*>(mc->GetMaterial());
+		if (!material) return;
+		PRINTL("Render ENTITY: " + entity->GetName() + " is at position: " + ToString(entity->GetTransform()->GetWorldPosition()));
 
 
 		//GLuint shaderProgID = material->GetShaderProgID();

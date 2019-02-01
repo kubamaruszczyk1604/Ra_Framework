@@ -11,7 +11,10 @@ namespace RA_FRAMEWORK
 	};
 
 
-	GLTexture::GLTexture(int w, int h, TextureFormat format, void* data, TextureFilterMode minFilterMode, TextureAddressMode magFilterMode, TextureAddressMode addressMode)
+	GLTexture::GLTexture(int w, int h, TextureFormat format, void* data, TextureFilterMode minFilterMode, TextureAddressMode magFilterMode, TextureAddressMode addressMode) :
+		Texture(GfxAPI::GL),
+		c_Width(w),
+		c_Height(h)
 	{
 		glGenTextures(1, &m_TextureID);
 		glBindTexture(GL_TEXTURE_2D, m_TextureID);
@@ -25,7 +28,10 @@ namespace RA_FRAMEWORK
 
 	//www.opengl-tutorial.org/intermediate-tutorials/tutorial-14-render-to-texture/
 
-	GLTexture::GLTexture(int w, int h, TextureFormat format, void* data)
+	GLTexture::GLTexture(int w, int h, TextureFormat format, void* data):
+		Texture(GfxAPI::GL),
+		c_Width(w),
+		c_Height(h)
 	{
 		glGenTextures(1, &m_TextureID);
 		glBindTexture(GL_TEXTURE_2D, m_TextureID);
@@ -36,7 +42,10 @@ namespace RA_FRAMEWORK
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, s_TextureAddresModeLookupTable[static_cast<GLuint>(TextureAddressMode::WRAP)]);
 	}
 
-	GLTexture::GLTexture(int w, int h, TextureFormat format)
+	GLTexture::GLTexture(int w, int h, TextureFormat format):
+		Texture(GfxAPI::GL),
+		c_Width(w),
+		c_Height(h)
 	{
 		glGenTextures(1, &m_TextureID);
 		glBindTexture(GL_TEXTURE_2D, m_TextureID);

@@ -3,7 +3,7 @@
 namespace RA_FRAMEWORK
 {
 
-	ModelComponent::ModelComponent(const std::string& id, Mesh* mesh, Material* material):Component(id,ComponentType::MODEL_COMPONENT),m_pMesh(mesh),m_pMaterial(material)
+	ModelComponent::ModelComponent(const std::string& id, Mesh* mesh, Material* material):Component(id,ComponentType::MODEL_COMPONENT),p_Mesh(mesh),p_Material(material)
 	{
 
 	}
@@ -11,12 +11,12 @@ namespace RA_FRAMEWORK
 
 	Mesh * ModelComponent::GetMesh()
 	{
-		return m_pMesh;
+		return p_Mesh;
 	}
 
 	Material * ModelComponent::GetMaterial()
 	{
-		return m_pMaterial;
+		return p_Material;
 	}
 
 	ModelComponent::~ModelComponent()

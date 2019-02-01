@@ -37,7 +37,7 @@ namespace RA_FRAMEWORK
 		Entity*  GetParent() const { return m_pParent; }
 		const std::string& GetName() const { return m_ID; }
 
-		Component* GetComponentFirst(ComponentType type);
+		Component* GetFirstComponentOfType(ComponentType type);
 		int        GetComponentCount() const { return m_pComponents.Count(); }
 		Component* GetComponent(int const index) { m_pComponents[index]; }
 		Transform* GetTransform() { return &m_Transform; }

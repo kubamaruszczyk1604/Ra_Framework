@@ -1,6 +1,7 @@
 #include <iostream>
 #include "WindowsApp.h"
 #include "BehaviourComponent.h"
+#include "ModelComponent.h"
 struct AtExit
 {
 	~AtExit()
@@ -106,6 +107,7 @@ public:
 	void OnMouseButtonDown(MouseButton const button)
 	{
 		PRINTL("Mouse Button Down: " + ToString(static_cast<int>(button)));
+		WindowsApp::SetFullscreenMode(false);
 	}
 
 };
@@ -116,6 +118,7 @@ int main()
 {
 	// Create application in 1280x720 window
 	WindowsApp::Create(1920, 1080, "EMPTY WINDOW");
+	//WindowsApp::SetFullscreenMode(true);
 	SceneManager::Load(new ExampleScene());
 	const int appState = WindowsApp::Run();
 	//int* i = new int(10);

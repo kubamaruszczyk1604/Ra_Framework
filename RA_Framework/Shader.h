@@ -1,4 +1,5 @@
 #pragma once
+#include "RATypes.h"
 namespace RA_FRAMEWORK
 {
 	enum class ShaderType
@@ -7,20 +8,14 @@ namespace RA_FRAMEWORK
 		FRAGMENT = 1
 	};
 
-	enum class ShaderAPI
-	{
-		D3D11 = 0,
-		GL = 1
-	};
-
 	class Shader
 	{
 	private:
 		ShaderType m_ShaderType;
-		ShaderAPI m_API;
+		GfxAPI m_API;
 
 	protected:
-		Shader(ShaderAPI api, ShaderType type);
+		Shader(GfxAPI api, ShaderType type);
 
 	public:
 
@@ -29,7 +24,7 @@ namespace RA_FRAMEWORK
 		Shader& operator=(const Shader&) = delete;
 
 		ShaderType GetType() { return m_ShaderType; }
-		ShaderAPI GetAPI() { return m_API; }
+		GfxAPI GetAPI() { return m_API; }
 
 		virtual ~Shader();
 	};

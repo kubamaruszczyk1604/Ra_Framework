@@ -11,7 +11,7 @@ namespace RA_FRAMEWORK
 		{
 			Entity* e = (*entityList)[i].get();
 
-			Component* c = e->GetComponentFirst(ComponentType::BEHAVIOUR_COMPONENT);
+			Component* c = e->GetFirstComponentOfType(ComponentType::BEHAVIOUR_COMPONENT);
 			if (c)
 			{
 				BehaviourComponent* bc = static_cast<BehaviourComponent*>(c);
@@ -31,7 +31,7 @@ namespace RA_FRAMEWORK
 		{
 			Entity* e = (*entityList)[i].get();
 
-			Component* c = e->GetComponentFirst(ComponentType::BEHAVIOUR_COMPONENT);
+			Component* c = e->GetFirstComponentOfType(ComponentType::BEHAVIOUR_COMPONENT);
 			if (c)
 			{
 				BehaviourComponent* bc = static_cast<BehaviourComponent*>(c);
