@@ -1,5 +1,5 @@
 #pragma once
-#include "RATypes.h"
+#include "ShaderVariable.h"
 namespace RA_FRAMEWORK
 {
 	enum class ShaderType
@@ -7,6 +7,8 @@ namespace RA_FRAMEWORK
 		VERTEX = 0,
 		FRAGMENT = 1
 	};
+
+
 
 	class Shader
 	{

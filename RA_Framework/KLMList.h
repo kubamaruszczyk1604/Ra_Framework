@@ -76,7 +76,9 @@ namespace RA_FRAMEWORK
 		template<typename UnaryPredicate>
 		T* Find(UnaryPredicate Predicate) noexcept
 		{
-			return &(*std::find_if(m_Data.begin(), m_Data.end(), Predicate));
+			auto p = std::find_if(m_Data.begin(), m_Data.end(), Predicate);
+			if(p != m_Data.end()) return &(*p);
+			else return nullptr;
 		}
 
 		template<typename UnaryPredicate>

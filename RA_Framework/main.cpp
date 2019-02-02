@@ -118,13 +118,18 @@ int main()
 {
 	// Create application in 1280x720 window
 	WindowsApp::Create(1920, 1080, "EMPTY WINDOW");
-	//WindowsApp::SetFullscreenMode(true);
 	SceneManager::Load(new ExampleScene());
 	const int appState = WindowsApp::Run();
 	//int* i = new int(10);
 	//std::unique_ptr<int> p(i);
-	
-	WaitForKeypress();
+	/*KLMList<String> list;
+	list.Add("A");
+	list.Add("Br");
+	list.Add("Cr");
+	String* s = list.Find(UNARY_PRED1(String, Object.size() == 2));
+	if(s != nullptr) std::cout << *s << std::endl;
+	else std::cout << "s is null" << std::endl;
+	WaitForKeypress();*/
 
 	return 0;
 }
