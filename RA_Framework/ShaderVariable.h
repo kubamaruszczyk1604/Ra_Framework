@@ -28,10 +28,10 @@ namespace RA_FRAMEWORK
 	{
 
 	private:
+		String m_Name;
 		ShaderVariableType m_Type;
 		void* m_pData;
-		String m_Name;
-		
+
 	public:
 		ShaderVariable(ShaderVariableType type, const String& name);
 		ShaderVariable(ShaderVariableType type, const String& name, void* value);

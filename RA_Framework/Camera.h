@@ -19,13 +19,12 @@ namespace RA_FRAMEWORK
 		glm::mat4 m_ProjectionMat;
 		glm::mat4 m_TransformMat;
 		glm::mat4 m_IdentityMat;
-
-		ProjectionType m_ProjectionType;
+		glm::vec3 m_NoParrentPos;
+		glm::vec3 m_NoParrentRotation;
 		float m_FOV;
 		float m_Near;
 		float m_Far;
-		glm::vec3 m_NoParrentPos;
-		glm::vec3 m_NoParrentRotation;
+		ProjectionType m_ProjectionType;
 		bool m_Active;
 
 	public:

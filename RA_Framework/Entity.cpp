@@ -6,7 +6,9 @@ namespace RA_FRAMEWORK
 
 	Entity::Entity(const std::string& ID) :
 		m_ID{ ID },
-		m_pParent{ nullptr }
+		m_pParent{ nullptr },
+		m_ComponentMask{0},
+		m_pCachedComponent_Model{nullptr}
 	{
 	}
 
@@ -74,6 +76,12 @@ namespace RA_FRAMEWORK
 	{
 		component.get()->SetParent(this);
 
+		
+		m_ComponentMask |= (int)component.get()->GetType();
+		if (component.get()->GetType() == ComponentType::MODEL_COMPONENT)
+		{
+			m_pCachedComponent_Model = component.get();
+		}
 		m_pComponents.GetStdVectorRef().push_back(std::move(component));
 	}
 
@@ -82,11 +90,23 @@ namespace RA_FRAMEWORK
 		 
 		for (int i = 0; i < m_pComponents.Count(); ++i)
 		{
-			if (m_pComponents[i]->GetType() == type) return m_pComponents[i].get();
+			if (m_pComponents[i]->GetType() == type)
+			{
+				return m_pComponents[i].get();
+			}
 		}
 
 		return nullptr;
 	}
+
+	bool Entity::TryGetCachedModel(Component *& outModel)
+	{
+		if (!m_pCachedComponent_Model) { return false; }
+		outModel = m_pCachedComponent_Model;
+		return true;
+	}
+
+
 
 	void Entity::CalculateTransform()
 	{

@@ -2,6 +2,7 @@
 #include "WindowsApp.h"
 #include "BehaviourComponent.h"
 #include "ModelComponent.h"
+#include "GLShaderProgram.h"
 struct AtExit
 {
 	~AtExit()
@@ -112,13 +113,110 @@ public:
 
 };
 
+class ExampleScene2 :public Scene
+{
 
+public:
+	ExampleScene2() :Scene()
+	{
+
+	}
+	~ExampleScene2() 
+	{
+		delete m_pQuadMesh;
+		delete m_pVertexShader;
+		delete m_pFragmentShader;
+		delete m_pShaderProg;
+		delete m_pMaterial;
+	}
+
+	Mesh* m_pQuadMesh;
+	Material* m_pMaterial;
+	ModelComponent* m_pModel;
+	GLShader* m_pVertexShader;
+	GLShader* m_pFragmentShader;
+	GLShaderProgram* m_pShaderProg;
+	void OnStart()
+	{
+		PRINTL("OnStart()");
+
+		// MESH
+		m_pQuadMesh = new Mesh();
+		m_pQuadMesh->AddVertex(Vertex(-100, 100,0 ));
+		m_pQuadMesh->AddVertex(Vertex(-100, -100,0));
+		m_pQuadMesh->AddVertex(Vertex(100, -100, 0 ));
+		m_pQuadMesh->AddVertex(Vertex(100,  100, 0));
+		// Index data
+		std::vector<unsigned> indices;
+		indices.push_back(0);
+		indices.push_back(3);
+		indices.push_back(2);
+		indices.push_back(0);
+		indices.push_back(2);
+		indices.push_back(1);
+		// Create buffer
+		m_pQuadMesh->CreateVertexBuffer(indices);
+
+
+		m_pVertexShader = new GLShader(ShaderType::VERTEX);
+
+		m_pFragmentShader = new GLShader(ShaderType::FRAGMENT);
+
+		m_pShaderProg = new GLShaderProgram(m_pVertexShader, m_pFragmentShader);
+
+
+		m_pMaterial = new Material(m_pShaderProg);
+
+		m_pModel = new ModelComponent("model",m_pQuadMesh, m_pMaterial);
+
+		Entity* e1 = new Entity("Test 1");
+		e1->AddComponent(std::unique_ptr<TestBehaviour>(new TestBehaviour()));
+		e1->AddComponent(std::unique_ptr<ModelComponent>(m_pModel));
+		e1->GetTransform()->SetPositionY(0.0f);
+
+		AddEntity(e1);
+	
+	
+
+
+	}
+	void Update(float deltaTime, float totalTime = 0)
+	{
+		//PRINTL("Update(" + ToString(deltaTime) + ", " + ToString(totalTime) + ")");
+	}
+	void OnExit()
+	{
+		PRINTL("OnExit()");
+	}
+
+	void PostUpdate() {}
+
+	//InputCallbacks
+	void OnKeyPressed(const int key, const KeyState state)
+	{
+		
+
+	}
+	void OnMouseMove(const int x, const int y)
+	{
+		
+	}
+	void OnMouseButtonUp(MouseButton const button)
+	{
+		
+	}
+	void OnMouseButtonDown(MouseButton const button)
+	{
+		
+	}
+
+};
 
 int main()
 {
 	// Create application in 1280x720 window
-	WindowsApp::Create(1920, 1080, "EMPTY WINDOW");
-	SceneManager::Load(new ExampleScene());
+	WindowsApp::Create(800, 600, "EMPTY WINDOW");
+	SceneManager::Load(new ExampleScene2());
 	const int appState = WindowsApp::Run();
 	//int* i = new int(10);
 	//std::unique_ptr<int> p(i);

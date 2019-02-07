@@ -22,7 +22,6 @@
 #include "Stopwatch.h"
 #include "KLMList.h"
 
-
 //#include  <glew.h>  
 //OPENGL HEADERS
 #include "GL\glew.h"

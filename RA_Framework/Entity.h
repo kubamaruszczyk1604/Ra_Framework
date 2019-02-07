@@ -20,7 +20,11 @@ namespace RA_FRAMEWORK
 		Entity(const Entity&) = delete;
 		Entity& operator=(const Entity&) = delete;
 		Mat4 m_Identity;
+		int m_ComponentMask;
 		bool m_DeleteMeFlag{ false };
+
+
+		Component* m_pCachedComponent_Model;
 
 	public:
 		explicit Entity(const std::string& ID);
@@ -40,6 +44,8 @@ namespace RA_FRAMEWORK
 		Component* GetFirstComponentOfType(ComponentType type);
 		int        GetComponentCount() const { return m_pComponents.Count(); }
 		Component* GetComponent(int const index) { m_pComponents[index]; }
+		bool       TryGetCachedModel(Component*& outModel);
+		
 		Transform* GetTransform() { return &m_Transform; }
 		void       CalculateTransform();
 

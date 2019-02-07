@@ -1,4 +1,5 @@
 #pragma once
+
 #include "RAUtils.h"
 #include "ShaderProgram.h"
 #include "Texture.h"
@@ -8,9 +9,9 @@ namespace RA_FRAMEWORK
 	class Material
 	{
 
-	private:
-		ShaderProgram* p_Shader;
+	private:	
 		KLMList<ShaderVariable> m_Variables;
+		ShaderProgram* p_Shader;
 	public:
 		Material(ShaderProgram* shaderProg);
 		Material(const Material&) = delete;

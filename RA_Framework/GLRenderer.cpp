@@ -1,5 +1,4 @@
 #include "GLRenderer.h"
-#include "ModelComponent.h"
 #include "Entity.h"
 //#include "GLTexture.h"
 //#include <msclr\marshal_cppstd.h>
@@ -82,15 +81,14 @@ namespace RA_FRAMEWORK
 
 		return true;
 	}
-
+	
 	void GLRenderer::Render(Entity * entity)
 	{
 		static float i = 0;
 		i += 0.01f;
 		ClearScreen(Colour(sin(i), 1, cos(i), 1));
-		
-		Component* c = entity->GetFirstComponentOfType(ComponentType::MODEL_COMPONENT);
-         if (!c)  return;
+        Component* c = entity->GetFirstComponentOfType(ComponentType::MODEL_COMPONENT);
+        if (!c)  return;
 
 		ModelComponent* mc = static_cast<ModelComponent*>(c);
 		Material* material = const_cast<Material*>(mc->GetMaterial());
@@ -232,8 +230,13 @@ namespace RA_FRAMEWORK
 		//}
 
 		//mc->GetMesh()->GetVBO()->Draw(PrimitiveType::TRIANGLES);
-
 	}
+
+	void GLRenderer::Render(ModelComponent* model,  Camera* camera)
+	{
+	}
+
+
 
 	
 	void GLRenderer::Update(const float deltaTime, const float totalTime)
