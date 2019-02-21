@@ -8,7 +8,7 @@
 
 namespace RA_FRAMEWORK
 {
-
+	class Transform;
 	class GLRenderer
 	{
 	private:
@@ -34,7 +34,7 @@ namespace RA_FRAMEWORK
 
 		static bool Initialize(const int width, const int height, const HWND handle);
 		static void Render(Entity* entity);
-		static void Render(ModelComponent* model, Camera* camera);
+		static void Render(ModelComponent* model, Camera* camera, Transform transform);
 
 		static void Update(const float deltaTime, const float totalTime);
 		static void ShutDown();

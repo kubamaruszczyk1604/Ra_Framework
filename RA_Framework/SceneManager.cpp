@@ -14,7 +14,6 @@ namespace RA_FRAMEWORK
 		InputSystem::SetKeyboardCallback(SceneManager::OnKeyPressed);
 		InputSystem::SetMouseButtonCallback(SceneManager::OnMouseButtonUp, SceneManager::OnMouseButtonDown);
 		InputSystem::SetMouseMoveCallback(SceneManager::OnMouseMove);
-		
 	}
 
 	void SceneManager::Load(Scene* scene)

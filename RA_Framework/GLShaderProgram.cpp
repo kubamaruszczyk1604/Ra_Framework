@@ -29,7 +29,6 @@ namespace RA_FRAMEWORK
 		m_Created = true;
 		return true;
 	}
-
 	bool GLShaderProgram::SetAsCurrent()
 	{
 		if (p_VertexShader&&p_FragmentShader)

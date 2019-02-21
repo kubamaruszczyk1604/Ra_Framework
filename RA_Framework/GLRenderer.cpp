@@ -32,7 +32,7 @@ namespace RA_FRAMEWORK
 			PFD_DOUBLEBUFFER |
 			PFD_SUPPORT_COMPOSITION;
 		pfd.iPixelType = PFD_TYPE_RGBA;
-		pfd.cColorBits = 32;
+		pfd.cColorBits = 64;
 		pfd.cRedBits = pfd.cRedShift = pfd.cGreenBits = pfd.cGreenShift =
 			pfd.cBlueBits = pfd.cBlueShift = 0;
 		pfd.cAlphaBits = pfd.cAlphaShift = 0;
@@ -232,8 +232,9 @@ namespace RA_FRAMEWORK
 		//mc->GetMesh()->GetVBO()->Draw(PrimitiveType::TRIANGLES);
 	}
 
-	void GLRenderer::Render(ModelComponent* model,  Camera* camera)
+	void GLRenderer::Render(ModelComponent* model,  Camera* camera, Transform transform)
 	{
+
 	}
 
 

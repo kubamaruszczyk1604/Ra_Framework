@@ -163,6 +163,7 @@
     <ClCompile Include="WindowsApp.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\..\Desktop\Engine Diagram.ncp" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
