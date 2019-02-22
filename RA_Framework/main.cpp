@@ -142,32 +142,45 @@ public:
 	void OnStart()
 	{
 		PRINTL("OnStart()");
-		m_pCamera = new Camera(ProjectionType::PERSPECTIVE, 60.0f, 0.1, 1000.0);
-		GLRenderer::SetActiveCamera(m_pCamera);
+		
+
 		// MESH
+
 		m_pQuadMesh = new Mesh();
-		m_pQuadMesh->AddVertex(Vertex(-100, 100,0 ));
-		m_pQuadMesh->AddVertex(Vertex(-100, -100,0));
-		m_pQuadMesh->AddVertex(Vertex(100, -100, 0 ));
-		m_pQuadMesh->AddVertex(Vertex(100,  100, 0));
-		// Index data
+
+		float size{ 5.5f };
+		float fbDist = 0.01f;
+
+		//front
+		m_pQuadMesh->AddVertex(Vertex(-size, -size, -fbDist, 0, 0, -1, 0, 0));
+		m_pQuadMesh->AddVertex(Vertex(size, -size, -fbDist, 0, 0, -1, 1, 0));
+		m_pQuadMesh->AddVertex(Vertex(size, size, -fbDist, 0, 0, -1, 1, 1));
+		m_pQuadMesh->AddVertex(Vertex(-size, size, -fbDist, 0, 0, -1, 0, 1));
+
 		std::vector<unsigned> indices;
 		indices.push_back(0);
-		indices.push_back(3);
+		indices.push_back(1);
 		indices.push_back(2);
 		indices.push_back(0);
 		indices.push_back(2);
-		indices.push_back(1);
-		// Create buffer
+		indices.push_back(3);
+
 		m_pQuadMesh->CreateVertexBuffer(indices);
 
 
 		m_pVertexShader = new GLShader(ShaderType::VERTEX);
+		m_pVertexShader->LoadFromFile("C:/Zapas/glVert.txt");
+		std::string status;
+		std::cout << "Compile Vertex Shader: " << m_pVertexShader->Compile(status);
+		std::cout << "  Status: "<< status << std::endl;
 
 		m_pFragmentShader = new GLShader(ShaderType::FRAGMENT);
+		m_pFragmentShader->LoadFromFile("C:/Zapas/glFrag.txt");
+		std::cout << "Compile Fragment Shader: " << m_pFragmentShader->Compile(status);
+		std::cout << "  Status: " << status << std::endl;
 
 		m_pShaderProg = new GLShaderProgram(m_pVertexShader, m_pFragmentShader);
-
+		std::cout << "Shader Program linking status: " << m_pShaderProg->Created() << std::endl;
 
 		m_pMaterial = new Material(m_pShaderProg);
 
@@ -176,14 +189,16 @@ public:
 		Entity* e1 = new Entity("Test 1");
 		e1->AddComponent(std::unique_ptr<TestBehaviour>(new TestBehaviour()));
 		e1->AddComponent(std::unique_ptr<ModelComponent>(m_pModel));
-		e1->GetTransform()->SetPositionX(20.0f);
+		//e1->GetTransform()->SetScale(Vec3(0.1, 0.1, 1));
 		//e1->CalculateTransform();
 		AddEntity(e1);
 
 		Entity* e2 = new Entity("Camera");
+		m_pCamera = new Camera(ProjectionType::PERSPECTIVE, 60.0f, 0.1, 1000.0);
+		GLRenderer::SetActiveCamera(m_pCamera);
 		e2->AddComponent(std::unique_ptr<Camera>(m_pCamera));
-		e2->GetTransform()->SetPositionZ(1.0f);
-
+		e2->GetTransform()->SetPosition(Vec3(10.8, 0, -24.98));
+		e2->CalculateTransform();
 		AddEntity(e2);
 	}
 

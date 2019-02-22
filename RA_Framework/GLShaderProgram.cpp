@@ -26,7 +26,9 @@ namespace RA_FRAMEWORK
 		glAttachShader(m_ProgId, p_VertexShader->GetID());
 		glAttachShader(m_ProgId, p_FragmentShader->GetID());
 		glLinkProgram(m_ProgId);
-		m_Created = true;
+		int ok = 0;
+		glGetProgramiv(m_ProgId, GL_LINK_STATUS, &ok);
+		m_Created = (ok != GL_FALSE);
 		return true;
 	}
 

@@ -16,9 +16,12 @@ namespace RA_FRAMEWORK
 	{
 
 	private:
+		static glm::mat4 s_IdentityMat;
+
 		glm::mat4 m_ProjectionMat;
 		glm::mat4 m_TransformMat;
-		glm::mat4 m_IdentityMat;
+		glm::mat4 m_ViewMat;
+		
 		glm::vec3 m_NoParrentPos;
 		glm::vec3 m_NoParrentRotation;
 		float m_FOV;
@@ -47,8 +50,8 @@ namespace RA_FRAMEWORK
 
 		const glm::mat4& GetProjectionMatrix(const int& scrWidth, const int& scrHeight);
 		const glm::mat4& SetTransformMatrix(const Vec3& translation, const Vec3& rotation);
-		const glm::mat4& SetTransformMatrix(const glm::mat4& mat);
-		const glm::mat4& GetViewMatrix()const { return glm::inverse(m_TransformMat); }
+		void SetTransformMatrix(const glm::mat4& mat);
+		const glm::mat4& GetViewMatrix()const { return m_ViewMat; }
 		const glm::mat4& GetTransformMatrix()const { return m_TransformMat; }
 
 		inline Vec3 GetLocalPosition() const { return m_NoParrentPos; }

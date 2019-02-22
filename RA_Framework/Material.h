@@ -19,6 +19,7 @@ namespace RA_FRAMEWORK
 		virtual ~Material();
 
 		void Use();
+		ShaderProgram* GetShaderProgram() { return p_Shader; }
 		void AddShaderVariable(ShaderVariableType type, const String& name);
 		void AddShaderVariable(ShaderVariableType type, const String& name, void* value);
 		ShaderVariable* FindVariable(ShaderVariableType type, const String& name);

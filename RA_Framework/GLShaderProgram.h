@@ -24,6 +24,8 @@ namespace RA_FRAMEWORK
 		bool SetAsCurrent() override;
 		GLuint GetID() { return m_ProgId; }
 
+		bool Created() { return m_Created; }
+
 
 		void SetInt(const String& varname, int value) override;
 		void SetFloat(const String& varname, float value) override;

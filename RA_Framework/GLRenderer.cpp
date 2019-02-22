@@ -32,7 +32,7 @@ namespace RA_FRAMEWORK
 			PFD_DOUBLEBUFFER |
 			PFD_SUPPORT_COMPOSITION;
 		pfd.iPixelType = PFD_TYPE_RGBA;
-		pfd.cColorBits = 64;
+		pfd.cColorBits = 32;
 		pfd.cRedBits = pfd.cRedShift = pfd.cGreenBits = pfd.cGreenShift =
 			pfd.cBlueBits = pfd.cBlueShift = 0;
 		pfd.cAlphaBits = pfd.cAlphaShift = 0;
@@ -86,9 +86,6 @@ namespace RA_FRAMEWORK
 	{
 		entity->CalculateTransform();
 		//PRINTL("Render ENTITY: " + entity->GetName() + " is at position: " + ToString(entity->GetTransform()->GetWorldPosition()));
-		static float i = 0;
-		i += 0.01f;
-		ClearScreen(Colour(sin(i), 1, cos(i), 1));
         Component* c = entity->GetFirstComponentOfType(ComponentType::MODEL_COMPONENT);
         if (!c)  return;
 
@@ -240,7 +237,7 @@ namespace RA_FRAMEWORK
 
 		if (!s_CurrentCamera) return;
 		if (!s_CurrentCamera->isActive()) return;
-		PRINTL("Render ENTITY: " + name + " is at position: " + ToString(transform->GetWorldPosition()));
+		//PRINTL("Render ENTITY: " + name + " is at position: " + ToString(transform->GetWorldPosition()));
 
 		Mat4 worldView;
 		if (s_CurrentCamera->GetParent() == nullptr)
@@ -250,13 +247,24 @@ namespace RA_FRAMEWORK
 		else
 		{
 			Entity* parent = s_CurrentCamera->GetParent();
-			worldView =
-				s_CurrentCamera->SetTransformMatrix(parent->GetTransform()->GetWorldMat())
-				* transform->GetWorldMat();
-
-			//ubs.CameraPosition = (parent->GetTransform()->GetWorldMat()*glm::vec4(0, 0, 0, 1));
+			parent->CalculateTransform();
+			s_CurrentCamera->SetTransformMatrix(parent->GetTransform()->GetWorldMat());
+			worldView = s_CurrentCamera->GetViewMatrix() * transform->GetWorldMat();
+		//	std::cout << "dws" << std::endl;
+			
 		}
 		Mat4 MVP = s_CurrentCamera->GetProjectionMatrix(s_ScreenWidth, s_ScreenHeight) * worldView;
+		//Mat4 MVP = worldView;// transform->GetWorldMat();
+		material->Use();
+		//material->GetShaderProgram()->SetMat4x4("uWORLD", transform->GetWorldMat());
+		//material->GetShaderProgram()->SetMat4x4("uWORLD_INVERSE", glm::inverse(transform->GetWorldMat()));
+		//material->GetShaderProgram()->SetMat4x4("uVIEW", s_CurrentCamera->GetViewMatrix());
+		material->GetShaderProgram()->SetMat4x4("uMVP", MVP);
+		
+		//material->GetShaderProgram()->SetVec3Float("uCameraPosition", Vec3(s_CurrentCamera->GetTransformMatrix()*Vec4(0.0, 0.0, 0.0, 1.0)));
+		//material->GetShaderProgram()->SetFloat("uTime", 0.0);
+
+		model->GetMesh()->GetVBO()->Draw(PrimitiveType::TRIANGLES);
 	}
 
 
@@ -295,7 +303,7 @@ namespace RA_FRAMEWORK
 
 	void GLRenderer::SetCullMode(const CullMode mode)
 	{
-
+		glCullFace(GL_FRONT_AND_BACK);
 	}
 
 	void GLRenderer::SetFillMode(const FillMode mode)

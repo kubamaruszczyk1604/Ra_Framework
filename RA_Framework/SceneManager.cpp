@@ -38,7 +38,8 @@ namespace RA_FRAMEWORK
 
 			ListOfEntities* list = m_upCurrentScene->GetEntityManager()->GetListOfEntities();
 			BehaviourManager::Update(list, deltaTime, totalTime);
-			//GLRenderer::ClearScreen(Colour(0,0,0,1));
+			GLRenderer::ClearScreen(Colour(0,0,0,1));
+			
 			for (int i = 0; i < list->size(); ++i)
 			{
 			
@@ -48,7 +49,6 @@ namespace RA_FRAMEWORK
 			}
 			//TODO: SYSTEMS ACT ON ENTITIES HERE
 			//DXRenderer::Update(deltaTime, totalTime);
-			
 			GLRenderer::SwapBuffers();
 			m_upCurrentScene->PostUpdate();
 		}
