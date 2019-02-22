@@ -46,7 +46,7 @@ namespace RA_FRAMEWORK
 		return m_TransformMat;
 	}
 
-	const glm::mat4 & Camera::SetTransformMatrix(const glm::mat4 & mat)
+	const Mat4& Camera::SetTransformMatrix(const glm::mat4 & mat)
 	{
 		m_TransformMat = mat;
 		return glm::inverse(m_TransformMat);

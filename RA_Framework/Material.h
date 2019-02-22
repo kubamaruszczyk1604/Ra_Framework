@@ -18,6 +18,7 @@ namespace RA_FRAMEWORK
 		Material& operator=(const Material&) = delete;
 		virtual ~Material();
 
+		void Use();
 		void AddShaderVariable(ShaderVariableType type, const String& name);
 		void AddShaderVariable(ShaderVariableType type, const String& name, void* value);
 		ShaderVariable* FindVariable(ShaderVariableType type, const String& name);

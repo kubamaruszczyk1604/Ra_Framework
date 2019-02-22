@@ -82,8 +82,10 @@ namespace RA_FRAMEWORK
 		return true;
 	}
 	
-	void GLRenderer::Render(Entity * entity)
+	void GLRenderer::Render(Entity* entity)
 	{
+		entity->CalculateTransform();
+		//PRINTL("Render ENTITY: " + entity->GetName() + " is at position: " + ToString(entity->GetTransform()->GetWorldPosition()));
 		static float i = 0;
 		i += 0.01f;
 		ClearScreen(Colour(sin(i), 1, cos(i), 1));
@@ -91,10 +93,8 @@ namespace RA_FRAMEWORK
         if (!c)  return;
 
 		ModelComponent* mc = static_cast<ModelComponent*>(c);
-		Material* material = const_cast<Material*>(mc->GetMaterial());
-		if (!material) return;
-		PRINTL("Render ENTITY: " + entity->GetName() + " is at position: " + ToString(entity->GetTransform()->GetWorldPosition()));
-
+		
+		Render(mc, s_CurrentCamera, entity->GetTransform(),entity->GetName());
 
 		//GLuint shaderProgID = material->GetShaderProgID();
 		//material->SetCurrentShaders();
@@ -232,9 +232,31 @@ namespace RA_FRAMEWORK
 		//mc->GetMesh()->GetVBO()->Draw(PrimitiveType::TRIANGLES);
 	}
 
-	void GLRenderer::Render(ModelComponent* model,  Camera* camera, Transform transform)
+	void GLRenderer::Render(ModelComponent* model, Camera* camera, Transform* transform, const String& name)
 	{
+		Material* material = const_cast<Material*>(model->GetMaterial());
+		if (!material) return;
+		
 
+		if (!s_CurrentCamera) return;
+		if (!s_CurrentCamera->isActive()) return;
+		PRINTL("Render ENTITY: " + name + " is at position: " + ToString(transform->GetWorldPosition()));
+
+		Mat4 worldView;
+		if (s_CurrentCamera->GetParent() == nullptr)
+		{
+			worldView = s_CurrentCamera->GetViewMatrix() * transform->GetWorldMat();
+		}
+		else
+		{
+			Entity* parent = s_CurrentCamera->GetParent();
+			worldView =
+				s_CurrentCamera->SetTransformMatrix(parent->GetTransform()->GetWorldMat())
+				* transform->GetWorldMat();
+
+			//ubs.CameraPosition = (parent->GetTransform()->GetWorldMat()*glm::vec4(0, 0, 0, 1));
+		}
+		Mat4 MVP = s_CurrentCamera->GetProjectionMatrix(s_ScreenWidth, s_ScreenHeight) * worldView;
 	}
 
 

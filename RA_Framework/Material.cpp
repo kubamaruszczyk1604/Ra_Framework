@@ -13,6 +13,11 @@ namespace RA_FRAMEWORK
 	{
 	}
 
+	void Material::Use()
+	{
+		p_Shader->SetAsCurrent();
+	}
+
 	void Material::AddShaderVariable(ShaderVariableType type, const String& name)
 	{
 		m_Variables.Add(ShaderVariable(type, name));

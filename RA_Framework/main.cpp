@@ -3,6 +3,7 @@
 #include "BehaviourComponent.h"
 #include "ModelComponent.h"
 #include "GLShaderProgram.h"
+#include "GLRenderer.h"
 struct AtExit
 {
 	~AtExit()
@@ -136,11 +137,13 @@ public:
 	GLShader* m_pVertexShader;
 	GLShader* m_pFragmentShader;
 	GLShaderProgram* m_pShaderProg;
+	Camera* m_pCamera;
 
 	void OnStart()
 	{
 		PRINTL("OnStart()");
-
+		m_pCamera = new Camera(ProjectionType::PERSPECTIVE, 60.0f, 0.1, 1000.0);
+		GLRenderer::SetActiveCamera(m_pCamera);
 		// MESH
 		m_pQuadMesh = new Mesh();
 		m_pQuadMesh->AddVertex(Vertex(-100, 100,0 ));
@@ -173,9 +176,15 @@ public:
 		Entity* e1 = new Entity("Test 1");
 		e1->AddComponent(std::unique_ptr<TestBehaviour>(new TestBehaviour()));
 		e1->AddComponent(std::unique_ptr<ModelComponent>(m_pModel));
-		e1->GetTransform()->SetPositionY(0.0f);
-
+		e1->GetTransform()->SetPositionX(20.0f);
+		//e1->CalculateTransform();
 		AddEntity(e1);
+
+		Entity* e2 = new Entity("Camera");
+		e2->AddComponent(std::unique_ptr<Camera>(m_pCamera));
+		e2->GetTransform()->SetPositionZ(1.0f);
+
+		AddEntity(e2);
 	}
 
 	void Update(float deltaTime, float totalTime = 0)

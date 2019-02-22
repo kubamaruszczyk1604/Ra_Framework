@@ -10,6 +10,7 @@ namespace RA_FRAMEWORK
 	{
 
 	private:
+		static Mat4 s_Identity;
 		KLMList<Entity*> m_pChildren;
 		KLMList<ComponentUnique> m_pComponents;
 		std::string m_ID;
@@ -19,7 +20,6 @@ namespace RA_FRAMEWORK
 		Entity() = default;
 		Entity(const Entity&) = delete;
 		Entity& operator=(const Entity&) = delete;
-		Mat4 m_Identity;
 		int m_ComponentMask;
 		bool m_DeleteMeFlag{ false };
 

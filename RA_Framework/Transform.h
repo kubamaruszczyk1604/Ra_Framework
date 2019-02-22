@@ -9,8 +9,8 @@ namespace RA_FRAMEWORK
 		Vec3 m_Position;
 		Vec3 m_Rotation;
 		Vec3 m_Scale;
-		Mat4 m_World;
-		Mat4 m_ParentTransformStack;
+		Mat4 m_World = glm::mat4(1.0);
+		Mat4 m_ParentTransformStack = glm::mat4(1.0);
 
 	public:
 		Transform();
@@ -47,7 +47,7 @@ namespace RA_FRAMEWORK
 		const Mat4& GetParentTransformStack() { return m_ParentTransformStack; }
 		void        SetParentTransformStack(const Mat4& pts) { m_ParentTransformStack = pts; }
 
-		Vec3        GetWorldPosition() { return Vec3(m_World*Vec4(0, 0, 0, 1)); }
+		Vec3        GetWorldPosition() { return Vec3(m_World*Vec4(0.0, 0, 0, 1)); }
 
 		void UpdatePosition(Vec3 step) { m_Position += step; }
 		void UpdatePosition(float x, float y, float z) { m_Position += Vec3(x, y, z); }
