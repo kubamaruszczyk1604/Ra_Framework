@@ -84,13 +84,14 @@ namespace RA_FRAMEWORK
 	
 	void GLRenderer::Render(Entity* entity)
 	{
-		entity->CalculateTransform();
+		
 		//PRINTL("Render ENTITY: " + entity->GetName() + " is at position: " + ToString(entity->GetTransform()->GetWorldPosition()));
-        Component* c = entity->GetFirstComponentOfType(ComponentType::MODEL_COMPONENT);
-        if (!c)  return;
+       // Component* c = entity->GetFirstComponentOfType(ComponentType::MODEL_COMPONENT);
+		Component* c;
+        if (!entity->TryGetCachedModel(c))  return;
 
 		ModelComponent* mc = static_cast<ModelComponent*>(c);
-		
+		entity->CalculateTransform();
 		Render(mc, s_CurrentCamera, entity->GetTransform(),entity->GetName());
 
 		//GLuint shaderProgID = material->GetShaderProgID();
@@ -231,20 +232,20 @@ namespace RA_FRAMEWORK
 
 	void GLRenderer::Render(ModelComponent* model, Camera* camera, Transform* transform, const String& name)
 	{
-		Material* material = const_cast<Material*>(model->GetMaterial());
-		if (!material) return;
+		Material* material = model->GetMaterial();
+		//if (!material) return;
 		
 
 		if (!s_CurrentCamera) return;
-		if (!s_CurrentCamera->isActive()) return;
+		//if (!s_CurrentCamera->isActive()) return;
 		//PRINTL("Render ENTITY: " + name + " is at position: " + ToString(transform->GetWorldPosition()));
 
 		Mat4 worldView;
-		if (s_CurrentCamera->GetParent() == nullptr)
-		{
-			worldView = s_CurrentCamera->GetViewMatrix() * transform->GetWorldMat();
-		}
-		else
+		//if (s_CurrentCamera->GetParent() == nullptr)
+		//{
+		//	worldView = s_CurrentCamera->GetViewMatrix() * transform->GetWorldMat();
+		//}
+		//else
 		{
 			Entity* parent = s_CurrentCamera->GetParent();
 			parent->CalculateTransform();

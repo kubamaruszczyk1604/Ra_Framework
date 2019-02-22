@@ -27,6 +27,7 @@ public:
 	}
 	void Update(float deltaTime, float totalTime)
 	{
+		GetParent()->GetTransform()->SetRotationX(totalTime*3.0);
 		//std::cout << "Behaviour update" << std::endl;
 	}
 	void OnExit()
@@ -138,7 +139,7 @@ public:
 	GLShader* m_pFragmentShader;
 	GLShaderProgram* m_pShaderProg;
 	Camera* m_pCamera;
-
+	Entity* e1;
 	void OnStart()
 	{
 		PRINTL("OnStart()");
@@ -184,27 +185,37 @@ public:
 
 		m_pMaterial = new Material(m_pShaderProg);
 
-		m_pModel = new ModelComponent("model",m_pQuadMesh, m_pMaterial);
 
-		Entity* e1 = new Entity("Test 1");
-		e1->AddComponent(std::unique_ptr<TestBehaviour>(new TestBehaviour()));
-		e1->AddComponent(std::unique_ptr<ModelComponent>(m_pModel));
-		//e1->GetTransform()->SetScale(Vec3(0.1, 0.1, 1));
-		//e1->CalculateTransform();
+
+        m_pModel = new ModelComponent("model", m_pQuadMesh, m_pMaterial);
+	    e1 = new Entity("Test 1");
+			//e1->AddComponent(std::unique_ptr<TestBehaviour>(new TestBehaviour()));
+	    e1->AddComponent(std::unique_ptr<ModelComponent>(m_pModel));
 		AddEntity(e1);
 
-		Entity* e2 = new Entity("Camera");
+
+		ModelComponent* m_pModel2 = new ModelComponent("model2", m_pQuadMesh, m_pMaterial);
+		Entity* e2 = new Entity("Test 2");
+		e2->AddComponent(std::unique_ptr<TestBehaviour>(new TestBehaviour()));
+		e2->AddComponent(std::unique_ptr<ModelComponent>(m_pModel2));
+		e2->GetTransform()->SetScale(0.3, 0.3, 1);
+		e2->GetTransform()->SetPosition(-7, 0, 0);
+		AddEntity(e2);
+		e1->AddChild(e2);
+
+		Entity* eCam = new Entity("Camera");
 		m_pCamera = new Camera(ProjectionType::PERSPECTIVE, 60.0f, 0.1, 1000.0);
 		GLRenderer::SetActiveCamera(m_pCamera);
-		e2->AddComponent(std::unique_ptr<Camera>(m_pCamera));
-		e2->GetTransform()->SetPosition(Vec3(10.8, 0, -24.98));
-		e2->CalculateTransform();
-		AddEntity(e2);
+		eCam->AddComponent(std::unique_ptr<Camera>(m_pCamera));
+		eCam->GetTransform()->SetPosition(Vec3(-6.8, 0, -24.98));
+		eCam->CalculateTransform();
+		AddEntity(eCam);
 	}
 
 	void Update(float deltaTime, float totalTime = 0)
 	{
 		//PRINTL("Update(" + ToString(deltaTime) + ", " + ToString(totalTime) + ")");
+		e1->GetTransform()->SetRotationZ(sin(totalTime));
 	}
 
 	void OnExit()
