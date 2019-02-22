@@ -136,6 +136,7 @@ public:
 	GLShader* m_pVertexShader;
 	GLShader* m_pFragmentShader;
 	GLShaderProgram* m_pShaderProg;
+
 	void OnStart()
 	{
 		PRINTL("OnStart()");
@@ -175,15 +176,13 @@ public:
 		e1->GetTransform()->SetPositionY(0.0f);
 
 		AddEntity(e1);
-	
-	
-
-
 	}
+
 	void Update(float deltaTime, float totalTime = 0)
 	{
 		//PRINTL("Update(" + ToString(deltaTime) + ", " + ToString(totalTime) + ")");
 	}
+
 	void OnExit()
 	{
 		PRINTL("OnExit()");

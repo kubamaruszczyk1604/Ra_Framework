@@ -29,6 +29,7 @@ namespace RA_FRAMEWORK
 		m_Created = true;
 		return true;
 	}
+
 	bool GLShaderProgram::SetAsCurrent()
 	{
 		if (p_VertexShader&&p_FragmentShader)
@@ -37,5 +38,78 @@ namespace RA_FRAMEWORK
 			return true;
 		}
 		return false;
+	}
+
+	void GLShaderProgram::SetInt(const String & varname, int value)
+	{
+		GLuint loc = glGetUniformLocation(m_ProgId, varname.c_str());
+		glUniform1i(loc, value);
+	}
+
+	void GLShaderProgram::SetFloat(const String & varname, float value)
+	{
+		GLuint loc = glGetUniformLocation(m_ProgId, varname.c_str());
+		glUniform1f(loc, value);
+	}
+
+	void GLShaderProgram::SetVec2Int(const String & varname, const Vec2i& value)
+	{
+		GLuint loc = glGetUniformLocation(m_ProgId, varname.c_str());
+		glUniform2i(m_ProgId, value.x, value.y);
+		//glUniform2iv(loc,2, &value.x);
+	}
+
+	void GLShaderProgram::SetVec3Int(const String & varname, const Vec3i & value)
+	{
+		GLuint loc = glGetUniformLocation(m_ProgId, varname.c_str());
+		glUniform3i(m_ProgId, value.x, value.y, value.z);
+	}
+
+	void GLShaderProgram::SetVec4Int(const String & varname, const Vec4i & value)
+	{
+		GLuint loc = glGetUniformLocation(m_ProgId, varname.c_str());
+		glUniform4i(m_ProgId, value.x, value.y, value.z, value.w);
+	}
+
+	void GLShaderProgram::SetVec2Float(const String & varname, const Vec2 & value)
+	{
+		GLuint loc = glGetUniformLocation(m_ProgId, varname.c_str());
+		glUniform2f(m_ProgId, value.x, value.y);
+	}
+
+	void GLShaderProgram::SetVec3Float(const String & varname, const Vec3 & value)
+	{
+		GLuint loc = glGetUniformLocation(m_ProgId, varname.c_str());
+		glUniform3f(m_ProgId, value.x, value.y, value.z);
+	}
+
+	void GLShaderProgram::SetVec4Float(const String & varname, const Vec4 & value)
+	{
+		GLuint loc = glGetUniformLocation(m_ProgId, varname.c_str());
+		glUniform4f(m_ProgId, value.x, value.y, value.z, value.w);
+	}
+
+	void GLShaderProgram::SetMat2x2(const String & varname, const Mat2 & value)
+	{
+		GLuint loc = glGetUniformLocation(m_ProgId, varname.c_str());
+		glUniformMatrix2fv(loc, 1, GL_FALSE, &value[0][0]);
+	}
+
+	void GLShaderProgram::SetMat3x3(const String & varname, const Mat3 & value)
+	{
+		GLuint loc = glGetUniformLocation(m_ProgId, varname.c_str());
+		glUniformMatrix3fv(loc, 1, GL_FALSE, &value[0][0]);
+	}
+
+	void GLShaderProgram::SetMat4x4(const String & varname, const Mat4 & value)
+	{
+		GLuint loc = glGetUniformLocation(m_ProgId, varname.c_str());
+		glUniformMatrix4fv(loc, 1, GL_FALSE, &value[0][0]);
+	}
+
+	void GLShaderProgram::SetTexture(const String & varname, int textureID)
+	{
+		GLuint samplerID = glGetUniformLocation(m_ProgId, varname.c_str());
+		glUniform1i(samplerID, textureID);
 	}
 }
