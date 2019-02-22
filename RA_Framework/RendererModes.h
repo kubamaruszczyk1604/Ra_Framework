@@ -5,7 +5,7 @@ namespace RA_FRAMEWORK
 	{
 		CULL_BACK = 0,
 		CULL_FRONT = 1,
-		CULL_NONE = 2
+		CULL_BACK_AND_FRONT = 2
 	};
 
 	enum class FillMode

@@ -21,5 +21,6 @@ namespace RA_FRAMEWORK
 
 	ModelComponent::~ModelComponent()
 	{
+		std::cout << "Model destructor" << std::endl;
 	}
 }

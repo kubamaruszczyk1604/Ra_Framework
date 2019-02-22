@@ -14,6 +14,7 @@ namespace RA_FRAMEWORK
 	HWND GLRenderer::s_hWnd{ 0 };
 	HGLRC GLRenderer::s_hGLRC{ nullptr };
 	HDC GLRenderer::s_hDevCtx{ nullptr };
+	GLuint GLRenderer::s_CullMode{ GL_FRONT_AND_BACK };
 	Camera* GLRenderer::s_CurrentCamera{ nullptr };
 	int GLRenderer::s_ScreenWidth{ 800 };
 	int GLRenderer::s_ScreenHeight{ 600 };
@@ -64,7 +65,7 @@ namespace RA_FRAMEWORK
 		if ((s_hGLRC = wglCreateContext(s_hDevCtx)) == NULL) return false;
 
 		wglMakeCurrent(s_hDevCtx, s_hGLRC);
-
+		//glutSetOption(GLUT_MULTISAMPLE, 8);
 		// set defaults
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LEQUAL);
@@ -72,6 +73,8 @@ namespace RA_FRAMEWORK
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_MULTISAMPLE);
+		glHint(GL_MULTISAMPLE_FILTER_HINT_NV, GL_NICEST);
+
 		glViewport(0, 0, width, height);
 
 		s_IsRunning = true;
@@ -94,151 +97,12 @@ namespace RA_FRAMEWORK
 		entity->CalculateTransform();
 		Render(mc, s_CurrentCamera, entity->GetTransform(),entity->GetName());
 
-		//GLuint shaderProgID = material->GetShaderProgID();
-		//material->SetCurrentShaders();
-
-		////Colours
-		//GLuint ambientID = glGetUniformLocation(shaderProgID, "ambient");
-		//GLuint diffuseID = glGetUniformLocation(shaderProgID, "diffuse");
-		//GLuint specularID = glGetUniformLocation(shaderProgID, "specular");
-
-
-		//glUniform4fv(ambientID, 1, &material->GetAmbientColPtr()->r);
-		//glUniform4fv(diffuseID, 1, &material->GetDiffuseColPtr()->r);
-		//glUniform4fv(specularID, 1, &material->GetSpecularColPtr()->r);
-
-
-		////TExtures
-		//const Texture* diffuseMapGen = material->GetDiffuseMap();
-		//const Texture* specularMapGen = material->GetSpecularMap();
-		//const Texture* normalMapGen = material->GetNormalMap();
-
-
-		//if (diffuseMapGen)
-		//{
-		//	const void* diffuse = material->GetDiffuseMap()->GetApiSpecificTexture();
-
-
-		//	GLTexture* diffuseMap = const_cast<GLTexture*>(static_cast<const GLTexture*>(diffuse));
-
-		//	GLuint samplerID = glGetUniformLocation(shaderProgID, "Texture0");
-		//	glUniform1i(samplerID, 0);
-		//	glActiveTexture(GL_TEXTURE0);
-		//	glBindTexture(GL_TEXTURE_2D, diffuseMap->GetID());
-		//}
-		//if (specularMapGen)
-		//{
-		//
-		//}
-		//if (normalMapGen)
-		//{
-		//
-		//}
-
-
-		//if (!s_CurrentCamera) return;
-		//if (!s_CurrentCamera->isActive()) return;
-
-
-		//Mat4 worldView;
-		//if (s_CurrentCamera->GetParent() == nullptr)
-		//{
-		//	worldView = s_CurrentCamera->GetViewMatrix() * entity->GetTransform()->GetWorldMat();
-		//}
-		//else
-		//{
-		//	Entity* parent = s_CurrentCamera->GetParent();
-		//	worldView =
-		//		s_CurrentCamera->SetTransformMatrix(parent->GetTransform()->GetWorldMat())
-		//		* entity->GetTransform()->GetWorldMat();
-
-		//	//ubs.CameraPosition = (parent->GetTransform()->GetWorldMat()*glm::vec4(0, 0, 0, 1));
-		//}
-		//Mat4 MVP = s_CurrentCamera->GetProjectionMatrix(s_ScreenWidth, s_ScreenHeight) * worldView;
-
-
-		///*String^ stringon = "MVP";
-		//std::string standardString = marshal_as<std::string>(stringon);*/
-
-		////Matrices
-		//GLuint MVP_ID = glGetUniformLocation(shaderProgID, "MVP");
-		//glUniformMatrix4fv(MVP_ID, 1, GL_FALSE, &MVP[0][0]);
-
-		//GLuint WORLD_ID = glGetUniformLocation(shaderProgID, "WORLD");
-		//glm::mat4 world = entity->GetTransform()->GetWorldMat();
-		//glUniformMatrix4fv(WORLD_ID, 1, GL_FALSE, &world[0][0]);
-
-
-		//
-		//GLuint WORLD_INVERSED_ID = glGetUniformLocation(shaderProgID, "WORLD_INVERSE");
-		//glm::mat4 worldInverse = glm::transpose(glm::inverse(entity->GetTransform()->GetWorldMat()));
-		//glUniformMatrix4fv(WORLD_INVERSED_ID, 1, GL_FALSE, &worldInverse[0][0]);
-
-		//
-		//      //Lighting
-		//if (LightBase::IsRequestingUpdate())
-		//{
-
-		//	for (int lIndex = 0; lIndex < LightBase::MAX_LIGHTS; ++lIndex)
-		//	{
-		//		const ShaderLightInfoStruct& l = LightBase::GetLightInfo(lIndex);
-
-		//		const std::string baseStr = "lights[" + ToString(lIndex) + "].";
-		//		//Enabled
-		//		GLuint loc = glGetUniformLocation(shaderProgID, (baseStr + "enabled").c_str());
-		//		glUniform1i(loc, l.Enabled);
-
-		//		//Position
-		//		loc = glGetUniformLocation(shaderProgID, (baseStr + "position").c_str());
-		//		glUniform4fv(loc,1, &l.Position.x);
-
-		//		//Ambient
-		//		loc = glGetUniformLocation(shaderProgID, (baseStr + "ambient").c_str());
-		//		glUniform4fv(loc, 1, &l.Ambient.r);
-
-		//		//Diffuse
-		//		loc = glGetUniformLocation(shaderProgID, (baseStr + "diffuse").c_str());
-		//		glUniform4fv(loc, 1, &l.Diffuse.r);
-
-		//		//Specular
-		//		loc = glGetUniformLocation(shaderProgID, (baseStr + "specular").c_str());
-		//		Vec4 tmpSpc(0, 0, 0, 0);
-		//		glUniform4fv(loc, 1, &tmpSpc.r);
-
-		//		//Spot cutoff
-		//		loc = glGetUniformLocation(shaderProgID, (baseStr + "spot_cutoff").c_str());
-		//		glUniform1f(loc,l.SpotCutoff);
-
-		//		//Spot Direction
-		//		loc = glGetUniformLocation(shaderProgID, (baseStr + "spot_direction").c_str());
-		//		glUniform3fv(loc, 1, &l.SpotDirection.x);
-
-		//		//Spot exponent
-		//		loc = glGetUniformLocation(shaderProgID, (baseStr + "spot_exponent").c_str());
-		//		glUniform1fv(loc, 1, &l.SpotDecay);
-
-		//		//Spot Attenuation
-		//		loc = glGetUniformLocation(shaderProgID, (baseStr + "attenuation").c_str());
-		//		glUniform3fv(loc, 1, &l.Attenuation.x);
-
-		//		
-		//	}
-
-		//	
-		//}
-
-		//mc->GetMesh()->GetVBO()->Draw(PrimitiveType::TRIANGLES);
 	}
 
 	void GLRenderer::Render(ModelComponent* model, Camera* camera, Transform* transform, const String& name)
 	{
 		Material* material = model->GetMaterial();
-		//if (!material) return;
-		
-
 		if (!s_CurrentCamera) return;
-		//if (!s_CurrentCamera->isActive()) return;
-		//PRINTL("Render ENTITY: " + name + " is at position: " + ToString(transform->GetWorldPosition()));
 
 		Mat4 worldView;
 		//if (s_CurrentCamera->GetParent() == nullptr)
@@ -304,12 +168,42 @@ namespace RA_FRAMEWORK
 
 	void GLRenderer::SetCullMode(const CullMode mode)
 	{
-		glCullFace(GL_FRONT_AND_BACK);
+		switch (mode)
+		{
+		case(CullMode::CULL_BACK_AND_FRONT):
+			s_CullMode = GL_FRONT_AND_BACK;
+			break;
+
+		case(CullMode::CULL_FRONT):
+			s_CullMode = GL_FRONT;
+			break;
+
+		case(CullMode::CULL_BACK):
+			s_CullMode = GL_BACK;
+			break;
+
+		default:
+			break;
+		}
+		glCullFace(s_CullMode);
 	}
 
 	void GLRenderer::SetFillMode(const FillMode mode)
 	{
+		switch (mode)
+		{
+		case(FillMode::FILL_SOLID):
+			glPolygonMode(s_CullMode, GL_FILL);
+			break;
+		case(FillMode::FILL_WIRE):
+			glPolygonMode(s_CullMode, GL_LINE);
+			break;
+		default:
+			break;
 
+		}
+
+		
 	}
 
 	void GLRenderer::SetActiveCamera(Camera * camera)

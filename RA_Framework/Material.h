@@ -10,7 +10,7 @@ namespace RA_FRAMEWORK
 	{
 
 	private:	
-		KLMList<ShaderVariable> m_Variables;
+		KLMList<ShaderVariable*> m_Variables;
 		ShaderProgram* p_Shader;
 	public:
 		Material(ShaderProgram* shaderProg);

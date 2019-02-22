@@ -16,6 +16,7 @@ namespace RA_FRAMEWORK
 		static HWND	s_hWnd;
 		static HGLRC s_hGLRC;
 		static HDC s_hDevCtx;
+		static GLuint s_CullMode;
 
 		static Camera* s_CurrentCamera;
 

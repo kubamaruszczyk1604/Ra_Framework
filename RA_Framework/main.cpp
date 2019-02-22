@@ -184,9 +184,10 @@ public:
 		std::cout << "Shader Program linking status: " << m_pShaderProg->Created() << std::endl;
 
 		m_pMaterial = new Material(m_pShaderProg);
+		//Vec3* t = new Vec3(7.0, 0.0, 0.0);
+		//m_pMaterial->AddShaderVariable(ShaderVariableType::VECf3, "color", t);
 
-
-
+		
         m_pModel = new ModelComponent("model", m_pQuadMesh, m_pMaterial);
 	    e1 = new Entity("Test 1");
 			//e1->AddComponent(std::unique_ptr<TestBehaviour>(new TestBehaviour()));
@@ -199,7 +200,7 @@ public:
 		e2->AddComponent(std::unique_ptr<TestBehaviour>(new TestBehaviour()));
 		e2->AddComponent(std::unique_ptr<ModelComponent>(m_pModel2));
 		e2->GetTransform()->SetScale(0.3, 0.3, 1);
-		e2->GetTransform()->SetPosition(-7, 0, 0);
+		e2->GetTransform()->SetPosition(-8, 0, 0);
 		AddEntity(e2);
 		e1->AddChild(e2);
 
@@ -210,6 +211,8 @@ public:
 		eCam->GetTransform()->SetPosition(Vec3(-6.8, 0, -24.98));
 		eCam->CalculateTransform();
 		AddEntity(eCam);
+
+		//GLRenderer::SetFillMode(FillMode::FILL_WIRE);
 	}
 
 	void Update(float deltaTime, float totalTime = 0)

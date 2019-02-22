@@ -35,7 +35,7 @@ namespace RA_FRAMEWORK
 	public:
 		ShaderVariable(ShaderVariableType type, const String& name);
 		ShaderVariable(ShaderVariableType type, const String& name, void* value);
-		//ShaderVariable(const ShaderVariable&) = delete;
+		ShaderVariable(const ShaderVariable&) = delete;
 		ShaderVariable& operator=(const ShaderVariable&) = delete;
 		~ShaderVariable();
 		//Takes ownership only of types that are not handled by Resource Manager
