@@ -1,5 +1,6 @@
 #pragma once
-//Uniform parameters send by the engine to bound shader program
+//Uniform parameters send by the engine to currently bound shader program:
+
 #define ENABLE__uWORLD			// World Matrix 4x4   id = "uWORLD"
 #define ENABLE__uWORLD_INVERSE  // Matrix 4x4         id = "uWORLD_INVERSE"
 #define ENABLE__uVIEW			// View Matrix 4x4    id = "uView" 

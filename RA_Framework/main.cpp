@@ -115,6 +115,7 @@ public:
 
 };
 
+
 class ExampleScene2 :public Scene
 {
 
@@ -190,7 +191,6 @@ public:
 		
         m_pModel = new ModelComponent("model", m_pQuadMesh, m_pMaterial);
 	    e1 = new Entity("Test 1");
-			//e1->AddComponent(std::unique_ptr<TestBehaviour>(new TestBehaviour()));
 	    e1->AddComponent(std::unique_ptr<ModelComponent>(m_pModel));
 		AddEntity(e1);
 
@@ -252,7 +252,7 @@ public:
 int main()
 {
 	// Create application in 1280x720 window
-	WindowsApp::Create(800, 600, "EMPTY WINDOW");
+	WindowsApp::Create(1280, 720, "EMPTY WINDOW");
 	//WindowsApp::SetFullscreenMode(true);
 	SceneManager::Load(new ExampleScene2());
 	const int appState = WindowsApp::Run();

@@ -84,7 +84,6 @@ namespace RA_FRAMEWORK
 		glewInit();
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		
-		//LightBase::InitializeLightSystem();
 		return true;
 	}
 	
