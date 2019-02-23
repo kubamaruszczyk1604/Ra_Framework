@@ -12,12 +12,12 @@ namespace RA_FRAMEWORK
 
 
 	GLTexture::GLTexture(int w, int h, TextureFormat format, void* data, TextureFilterMode minFilterMode, TextureAddressMode magFilterMode, TextureAddressMode addressMode) :
-		Texture(GfxAPI::GL),
+		Texture(GfxAPI::GL,0),
 		c_Width(w),
 		c_Height(h)
 	{
-		glGenTextures(1, &m_TextureID);
-		glBindTexture(GL_TEXTURE_2D, m_TextureID);
+		glGenTextures(1, &m_ID);
+		glBindTexture(GL_TEXTURE_2D, m_ID);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, w, h, 0, GL_RGB, static_cast<GLuint>(format), data);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, static_cast<GLuint>(minFilterMode));
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, static_cast<GLuint>(magFilterMode));
@@ -29,12 +29,12 @@ namespace RA_FRAMEWORK
 	//www.opengl-tutorial.org/intermediate-tutorials/tutorial-14-render-to-texture/
 
 	GLTexture::GLTexture(int w, int h, TextureFormat format, void* data):
-		Texture(GfxAPI::GL),
+		Texture(GfxAPI::GL,0),
 		c_Width(w),
 		c_Height(h)
 	{
-		glGenTextures(1, &m_TextureID);
-		glBindTexture(GL_TEXTURE_2D, m_TextureID);
+		glGenTextures(1, &m_ID);
+		glBindTexture(GL_TEXTURE_2D, m_ID);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, w, h, 0, GL_RGB, static_cast<GLuint>(format), data);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, static_cast<GLuint>(TextureFilterMode::NEAREST));
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, static_cast<GLuint>(TextureFilterMode::NEAREST));
@@ -43,12 +43,12 @@ namespace RA_FRAMEWORK
 	}
 
 	GLTexture::GLTexture(int w, int h, TextureFormat format):
-		Texture(GfxAPI::GL),
+		Texture(GfxAPI::GL,0),
 		c_Width(w),
 		c_Height(h)
 	{
-		glGenTextures(1, &m_TextureID);
-		glBindTexture(GL_TEXTURE_2D, m_TextureID);
+		glGenTextures(1, &m_ID);
+		glBindTexture(GL_TEXTURE_2D, m_ID);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, w, h, 0, GL_RGB, static_cast<GLuint>(format), 0);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, static_cast<GLuint>(TextureFilterMode::NEAREST));
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, static_cast<GLuint>(TextureFilterMode::NEAREST));
@@ -59,12 +59,12 @@ namespace RA_FRAMEWORK
 	void GLTexture::Bind(GLuint slot)
 	{
 		glActiveTexture(GL_TEXTURE0 + slot);
-		glBindTexture(GL_TEXTURE_2D, m_TextureID);
+		glBindTexture(GL_TEXTURE_2D, m_ID);
 	}
 
 	void GLTexture::Bind()
 	{
-		glBindTexture(GL_TEXTURE_2D, m_TextureID);
+		glBindTexture(GL_TEXTURE_2D, m_ID);
 	}
 
 	void GLTexture::Bind(const std::string& uniformName, GLuint shaderProgID, GLuint slot)
@@ -72,7 +72,7 @@ namespace RA_FRAMEWORK
 		GLuint samplerID = glGetUniformLocation(shaderProgID, uniformName.c_str());
 		glUniform1i(samplerID, slot);
 		glActiveTexture(GL_TEXTURE0 + slot);
-		glBindTexture(GL_TEXTURE_2D, m_TextureID);
+		glBindTexture(GL_TEXTURE_2D, m_ID);
 	}
 
 	void GLTexture::Unbind()
@@ -82,6 +82,6 @@ namespace RA_FRAMEWORK
 
 	GLTexture::~GLTexture()
 	{
-		glDeleteTextures(1, &m_TextureID);
+		glDeleteTextures(1, &m_ID);
 	}
 }

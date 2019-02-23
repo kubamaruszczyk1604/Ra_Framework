@@ -23,25 +23,26 @@ namespace RA_FRAMEWORK
 		SKYBOX = 13
 	};
 
-	
+	template<class T>
 	class ShaderVariable
 	{
 
 	private:
 		String m_Name;
-		ShaderVariableType m_Type;
-		void* m_pData;
+		T m_Data;
 
 	public:
-		ShaderVariable(ShaderVariableType type, const String& name);
-		ShaderVariable(ShaderVariableType type, const String& name, void* value);
+
+
+		ShaderVariable(const String& name, const T& data) :m_Name{ name }, m_Data{ data }
+		{}
+
 		ShaderVariable(const ShaderVariable&) = delete;
 		ShaderVariable& operator=(const ShaderVariable&) = delete;
-		~ShaderVariable();
-		//Takes ownership only of types that are not handled by Resource Manager
-		void SetValue(void* value) { m_pData = value; }
-		void* GetValue() const { return m_pData; }
-		ShaderVariableType GetType() const { return m_Type; }
+		~ShaderVariable() {}
+
+		void SetData(const T& data) { m_Data = data; }
+		const T& GetData() { return m_Data; }
 		const String& GetName() const { return m_Name; }
 	};
 

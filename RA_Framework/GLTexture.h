@@ -10,7 +10,7 @@ namespace RA_FRAMEWORK
 	private:
 		static const GLuint s_TextureAddresModeLookupTable[5];
 
-		GLuint m_TextureID{ 0 };
+		//GLuint m_TextureID{ 0 };
 		const int c_Width;
 		const int c_Height;
 	public:
@@ -18,7 +18,7 @@ namespace RA_FRAMEWORK
 		GLTexture(int w, int h, TextureFormat format, void* data, TextureFilterMode minFilterMode, TextureAddressMode magFilterMode, TextureAddressMode addressMode);
 		GLTexture(int w, int h, TextureFormat format, void* data);
 		GLTexture(int w, int h, TextureFormat format);
-		GLuint GetID() { return m_TextureID; }
+		GLuint GetID() { return m_ID; }
 
 		//Assigns shader's uniform to the same slot as the texture.
 		void Bind(const std::string& uniformName, GLuint shaderProgID, GLuint slot = 0);

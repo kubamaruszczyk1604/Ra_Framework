@@ -8,13 +8,15 @@ namespace RA_FRAMEWORK
 		GfxAPI m_API;
 
 	protected:
-		Texture(GfxAPI API);
+		Texture(GfxAPI API, unsigned id);
+		unsigned m_ID;
 
 	public:
 		Texture(const Texture&) = delete;
 		Texture& operator=(const Texture&) = delete;
 		GfxAPI GetAPI() { return m_API; }
 		virtual ~Texture();
+		unsigned GetID() { return m_ID; }
 	};
 
 }

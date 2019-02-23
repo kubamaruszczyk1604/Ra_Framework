@@ -136,10 +136,9 @@ namespace RA_FRAMEWORK
 		material->GetShaderProgram()->SetVec3Float("uCameraPosition", Vec3(camera->GetTransformMatrix()*Vec4(0.0, 0.0, 0.0, 1.0)));
 #endif //ENABLE__uCameraPosition
 #ifdef ENABLE__uTime
-		material->GetShaderProgram()->SetFloat("uTime", 0.0);
+		material->GetShaderProgram()->SetFloat("uTime", 0.1);
 #endif//ENABLE__uTime
 
-		
 		model->GetMesh()->GetVBO()->Draw(PrimitiveType::TRIANGLES);
 	}
 

@@ -186,8 +186,7 @@ public:
 		std::cout << "Shader Program linking status: " << m_pShaderProg->Created() << std::endl;
 
 		m_pMaterial = new Material(m_pShaderProg);
-		//Vec3* t = new Vec3(7.0, 0.0, 0.0);
-		//m_pMaterial->AddShaderVariable(ShaderVariableType::VECf3, "color", t);
+		m_pMaterial->AddShaderVariable("aa", Vec3(0.0, 1.0, 1.0));
 
 		
         m_pModel = new ModelComponent("model", m_pQuadMesh, m_pMaterial);

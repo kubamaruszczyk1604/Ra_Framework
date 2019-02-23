@@ -57,38 +57,38 @@ namespace RA_FRAMEWORK
 	void GLShaderProgram::SetVec2Int(const String & varname, const Vec2i& value)
 	{
 		GLuint loc = glGetUniformLocation(m_ProgId, varname.c_str());
-		glUniform2i(m_ProgId, value.x, value.y);
+		glUniform2i(loc, value.x, value.y);
 		//glUniform2iv(loc,2, &value.x);
 	}
 
 	void GLShaderProgram::SetVec3Int(const String & varname, const Vec3i & value)
 	{
 		GLuint loc = glGetUniformLocation(m_ProgId, varname.c_str());
-		glUniform3i(m_ProgId, value.x, value.y, value.z);
+		glUniform3i(loc, value.x, value.y, value.z);
 	}
 
 	void GLShaderProgram::SetVec4Int(const String & varname, const Vec4i & value)
 	{
 		GLuint loc = glGetUniformLocation(m_ProgId, varname.c_str());
-		glUniform4i(m_ProgId, value.x, value.y, value.z, value.w);
+		glUniform4i(loc, value.x, value.y, value.z, value.w);
 	}
 
 	void GLShaderProgram::SetVec2Float(const String & varname, const Vec2 & value)
 	{
 		GLuint loc = glGetUniformLocation(m_ProgId, varname.c_str());
-		glUniform2f(m_ProgId, value.x, value.y);
+		glUniform2f(loc, value.x, value.y);
 	}
 
 	void GLShaderProgram::SetVec3Float(const String & varname, const Vec3 & value)
 	{
 		GLuint loc = glGetUniformLocation(m_ProgId, varname.c_str());
-		glUniform3f(m_ProgId, value.x, value.y, value.z);
+		glUniform3fv(loc, 1, &value.x);
 	}
 
 	void GLShaderProgram::SetVec4Float(const String & varname, const Vec4 & value)
 	{
 		GLuint loc = glGetUniformLocation(m_ProgId, varname.c_str());
-		glUniform4f(m_ProgId, value.x, value.y, value.z, value.w);
+		glUniform4f(loc, value.x, value.y, value.z, value.w);
 	}
 
 	void GLShaderProgram::SetMat2x2(const String & varname, const Mat2 & value)
