@@ -123,6 +123,7 @@ public:
 	ExampleScene2() :Scene()
 	{
 
+
 	}
 	~ExampleScene2() 
 	{
