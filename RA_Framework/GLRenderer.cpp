@@ -133,6 +133,11 @@ namespace RA_FRAMEWORK
 #ifdef ENABLE__uVIEW
 		material->GetShaderProgram()->SetMat4x4("uVIEW", s_CurrentCamera->GetViewMatrix());
 #endif //ENABLE__uVIEW
+
+#ifdef ENABLE__uMVP
+		material->GetShaderProgram()->SetMat4x4("uMVP", MVP);
+#endif //ENABLE__uMVP
+
 #ifdef ENABLE__uCameraPosition
 		material->GetShaderProgram()->SetVec3Float("uCameraPosition", Vec3(s_CurrentCamera->GetTransformMatrix()*Vec4(0.0, 0.0, 0.0, 1.0)));
 #endif //ENABLE__uCameraPosition
@@ -140,7 +145,7 @@ namespace RA_FRAMEWORK
 		material->GetShaderProgram()->SetFloat("uTime", 0.0);
 #endif//ENABLE__uTime
 
-		material->GetShaderProgram()->SetMat4x4("uMVP", MVP);
+		
 		model->GetMesh()->GetVBO()->Draw(PrimitiveType::TRIANGLES);
 	}
 
