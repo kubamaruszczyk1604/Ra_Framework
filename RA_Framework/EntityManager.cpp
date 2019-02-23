@@ -52,12 +52,6 @@ namespace RA_FRAMEWORK
 		for (int i = 0; i < m_pEntities.size(); ++i)
 		{
 			m_pEntities[i]->CalculateTransform();
-		}
-
-
-		for (int i = 0; i < m_pEntities.size(); ++i)
-		{
-
 			Entity* e = m_pEntities[i].get();
 			if (e->ShouldDelete())
 			{

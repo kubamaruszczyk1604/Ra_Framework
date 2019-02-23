@@ -90,14 +90,11 @@ namespace RA_FRAMEWORK
 	
 	void GLRenderer::Render(Entity* entity)
 	{
-		
-		//PRINTL("Render ENTITY: " + entity->GetName() + " is at position: " + ToString(entity->GetTransform()->GetWorldPosition()));
-       // Component* c = entity->GetFirstComponentOfType(ComponentType::MODEL_COMPONENT);
+
 		Component* c;
         if (!entity->TryGetCachedModel(c))  return;
 
 		ModelComponent* mc = static_cast<ModelComponent*>(c);
-		entity->CalculateTransform();
 		Render(mc, s_CurrentCamera, entity->GetTransform(),entity->GetName());
 
 	}
@@ -105,7 +102,7 @@ namespace RA_FRAMEWORK
 	void GLRenderer::Render(ModelComponent* model, Camera* camera, Transform* transform, const String& name)
 	{
 		Material* material = model->GetMaterial();
-		if (!s_CurrentCamera) return;
+		if (!camera) return;
 
 		Mat4 worldView;
 		//if (s_CurrentCamera->GetParent() == nullptr)
@@ -114,14 +111,14 @@ namespace RA_FRAMEWORK
 		//}
 		//else
 		{
-			Entity* parent = s_CurrentCamera->GetParent();
+			Entity* parent = camera->GetParent();
 			parent->CalculateTransform();
-			s_CurrentCamera->SetTransformMatrix(parent->GetTransform()->GetWorldMat());
-			worldView = s_CurrentCamera->GetViewMatrix() * transform->GetWorldMat();
+			camera->SetTransformMatrix(parent->GetTransform()->GetWorldMat());
+			worldView = camera->GetViewMatrix() * transform->GetWorldMat();
 		//	std::cout << "dws" << std::endl;
 			
 		}
-		Mat4 MVP = s_CurrentCamera->GetProjectionMatrix(s_ScreenWidth, s_ScreenHeight) * worldView;
+		Mat4 MVP = camera->GetProjectionMatrix(s_ScreenWidth, s_ScreenHeight) * worldView;
 		material->Use();
 
 #ifdef ENABLE__uWORLD
@@ -133,13 +130,11 @@ namespace RA_FRAMEWORK
 #ifdef ENABLE__uVIEW
 		material->GetShaderProgram()->SetMat4x4("uVIEW", s_CurrentCamera->GetViewMatrix());
 #endif //ENABLE__uVIEW
-
 #ifdef ENABLE__uMVP
 		material->GetShaderProgram()->SetMat4x4("uMVP", MVP);
 #endif //ENABLE__uMVP
-
 #ifdef ENABLE__uCameraPosition
-		material->GetShaderProgram()->SetVec3Float("uCameraPosition", Vec3(s_CurrentCamera->GetTransformMatrix()*Vec4(0.0, 0.0, 0.0, 1.0)));
+		material->GetShaderProgram()->SetVec3Float("uCameraPosition", Vec3(camera->GetTransformMatrix()*Vec4(0.0, 0.0, 0.0, 1.0)));
 #endif //ENABLE__uCameraPosition
 #ifdef ENABLE__uTime
 		material->GetShaderProgram()->SetFloat("uTime", 0.0);

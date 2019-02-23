@@ -8,8 +8,8 @@
 #define ENABLE__uTime			// Single Float       id = "uTime"
 
 /* 
-   NOTE:
-  Thr "uMVP" matrix is essential for the camera system to werk and is best left enabled.
+  NOTE:
+  Thr "uMVP" matrix is essential for the camera system to work and is best left enabled.
   In your vertex shader multiply the position attribute by this matrix:
   -> gl_Position =  uMVP*vec4(vertex_position, 1.0); <-
 */
