@@ -197,5 +197,8 @@
     <ClInclude Include="ShaderVariable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="RendererDirectives.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

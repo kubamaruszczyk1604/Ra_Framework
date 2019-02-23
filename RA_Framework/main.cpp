@@ -253,6 +253,7 @@ int main()
 {
 	// Create application in 1280x720 window
 	WindowsApp::Create(800, 600, "EMPTY WINDOW");
+	//WindowsApp::SetFullscreenMode(true);
 	SceneManager::Load(new ExampleScene2());
 	const int appState = WindowsApp::Run();
 	//int* i = new int(10);

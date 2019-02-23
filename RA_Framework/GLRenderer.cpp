@@ -1,5 +1,6 @@
 #include "GLRenderer.h"
 #include "Entity.h"
+#include "RendererDirectives.h"
 //#include "GLTexture.h"
 //#include <msclr\marshal_cppstd.h>
 //#include "ShaderVariableContainer.h"
@@ -40,11 +41,12 @@ namespace RA_FRAMEWORK
 		pfd.cAccumBits = pfd.cAccumRedBits = pfd.cAccumGreenBits =
 			pfd.cAccumBlueBits = pfd.cAccumAlphaBits = 0;
 		pfd.cDepthBits = 24;
-		pfd.cStencilBits = pfd.cAuxBuffers = 0;
+		pfd.cStencilBits = 8;
+		pfd.cAuxBuffers = 0;
 		pfd.iLayerType = PFD_MAIN_PLANE;
 		pfd.bReserved = 0;
 		pfd.dwLayerMask = pfd.dwVisibleMask = pfd.dwDamageMask = 0;
-
+		
 		// choose pixel format returns the number most similar pixel format available
 		int n = ChoosePixelFormat(hdc, &pfd);
 		// set pixel format returns whether it sucessfully set the pixel format
@@ -65,7 +67,7 @@ namespace RA_FRAMEWORK
 		if ((s_hGLRC = wglCreateContext(s_hDevCtx)) == NULL) return false;
 
 		wglMakeCurrent(s_hDevCtx, s_hGLRC);
-		//glutSetOption(GLUT_MULTISAMPLE, 8);
+		
 		// set defaults
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LEQUAL);
@@ -73,15 +75,16 @@ namespace RA_FRAMEWORK
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_MULTISAMPLE);
+		
 		glHint(GL_MULTISAMPLE_FILTER_HINT_NV, GL_NICEST);
-
+		
 		glViewport(0, 0, width, height);
 
 		s_IsRunning = true;
 		glewInit();
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		
 		//LightBase::InitializeLightSystem();
-
 		return true;
 	}
 	
@@ -119,16 +122,25 @@ namespace RA_FRAMEWORK
 			
 		}
 		Mat4 MVP = s_CurrentCamera->GetProjectionMatrix(s_ScreenWidth, s_ScreenHeight) * worldView;
-		//Mat4 MVP = worldView;// transform->GetWorldMat();
 		material->Use();
-		//material->GetShaderProgram()->SetMat4x4("uWORLD", transform->GetWorldMat());
-		//material->GetShaderProgram()->SetMat4x4("uWORLD_INVERSE", glm::inverse(transform->GetWorldMat()));
-		//material->GetShaderProgram()->SetMat4x4("uVIEW", s_CurrentCamera->GetViewMatrix());
-		material->GetShaderProgram()->SetMat4x4("uMVP", MVP);
-		
-		//material->GetShaderProgram()->SetVec3Float("uCameraPosition", Vec3(s_CurrentCamera->GetTransformMatrix()*Vec4(0.0, 0.0, 0.0, 1.0)));
-		//material->GetShaderProgram()->SetFloat("uTime", 0.0);
 
+#ifdef ENABLE__uWORLD
+		material->GetShaderProgram()->SetMat4x4("uWORLD", transform->GetWorldMat());
+#endif // ENABLE__uWORLD
+#ifdef ENABLE__uWORLD_INVERSE
+		material->GetShaderProgram()->SetMat4x4("uWORLD_INVERSE", glm::inverse(transform->GetWorldMat()));
+#endif // ENABLE__uWORLD_INVERSE
+#ifdef ENABLE__uVIEW
+		material->GetShaderProgram()->SetMat4x4("uVIEW", s_CurrentCamera->GetViewMatrix());
+#endif //ENABLE__uVIEW
+#ifdef ENABLE__uCameraPosition
+		material->GetShaderProgram()->SetVec3Float("uCameraPosition", Vec3(s_CurrentCamera->GetTransformMatrix()*Vec4(0.0, 0.0, 0.0, 1.0)));
+#endif //ENABLE__uCameraPosition
+#ifdef ENABLE__uTime
+		material->GetShaderProgram()->SetFloat("uTime", 0.0);
+#endif//ENABLE__uTime
+
+		material->GetShaderProgram()->SetMat4x4("uMVP", MVP);
 		model->GetMesh()->GetVBO()->Draw(PrimitiveType::TRIANGLES);
 	}
 
@@ -170,15 +182,15 @@ namespace RA_FRAMEWORK
 	{
 		switch (mode)
 		{
-		case(CullMode::CULL_BACK_AND_FRONT):
+		case(CullMode::FRONT_AND_BACK):
 			s_CullMode = GL_FRONT_AND_BACK;
 			break;
 
-		case(CullMode::CULL_FRONT):
+		case(CullMode::FRONT):
 			s_CullMode = GL_FRONT;
 			break;
 
-		case(CullMode::CULL_BACK):
+		case(CullMode::BACK):
 			s_CullMode = GL_BACK;
 			break;
 
@@ -192,10 +204,10 @@ namespace RA_FRAMEWORK
 	{
 		switch (mode)
 		{
-		case(FillMode::FILL_SOLID):
+		case(FillMode::SOLID):
 			glPolygonMode(s_CullMode, GL_FILL);
 			break;
-		case(FillMode::FILL_WIRE):
+		case(FillMode::WIREFRAME):
 			glPolygonMode(s_CullMode, GL_LINE);
 			break;
 		default:
