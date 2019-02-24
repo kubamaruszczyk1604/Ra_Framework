@@ -21,7 +21,7 @@ namespace RA_FRAMEWORK
 	int GLRenderer::s_ScreenHeight{ 600 };
 	bool GLRenderer::s_MakeCurrentCalled{ false };
 	Vec4 GLRenderer::VectorVariableTest{ Vec4(1.0f) };
-	float GLRenderer::dummyTime = 0;
+	float GLRenderer::s_TotalTime{ 0 };
 
 	bool GLRenderer::KLMSetPixelFormat(HDC hdc)
 	{
@@ -136,7 +136,7 @@ namespace RA_FRAMEWORK
 		material->GetShaderProgram()->SetVec3Float("uCameraPosition", Vec3(camera->GetTransformMatrix()*Vec4(0.0, 0.0, 0.0, 1.0)));
 #endif //ENABLE__uCameraPosition
 #ifdef ENABLE__uTime
-		material->GetShaderProgram()->SetFloat("uTime", 0.1);
+		material->GetShaderProgram()->SetFloat("uTime", s_TotalTime);
 #endif//ENABLE__uTime
 
 		model->GetMesh()->GetVBO()->Draw(PrimitiveType::TRIANGLES);
@@ -147,7 +147,7 @@ namespace RA_FRAMEWORK
 	
 	void GLRenderer::Update(const float deltaTime, const float totalTime)
 	{
-		dummyTime = totalTime;
+		s_TotalTime = totalTime;
 		//PRINTL("TotalTime: " + ToString(dummyTime));
 		
 	}

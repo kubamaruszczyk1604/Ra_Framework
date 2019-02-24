@@ -186,7 +186,7 @@ public:
 		std::cout << "Shader Program linking status: " << m_pShaderProg->Created() << std::endl;
 
 		m_pMaterial = new Material(m_pShaderProg);
-		m_pMaterial->AddShaderVariable("aa", Vec3(0.0, 1.0, 1.0));
+		m_pMaterial->AddShaderVariable("aa", Vec3(0.0, 0.0, 1.0));
 
 		
         m_pModel = new ModelComponent("model", m_pQuadMesh, m_pMaterial);
@@ -212,7 +212,7 @@ public:
 		eCam->CalculateTransform();
 		AddEntity(eCam);
 
-		//GLRenderer::SetFillMode(FillMode::FILL_WIRE);
+		//GLRenderer::SetFillMode(FillMode::WIREFRAME);
 	}
 
 	void Update(float deltaTime, float totalTime = 0)
@@ -265,7 +265,8 @@ int main()
 	String* s = list.Find(UNARY_PRED1(String, Object.size() == 2));
 	if(s != nullptr) std::cout << *s << std::endl;
 	else std::cout << "s is null" << std::endl;
-	WaitForKeypress();*/
-
+	*/
+	//std::cout << "Application has been closed - press any key" << std::endl;
+    //WaitForKeypress();
 	return 0;
 }

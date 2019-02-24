@@ -47,6 +47,7 @@ namespace RA_FRAMEWORK
 				GLRenderer::Render(e);
 				//PRINTL("ENTITY: " + e->GetName() + " is at position: " + ToString(e->GetTransform()->GetWorldPosition()));
 			}
+			GLRenderer::Update(deltaTime, totalTime);
 			//TODO: SYSTEMS ACT ON ENTITIES HERE
 			//DXRenderer::Update(deltaTime, totalTime);
 			GLRenderer::SwapBuffers();

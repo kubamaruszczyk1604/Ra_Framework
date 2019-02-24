@@ -26,7 +26,7 @@ namespace RA_FRAMEWORK
 		static bool KLMSetPixelFormat(HDC hdc);
 
 		static Vec4 VectorVariableTest;
-		static float dummyTime;
+		static float s_TotalTime;
 
 	public:
 		GLRenderer() = delete;
