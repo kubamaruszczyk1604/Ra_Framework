@@ -186,6 +186,7 @@
     <ClInclude Include="RAUtils.h" />
     <ClInclude Include="RendererModes.h" />
     <ClInclude Include="GLRenderTarget.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Shader.h" />
@@ -198,6 +199,13 @@
     <ClInclude Include="VBO.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="WindowsApp.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="RA_Framework.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="BuildInShaders\RA_glFrag.txt" />
+    <Text Include="BuildInShaders\RA_glVert.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

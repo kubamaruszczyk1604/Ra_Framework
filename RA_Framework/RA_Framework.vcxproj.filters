@@ -197,5 +197,17 @@
     <ClInclude Include="RendererDirectives.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="RA_Framework.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="BuildInShaders\RA_glFrag.txt" />
+    <Text Include="BuildInShaders\RA_glVert.txt" />
   </ItemGroup>
 </Project>
