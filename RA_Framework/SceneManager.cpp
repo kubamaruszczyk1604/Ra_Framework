@@ -3,8 +3,6 @@
 #include "EntityManager.h"
 #include "BehaviourManager.h"
 #include "GLRenderer.h"
-//#include "ResourceManager.h"
-
 namespace RA_FRAMEWORK
 {
 	SceneUniquePtr SceneManager::m_upCurrentScene;
@@ -26,7 +24,6 @@ namespace RA_FRAMEWORK
 		}
 		m_upCurrentScene = std::unique_ptr<Scene>(scene);
 		m_upCurrentScene->OnStart();
-
 	}
 
 	void SceneManager::Update(const float deltaTime, const float totalTime)
@@ -35,14 +32,11 @@ namespace RA_FRAMEWORK
 		{
 			m_upCurrentScene->Update(deltaTime, totalTime);
 			m_upCurrentScene->GetEntityManager()->Update(deltaTime, totalTime);
-
 			ListOfEntities* list = m_upCurrentScene->GetEntityManager()->GetListOfEntities();
 			BehaviourManager::Update(list, deltaTime, totalTime);
-			GLRenderer::ClearScreen(Colour(0,0,0,1));
-			
+			GLRenderer::ClearScreen(Colour(0,0,0,1));	
 			for (int i = 0; i < list->size(); ++i)
 			{
-			
 				Entity* e = (*list)[i].get();
 				GLRenderer::Render(e);
 				//PRINTL("ENTITY: " + e->GetName() + " is at position: " + ToString(e->GetTransform()->GetWorldPosition()));

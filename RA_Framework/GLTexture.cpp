@@ -10,7 +10,6 @@ namespace RA_FRAMEWORK
 		GL_MIRROR_CLAMP_TO_EDGE
 	};
 
-
 	GLTexture::GLTexture(int w, int h, TextureFormat format, void* data, TextureFilterMode minFilterMode, TextureAddressMode magFilterMode, TextureAddressMode addressMode) :
 		Texture(GfxAPI::GL,0),
 		c_Width(w),
@@ -23,11 +22,8 @@ namespace RA_FRAMEWORK
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, static_cast<GLuint>(magFilterMode));
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, s_TextureAddresModeLookupTable[static_cast<GLuint>(addressMode)]);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, s_TextureAddresModeLookupTable[static_cast<GLuint>(addressMode)]);
-
 	}
-
 	//www.opengl-tutorial.org/intermediate-tutorials/tutorial-14-render-to-texture/
-
 	GLTexture::GLTexture(int w, int h, TextureFormat format, void* data):
 		Texture(GfxAPI::GL,0),
 		c_Width(w),

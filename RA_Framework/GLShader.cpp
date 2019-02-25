@@ -1,11 +1,8 @@
-#include "GLShader.h"
 #include <fstream>
-
-
+#include "GLShader.h"
 namespace RA_FRAMEWORK
 {
 	//#define PRINT_SHADERS
-
 	GLShader::GLShader(ShaderType type) :
 		Shader(GfxAPI::GL, type),
 		m_Id(0)
@@ -20,18 +17,14 @@ namespace RA_FRAMEWORK
 		}
 	}
 
-
 	GLShader::~GLShader()
 	{
-
 		glDeleteShader(m_Id);
 	}
 
 	bool GLShader::LoadFromFile(const std::string & path)
 	{
-
 		std::ifstream ifs(path);
-
 		if (!ifs.is_open()) return false;
 		std::string result;
 		char buffer;
@@ -39,7 +32,6 @@ namespace RA_FRAMEWORK
 		{
 			result += buffer;
 		}
-
 #ifdef PRINT_SHADERS
 		std::cout << result << std::endl;
 #endif
@@ -57,7 +49,6 @@ namespace RA_FRAMEWORK
 		{
 			GLint maxLength = 0;
 			glGetShaderiv(m_Id, GL_INFO_LOG_LENGTH, &maxLength);
-
 			// The maxLength includes the NULL character
 			std::vector<char> errorLog(maxLength);
 			glGetShaderInfoLog(m_Id, maxLength, &maxLength, &errorLog[0]);
@@ -87,7 +78,4 @@ namespace RA_FRAMEWORK
 	{
 		return m_Id;
 	}
-
-
-
 }

@@ -1,16 +1,12 @@
 #include "InputSystem.h"
-
 namespace RA_FRAMEWORK
 {
 	Vec2i InputSystem::s_MousePos{ Vec2i{ 0,0 } };
 	Vec2i InputSystem::s_PreviousMousePos{ Vec2i{ 0,0 } };
-
 	KeyboardCallback InputSystem::s_KeyboardCallback{ nullptr };
 	MouseMoveCallback InputSystem::s_MouseMoveCallback{ nullptr };;
 	MouseButtonUpCallback InputSystem::s_MouseButtonUpCallback{ nullptr };
 	MouseButtonDownCallback InputSystem::s_MouseButtonDownCallback{ nullptr };
-
-
 
 	void InputSystem::PropagateOnKeyDown(const int key)
 	{

@@ -24,9 +24,6 @@
     <ClCompile Include="WindowsApp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="KLMList.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="InputSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

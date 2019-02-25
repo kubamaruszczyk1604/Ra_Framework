@@ -1,7 +1,5 @@
 #pragma once
 #include "Vertex.h"
-
-
 namespace RA_FRAMEWORK
 {
 	enum class PrimitiveType
@@ -16,16 +14,14 @@ namespace RA_FRAMEWORK
 	class VBO
 	{
 	public:
-
 		VBO() = default;
-		virtual ~VBO() {}
 		VBO(const VBO&) = delete;
 		VBO& operator=(const VBO&) = delete;
-
+		virtual ~VBO() {}
+	public:
 		virtual bool Create(Vertex* vertices, int numVertices) = 0;
 		virtual void Draw(PrimitiveType primitiveType)const = 0;
 		virtual bool CreateIndexBuffer(unsigned * const indices, const unsigned numInidices) = 0;
 		virtual const std::vector<unsigned> const& GetIndices()const = 0;
 	};
-
 }

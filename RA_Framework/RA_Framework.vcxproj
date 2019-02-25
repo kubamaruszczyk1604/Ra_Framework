@@ -146,7 +146,6 @@
     <ClCompile Include="GLTexture.cpp" />
     <ClCompile Include="GLVBO.cpp" />
     <ClCompile Include="InputSystem.cpp" />
-    <ClCompile Include="KLMList.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Mesh.cpp" />

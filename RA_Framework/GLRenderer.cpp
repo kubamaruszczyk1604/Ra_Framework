@@ -5,12 +5,10 @@
 //#include <msclr\marshal_cppstd.h>
 //#include "ShaderVariableContainer.h"
 //#include "VariableStrings.cs"
-
 namespace RA_FRAMEWORK
 {
 	//using namespace msclr::interop;
 	//using namespace ShaderCreationTool;
-
 	bool GLRenderer::s_IsRunning{ false };
 	HWND GLRenderer::s_hWnd{ 0 };
 	HGLRC GLRenderer::s_hGLRC{ nullptr };
@@ -26,7 +24,6 @@ namespace RA_FRAMEWORK
 	bool GLRenderer::KLMSetPixelFormat(HDC hdc)
 	{
 		PIXELFORMATDESCRIPTOR pfd;
-
 		pfd.nSize = sizeof(PIXELFORMATDESCRIPTOR);
 		pfd.nVersion = 1;
 		pfd.dwFlags = PFD_DRAW_TO_WINDOW |
@@ -46,7 +43,6 @@ namespace RA_FRAMEWORK
 		pfd.iLayerType = PFD_MAIN_PLANE;
 		pfd.bReserved = 0;
 		pfd.dwLayerMask = pfd.dwVisibleMask = pfd.dwDamageMask = 0;
-		
 		// choose pixel format returns the number most similar pixel format available
 		int n = ChoosePixelFormat(hdc, &pfd);
 		// set pixel format returns whether it sucessfully set the pixel format
@@ -59,15 +55,11 @@ namespace RA_FRAMEWORK
 		s_ScreenHeight = height;
 		s_hWnd = handle;
 		if ((s_hDevCtx = GetDC(s_hWnd)) == NULL) return false;
-
 		// set the pixel format
 		if (!KLMSetPixelFormat(s_hDevCtx)) return false;
-
 		// Create context 
 		if ((s_hGLRC = wglCreateContext(s_hDevCtx)) == NULL) return false;
-
 		wglMakeCurrent(s_hDevCtx, s_hGLRC);
-		
 		// set defaults
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LEQUAL);
@@ -75,34 +67,26 @@ namespace RA_FRAMEWORK
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_MULTISAMPLE);
-		
 		glHint(GL_MULTISAMPLE_FILTER_HINT_NV, GL_NICEST);
-		
 		glViewport(0, 0, width, height);
-
 		s_IsRunning = true;
 		glewInit();
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		
 		return true;
 	}
 	
 	void GLRenderer::Render(Entity* entity)
 	{
-
 		Component* c;
         if (!entity->TryGetCachedModel(c))  return;
-
 		ModelComponent* mc = static_cast<ModelComponent*>(c);
 		Render(mc, s_CurrentCamera, entity->GetTransform(),entity->GetName());
-
 	}
 
 	void GLRenderer::Render(ModelComponent* model, Camera* camera, Transform* transform, const String& name)
 	{
 		Material* material = model->GetMaterial();
 		if (!camera) return;
-
 		Mat4 worldView;
 		//if (s_CurrentCamera->GetParent() == nullptr)
 		//{
@@ -114,12 +98,9 @@ namespace RA_FRAMEWORK
 			parent->CalculateTransform();
 			camera->SetTransformMatrix(parent->GetTransform()->GetWorldMat());
 			worldView = camera->GetViewMatrix() * transform->GetWorldMat();
-		//	std::cout << "dws" << std::endl;
-			
 		}
 		Mat4 MVP = camera->GetProjectionMatrix(s_ScreenWidth, s_ScreenHeight) * worldView;
 		material->Use();
-
 #ifdef ENABLE__uWORLD
 		material->GetShaderProgram()->SetMat4x4("uWORLD", transform->GetWorldMat());
 #endif // ENABLE__uWORLD
@@ -133,23 +114,17 @@ namespace RA_FRAMEWORK
 		material->GetShaderProgram()->SetMat4x4("uMVP", MVP);
 #endif //ENABLE__uMVP
 #ifdef ENABLE__uCameraPosition
-		material->GetShaderProgram()->SetVec3Float("uCameraPosition", Vec3(camera->GetTransformMatrix()*Vec4(0.0, 0.0, 0.0, 1.0)));
+		material->GetShaderProgram()->SetVec3Float("uCameraPosition", Vec3(camera->GetWorldMatrix()*Vec4(0.0, 0.0, 0.0, 1.0)));
 #endif //ENABLE__uCameraPosition
 #ifdef ENABLE__uTime
 		material->GetShaderProgram()->SetFloat("uTime", s_TotalTime);
 #endif//ENABLE__uTime
-
 		model->GetMesh()->GetVBO()->Draw(PrimitiveType::TRIANGLES);
 	}
 
-
-
-	
 	void GLRenderer::Update(const float deltaTime, const float totalTime)
 	{
 		s_TotalTime = totalTime;
-		//PRINTL("TotalTime: " + ToString(dummyTime));
-		
 	}
 
 	void GLRenderer::ShutDown()
@@ -183,15 +158,12 @@ namespace RA_FRAMEWORK
 		case(CullMode::FRONT_AND_BACK):
 			s_CullMode = GL_FRONT_AND_BACK;
 			break;
-
 		case(CullMode::FRONT):
 			s_CullMode = GL_FRONT;
 			break;
-
 		case(CullMode::BACK):
 			s_CullMode = GL_BACK;
 			break;
-
 		default:
 			break;
 		}
@@ -210,16 +182,11 @@ namespace RA_FRAMEWORK
 			break;
 		default:
 			break;
-
 		}
-
-		
 	}
 
 	void GLRenderer::SetActiveCamera(Camera * camera)
 	{
 		s_CurrentCamera = camera;
 	}
-
-
 }

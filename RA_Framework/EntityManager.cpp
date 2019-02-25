@@ -1,19 +1,9 @@
 #include "EntityManager.h"
-
-
 namespace RA_FRAMEWORK
 {
-	//#include "BehaviourManager.h"
+	EntityManager::EntityManager(){}
 
-
-
-	EntityManager::EntityManager()
-	{
-	}
-
-	EntityManager::~EntityManager()
-	{
-	}
+	EntityManager::~EntityManager(){}
 
 	void EntityManager::AddEntity(EntityUnique entity)
 	{
@@ -39,7 +29,6 @@ namespace RA_FRAMEWORK
 			if (m_pEntities[i]->ShouldDelete())continue;
 			if (m_pEntities[i]->GetName() == name)
 			{
-
 				return m_pEntities[i].get();
 			}
 		}
@@ -48,7 +37,6 @@ namespace RA_FRAMEWORK
 
 	void EntityManager::Update(float const deltaTime, float const totalTime)
 	{
-
 		for (int i = 0; i < m_pEntities.size(); ++i)
 		{
 			m_pEntities[i]->CalculateTransform();
@@ -59,10 +47,6 @@ namespace RA_FRAMEWORK
 				RemoveFromVecByValue(m_pEntities, m_pEntities[i]);
 			}
 		}
-
-
-		//PRINTL("UPDATING X FORMS..");
-
 	}
 
 	void EntityManager::RemoveAllEntities()

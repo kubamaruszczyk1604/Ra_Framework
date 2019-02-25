@@ -1,28 +1,12 @@
 #include "Mesh.h"
-
-
-//#include "Renderer.h"
-
 namespace RA_FRAMEWORK
 {
-
-	Mesh::Mesh() :m_BuffersCreated{ false }
-	{
-		//if (Renderer::GetAPI() == GfxAPI::D3D11)
-		//{
-		//	m_pVBO = new D3D11VBO();
-		//}
-		//else if (Renderer::GetAPI() == GfxAPI::GL)
-		//{
-			m_pVBO = new GLVBO();
-		//}
-	}
+	Mesh::Mesh() :m_BuffersCreated{ false }, m_pVBO{new GLVBO()}{}
 
 	Mesh::~Mesh()
 	{
 		delete m_pVBO;
 	}
-
 
 	bool Mesh::AddVertex(const Vertex & v)
 	{
@@ -47,5 +31,4 @@ namespace RA_FRAMEWORK
 		m_pVBO->CreateIndexBuffer(&indices[0], indices.size());
 		return m_pVBO;
 	}
-
 }

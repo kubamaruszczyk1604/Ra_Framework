@@ -11,12 +11,13 @@ namespace RA_FRAMEWORK
 		Material* p_Material;
 	public:
 		ModelComponent(const std::string& id, Mesh* mesh, Material* material);
-		ModelComponent() = delete;
 		ModelComponent operator=(const ModelComponent&) = delete;
 		ModelComponent(const ModelComponent&) = delete;
+		ModelComponent() = delete;
+	public:
 		Mesh* GetMesh();
 		Material* GetMaterial();
+	public:
 		virtual ~ModelComponent();
 	};
-
 }

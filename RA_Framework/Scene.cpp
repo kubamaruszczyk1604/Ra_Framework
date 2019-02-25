@@ -1,12 +1,7 @@
 #include "Scene.h"
-
-
 namespace RA_FRAMEWORK
 {
-
-	Scene::Scene() :m_pEntityManager{ new EntityManager() }
-	{
-	}
+	Scene::Scene() :m_pEntityManager{ new EntityManager() }{}
 
 	Scene::~Scene()
 	{
@@ -30,19 +25,8 @@ namespace RA_FRAMEWORK
 		return m_pEntityManager->FindEntity(name);
 	}
 
-	void Scene::OnKeyPressed(const int key, const KeyState state)
-	{
-	}
-
-	void Scene::OnMouseMove(const int x, const int y)
-	{
-	}
-
-	void Scene::OnMouseButtonUp(MouseButton const button)
-	{
-	}
-
-	void Scene::OnMouseButtonDown(MouseButton const button)
-	{
-	}
+	void Scene::OnKeyPressed(const int key, const KeyState state) {}
+	void Scene::OnMouseMove(const int x, const int y){}
+	void Scene::OnMouseButtonUp(MouseButton const button){}
+	void Scene::OnMouseButtonDown(MouseButton const button){}
 }

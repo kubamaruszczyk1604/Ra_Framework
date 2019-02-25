@@ -13,18 +13,12 @@ namespace RA_FRAMEWORK
 		m_FOV(fovDeg),
 		m_Near(fnear),
 		m_Far(ffar),
-		m_Active(true)
+		m_Active(true){}
 
-	{
-	}
-
-	Camera::~Camera()
-	{
-	}
+	Camera::~Camera(){}
 
 	const glm::mat4 & Camera::GetProjectionMatrix(const int & scrWidth, const int & scrHeight)
 	{
-
 		if (m_ProjectionType == ProjectionType::PERSPECTIVE)
 		{
 			m_ProjectionMat = glm::perspectiveFovLH(glm::radians(m_FOV),

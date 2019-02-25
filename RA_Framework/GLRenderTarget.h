@@ -1,11 +1,7 @@
 #pragma once
-
-#include "RAUtils.h"
 #include "GLTexture.h"
-
 namespace RA_FRAMEWORK
 {
-
 	class GLRenderTarget
 	{
 	private:
@@ -15,9 +11,12 @@ namespace RA_FRAMEWORK
 		bool m_DepthFlag;
 	public:
 		static void SetScreen(int w, int h);
-		GLRenderTarget(GLTexture* destination, bool depthOn);
-		void Bind();
+	public:
+		explicit GLRenderTarget(GLTexture* destination, bool depthOn);
+		GLRenderTarget(const GLRenderTarget&) = delete;
+		GLRenderTarget& operator=(const GLRenderTarget&) = delete;
 		~GLRenderTarget();
+	public:
+		void Bind();	
 	};
-
 }

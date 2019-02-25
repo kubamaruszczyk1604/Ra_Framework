@@ -1,13 +1,8 @@
 #include "Material.h"
-
 namespace RA_FRAMEWORK
 {
-
 	Material::Material(ShaderProgram* shaderProg):
-		p_Shader(shaderProg)
-
-	{
-	}
+		p_Shader(shaderProg){}
 
 	Material::~Material()
 	{
@@ -27,7 +22,6 @@ namespace RA_FRAMEWORK
 		{
 			delete m_V4IntList[i];
 		}
-
 		for (int i = 0; i < m_FloatList.Count(); ++i)
 		{
 			delete m_FloatList[i];
@@ -44,7 +38,6 @@ namespace RA_FRAMEWORK
 		{
 			delete m_V4FloatList[i];
 		}
-
 		for (int i = 0; i < m_Mat2List.Count(); ++i)
 		{
 			delete m_Mat2List[i];
@@ -57,7 +50,6 @@ namespace RA_FRAMEWORK
 		{
 			delete m_Mat4List[i];
 		}
-
 		for (int i = 0; i < m_Texture2DList.Count(); ++i)
 		{
 			delete m_Texture2DList[i];
@@ -88,7 +80,6 @@ namespace RA_FRAMEWORK
 			auto temp = m_V4IntList[i];
 			p_Shader->SetVec4Int(temp->GetName(), temp->GetData());
 		}
-
 		for (int i = 0; i < m_FloatList.Count(); ++i)
 		{
 			auto temp = m_FloatList[i];
@@ -109,7 +100,6 @@ namespace RA_FRAMEWORK
 			auto temp = m_V4FloatList[i];
 			p_Shader->SetVec4Float(temp->GetName(), temp->GetData());
 		}
-
 		for (int i = 0; i < m_Mat2List.Count(); ++i)
 		{
 			auto temp = m_Mat2List[i];
@@ -125,7 +115,6 @@ namespace RA_FRAMEWORK
 			auto temp = m_Mat4List[i];
 			p_Shader->SetMat4x4(temp->GetName(), temp->GetData());
 		}
-
 		for (int i = 0; i < m_Texture2DList.Count(); ++i)
 		{
 			auto temp = m_Texture2DList[i];
@@ -133,7 +122,6 @@ namespace RA_FRAMEWORK
 			
 		}
 	}
-
 	//ShaderVariable* Material::FindVariable(ShaderVariableType type, const String& name)
 	//{
 	//	ShaderVariable** sw = m_Variables.Find([name, type](ShaderVariable* const& Object) { return ((Object->GetName() == name) && (Object->GetType() == type)); });

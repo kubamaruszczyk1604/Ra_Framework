@@ -1,6 +1,2 @@
 #include "ShaderVariable.h"
-
-namespace RA_FRAMEWORK
-{
-
-}
+namespace RA_FRAMEWORK{}

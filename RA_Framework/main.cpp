@@ -4,6 +4,7 @@
 #include "ModelComponent.h"
 #include "GLShaderProgram.h"
 #include "GLRenderer.h"
+
 struct AtExit
 {
 	~AtExit()
@@ -18,9 +19,7 @@ class TestBehaviour : public BehaviourComponent
 {
 public:
 	TestBehaviour():BehaviourComponent("testB") {}
-
 	~TestBehaviour() {}
-
 	void OnStart()
 	{
 		std::cout << "Behaviour wystartowal" << std::endl;
@@ -28,7 +27,6 @@ public:
 	void Update(float deltaTime, float totalTime)
 	{
 		GetParent()->GetTransform()->SetRotationX(totalTime*3.0);
-		//std::cout << "Behaviour update" << std::endl;
 	}
 	void OnExit()
 	{
@@ -120,11 +118,8 @@ class ExampleScene2 :public Scene
 {
 
 public:
-	ExampleScene2() :Scene()
-	{
+	ExampleScene2() :Scene() {}
 
-
-	}
 	~ExampleScene2() 
 	{
 		delete m_pQuadMesh;
@@ -142,18 +137,15 @@ public:
 	GLShaderProgram* m_pShaderProg;
 	Camera* m_pCamera;
 	Entity* e1;
+
 	void OnStart()
 	{
 		PRINTL("OnStart()");
-		
 
 		// MESH
-
 		m_pQuadMesh = new Mesh();
-
 		float size{ 5.5f };
 		float fbDist = 0.01f;
-
 		//front
 		m_pQuadMesh->AddVertex(Vertex(-size, -size, -fbDist, 0, 0, -1, 0, 0));
 		m_pQuadMesh->AddVertex(Vertex(size, -size, -fbDist, 0, 0, -1, 1, 0));
@@ -169,7 +161,6 @@ public:
 		indices.push_back(3);
 
 		m_pQuadMesh->CreateVertexBuffer(indices);
-
 
 		m_pVertexShader = new GLShader(ShaderType::VERTEX);
 		m_pVertexShader->LoadFromFile("C:/Zapas/glVert.txt");
@@ -194,7 +185,6 @@ public:
 	    e1->AddComponent(std::unique_ptr<ModelComponent>(m_pModel));
 		AddEntity(e1);
 
-
 		ModelComponent* m_pModel2 = new ModelComponent("model2", m_pQuadMesh, m_pMaterial);
 		Entity* e2 = new Entity("Test 2");
 		e2->AddComponent(std::unique_ptr<TestBehaviour>(new TestBehaviour()));
@@ -217,7 +207,6 @@ public:
 
 	void Update(float deltaTime, float totalTime = 0)
 	{
-		//PRINTL("Update(" + ToString(deltaTime) + ", " + ToString(totalTime) + ")");
 		e1->GetTransform()->SetRotationZ(sin(totalTime));
 	}
 
@@ -231,22 +220,16 @@ public:
 	//InputCallbacks
 	void OnKeyPressed(const int key, const KeyState state)
 	{
-		
-
 	}
 	void OnMouseMove(const int x, const int y)
 	{
-		
 	}
 	void OnMouseButtonUp(MouseButton const button)
 	{
-		
 	}
 	void OnMouseButtonDown(MouseButton const button)
 	{
-		
 	}
-
 };
 
 int main()

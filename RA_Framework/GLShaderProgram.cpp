@@ -1,6 +1,4 @@
 #include "GLShaderProgram.h"
-
-
 namespace RA_FRAMEWORK
 {
 	GLShaderProgram::GLShaderProgram(GLShader * vertexShader, GLShader * fragmentShader) :
@@ -10,7 +8,6 @@ namespace RA_FRAMEWORK
 	{
 		Create();
 	}
-
 
 	GLShaderProgram::~GLShaderProgram()
 	{

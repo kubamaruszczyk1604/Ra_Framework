@@ -10,18 +10,14 @@ namespace RA_FRAMEWORK
 		PERSPECTIVE = 1
 	};
 
-
 	class Entity;
 	class Camera : public Component
 	{
-
 	private:
 		static glm::mat4 s_IdentityMat;
-
 		glm::mat4 m_ProjectionMat;
 		glm::mat4 m_TransformMat;
 		glm::mat4 m_ViewMat;
-		
 		glm::vec3 m_NoParrentPos;
 		glm::vec3 m_NoParrentRotation;
 		float m_FOV;
@@ -29,33 +25,28 @@ namespace RA_FRAMEWORK
 		float m_Far;
 		ProjectionType m_ProjectionType;
 		bool m_Active;
-
 	public:
 		Camera(const ProjectionType& projection, const float& fovDeg, const float& fnear, const float& ffar);
-		virtual ~Camera();
-
 		Camera(const Camera&) = delete;
 		Camera &operator=(const Camera&) = delete;
-
+		virtual ~Camera();
 	public:
-
 		float GetFOV()const { return m_FOV; }
 		float GetNear()const { return  m_Near; }
 		float GetFar()const { return m_Far; }
 		ProjectionType GetProjectionType()const { return m_ProjectionType; }
+		const Vec4& GetWorldPosition()const { return m_TransformMat * Vec4(0, 0, 0, 1); }
+		const Vec3& GetLocalPosition()const { return m_NoParrentPos; }
+		const Vec3& GetLocalRotation()const { return m_NoParrentRotation; }
+		const Mat4& GetWorldMatrix()const { return m_TransformMat; }
+		const Mat4& GetViewMatrix()const { return m_ViewMat; }
+		const Mat4& GetProjectionMatrix(const int& scrWidth, const int& scrHeight);
+
 		void SetActive(bool active) { m_Active = active; }
 		bool isActive()const { return  m_Active; }
-
-		Vec4 GetPosition() const { return m_TransformMat * Vec4(0, 0, 0, 1); }
-
-		const glm::mat4& GetProjectionMatrix(const int& scrWidth, const int& scrHeight);
-		const glm::mat4& SetTransformMatrix(const Vec3& translation, const Vec3& rotation);
+		const Mat4& SetTransformMatrix(const Vec3& translation, const Vec3& rotation);
 		void SetTransformMatrix(const glm::mat4& mat);
-		const glm::mat4& GetViewMatrix()const { return m_ViewMat; }
-		const glm::mat4& GetTransformMatrix()const { return m_TransformMat; }
-
-		inline Vec3 GetLocalPosition() const { return m_NoParrentPos; }
-		inline Vec3 GetLocalRotation() const { return m_NoParrentRotation; }
+		
 
 	};
 }
