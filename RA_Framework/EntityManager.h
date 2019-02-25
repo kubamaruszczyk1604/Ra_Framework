@@ -10,9 +10,9 @@ namespace RA_FRAMEWORK
 		std::vector<EntityUnique> m_pEntities;
 	public:
 		EntityManager();
+		~EntityManager();
 		EntityManager(const EntityManager&) = delete;
 		EntityManager& operator=(const EntityManager&) = delete;
-		~EntityManager();
 	public:
 		void      AddEntity(EntityUnique entity);
 		void      RemoveEntity(const std::string& id);

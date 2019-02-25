@@ -1,6 +1,4 @@
 #include "Entity.h"
-
-
 namespace RA_FRAMEWORK
 {
 	Mat4 Entity::s_Identity{ Mat4(1.0) };
@@ -8,11 +6,9 @@ namespace RA_FRAMEWORK
 		m_ID{ ID },
 		m_pParent{ nullptr },
 		m_ComponentMask{0},
-		m_pCachedComponent_Model{nullptr}
-	{}
+		m_pCachedComponent_Model{nullptr}{}
 
-	Entity::~Entity()
-	{}
+	Entity::~Entity(){}
 
 	void Entity::Delete()
 	{
@@ -92,7 +88,7 @@ namespace RA_FRAMEWORK
 		return nullptr;
 	}
 
-	bool Entity::TryGetCachedModel(Component *& outModel)
+	bool Entity::TryGetCachedModel(Component *& outModel)const
 	{
 		if (!m_pCachedComponent_Model) { return false; }
 		outModel = m_pCachedComponent_Model;
@@ -115,6 +111,5 @@ namespace RA_FRAMEWORK
 		{
 			m_pChildren[i]->GetTransform()->SetParentTransformStack(m_Transform.GetWorldMat());
 		}
-
 	}
 }

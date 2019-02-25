@@ -1,5 +1,4 @@
 #include "Camera.h"
-
 namespace RA_FRAMEWORK
 {
 	Mat4 Camera::s_IdentityMat{ Mat4(1.0) };

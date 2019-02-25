@@ -2,7 +2,6 @@
 namespace RA_FRAMEWORK
 {
 	EntityManager::EntityManager(){}
-
 	EntityManager::~EntityManager(){}
 
 	void EntityManager::AddEntity(EntityUnique entity)

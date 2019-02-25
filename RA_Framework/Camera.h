@@ -1,7 +1,6 @@
 #pragma once
 #include "RAUtils.h"
 #include "Component.h"
-
 namespace RA_FRAMEWORK
 {
 	enum class ProjectionType
@@ -46,7 +45,5 @@ namespace RA_FRAMEWORK
 		bool isActive()const { return  m_Active; }
 		const Mat4& SetTransformMatrix(const Vec3& translation, const Vec3& rotation);
 		void SetTransformMatrix(const glm::mat4& mat);
-		
-
 	};
 }
