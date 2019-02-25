@@ -8,7 +8,7 @@
 #include "GLM\GLM.hpp"
 #include "GLM\GTC\matrix_transform.hpp"
 #include "GLM\GTC\type_ptr.hpp"
-#include <GLM\GTC\matrix_transform.hpp>
+//#include <GLM\GTC\matrix_transform.hpp>
 
 
 #include <unordered_map>
@@ -25,17 +25,16 @@
 //#include  <glew.h>  
 //OPENGL HEADERS
 #include "GL\glew.h"
-#include "GL\freeglut.h"
-
+//#include "GL\freeglut.h"
+#include <windows.h>
 
 #pragma comment(lib, "opengl32.lib")
-#pragma comment(lib, "glu32.lib")
-#pragma comment(lib, "freeglut.lib")
+//#pragma comment(lib, "glu32.lib")
+//#pragma comment(lib, "freeglut.lib")
 #pragma comment(lib, "glew32.lib")
 
 namespace RA_FRAMEWORK
 {
-
 	template<class T_KEY, class T_VAL>
 	bool QueryMap(T_KEY key, T_VAL& output, const std::unordered_map<T_KEY, T_VAL>& map)
 	{
@@ -45,7 +44,6 @@ namespace RA_FRAMEWORK
 			output = itemPair->second;
 			return true;
 		}
-
 		return false;
 	};
 
@@ -55,12 +53,10 @@ namespace RA_FRAMEWORK
 		vec.erase(std::remove(vec.begin(), vec.end(), value), vec.end());
 	}
 
-
 	inline float RandomRange(float low, float high)
 	{
 		return  low + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (high - low)));
 	}
-
 
 	inline bool IsApproxEqual(const float& a, const float& b, float epsilon)
 	{
