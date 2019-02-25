@@ -8,7 +8,6 @@ namespace RA_FRAMEWORK
 		ORTHO = 0,
 		PERSPECTIVE = 1
 	};
-
 	class Entity;
 	class Camera : public Component
 	{

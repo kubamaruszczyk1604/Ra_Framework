@@ -9,7 +9,7 @@
 #include <vector>
 #include <algorithm>
 #include <random>
-#include "RATypes.h";
+#include "RATypes.h"
 namespace RA_FRAMEWORK
 {
 	template<class T>
@@ -102,7 +102,7 @@ namespace RA_FRAMEWORK
 			return m_Data[index];
 		}
 		void Clear() noexcept { m_Data.clear(); }
-		unsigned Count()const noexcept { return m_Data.size(); }
+		unsigned long long Count()const noexcept { return m_Data.size(); }
 		//Requires << operator to be overriden
 		void ConsoleDump_DEBUG() noexcept
 		{

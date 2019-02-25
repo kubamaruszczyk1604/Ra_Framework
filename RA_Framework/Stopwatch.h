@@ -1,5 +1,5 @@
-#pragma once
 /*Simple stopwatch based on chrono library by Kuba Maruszczyk*/
+#pragma once
 #include <chrono>
 #include <ctime>
 #include <ratio>

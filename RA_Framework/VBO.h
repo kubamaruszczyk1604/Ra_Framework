@@ -22,6 +22,6 @@ namespace RA_FRAMEWORK
 		virtual bool Create(Vertex* vertices, int numVertices) = 0;
 		virtual void Draw(PrimitiveType primitiveType)const = 0;
 		virtual bool CreateIndexBuffer(unsigned * const indices, const unsigned numInidices) = 0;
-		virtual const std::vector<unsigned> const& GetIndices()const = 0;
+		virtual const std::vector<unsigned>& GetIndices()const = 0;
 	};
 }

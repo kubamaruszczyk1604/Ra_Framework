@@ -4,7 +4,6 @@
 #include "GLRenderer.h"
 
 using namespace RA_FRAMEWORK;
-
 int WindowsApp::s_ClientWidth{ 800 };
 int WindowsApp::s_ClientHeight{ 600 };
 bool WindowsApp::s_isFullScreen{ false };
@@ -16,7 +15,6 @@ std::string WindowsApp::s_AppTitle{ "no title" };
 HWND WindowsApp::s_Hwnd{ nullptr };
 bool WindowsApp::s_ExitFlag{ false };
 float WindowsApp::s_TimeScale{ 1.0f };
-
 Stopwatch WindowsApp::s_GlobalTimer;
 Stopwatch WindowsApp::s_FrameTimer;
 
@@ -28,7 +26,6 @@ bool WindowsApp::Create(int const width, int const height, const std::string& ti
 
 	WNDCLASSEX wc;
 	ZeroMemory(&wc, sizeof(WNDCLASSEX));
-
 	wc.cbSize = sizeof(WNDCLASSEX);
 	wc.style = CS_HREDRAW | CS_VREDRAW;
 	wc.lpfnWndProc = MsgProc;
@@ -65,7 +62,6 @@ bool WindowsApp::Create(int const width, int const height, const std::string& ti
 		::GetModuleHandle(nullptr),
 		nullptr
 	);
-
 	if (!s_Hwnd)
 	{
 		::MessageBox(nullptr, "Failed to create Window", "Error", MB_OK);
@@ -83,14 +79,9 @@ bool WindowsApp::Create(int const width, int const height, const std::string& ti
 int WindowsApp::Run()
 {
 	MSG msg = { nullptr };
-	// Begin timers
 	s_GlobalTimer.Start();
-	//PRINTL("GLOBAL TIMER START..");
-
 	while (!s_ExitFlag && msg.message != WM_QUIT)
 	{
-
-
 		//Handle input from system
 		if (PeekMessage(&msg, NULL, NULL, NULL, PM_REMOVE))
 		{
@@ -99,26 +90,18 @@ int WindowsApp::Run()
 		}
 		else
 		{
-
 			s_FrameTimer.Start();
 			//Updates scene and then renderer
 			SceneManager::Update(s_FrameTimer.ElapsedTime()* s_TimeScale, s_GlobalTimer.ElapsedTime() * s_TimeScale);
-
-			//DXRenderer::SwapBuffers();
-			
 			s_FrameTimer.Stop();
 		}
-
 	}
-
 	if (s_ExitFlag)
 	{
 		msg.wParam = 0;
 	}
-
 	// Shut down the scene manager
 	SceneManager::ShutDown();
-
 	return static_cast<int>(msg.wParam);
 }
 
@@ -129,10 +112,8 @@ LRESULT WindowsApp::MsgProc(HWND const hWnd, UINT const msg, WPARAM const wParam
 	{
 	return 0;
 	}*/
-
 	switch (msg)
 	{
-
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		return 0;
@@ -163,11 +144,9 @@ LRESULT WindowsApp::MsgProc(HWND const hWnd, UINT const msg, WPARAM const wParam
 		break;
 	case WM_SIZE:
 		break;
-
 	default:
 		return DefWindowProc(hWnd, msg, wParam, lParam);
 	}
-
 	return LRESULT();
 }
 
@@ -181,20 +160,20 @@ void WindowsApp::OnResize(HWND const hWnd) {
 	// store windowed coords loally (if not fullscreen)
 	if (!IsFullscreen) ::GetWindowRect(s_Hwnd, &s_WindowedCoords);
 	// Window size is different? true = SIZE (not a MOVE)
-	//DXRenderer::Resize(hWnd, (r.right - r.left), (r.bottom - r.top));
+	//TODO: GLRenderer::Resize(hWnd, (r.right - r.left), (r.bottom - r.top));
 }
 
 void WindowsApp::SetFullscreenMode(bool fullscreen)
 {
-
 	// Get screen resolution for fullscreen
 	const int FS_x = GetSystemMetrics(SM_CXSCREEN);
 	const int FS_y = GetSystemMetrics(SM_CYSCREEN);
 
 	// Check that we need to change screen mode from current mode
-	if (fullscreen != s_isFullScreen) {
-
-		if (fullscreen) {
+	if (fullscreen != s_isFullScreen) 
+	{
+		if (fullscreen) 
+		{
 			// go fullscreen (set the window style)
 			::SetWindowLong(s_Hwnd, GWL_STYLE, s_WindowStyle_FS);
 			::SetWindowPos(
@@ -209,7 +188,8 @@ void WindowsApp::SetFullscreenMode(bool fullscreen)
 			s_isFullScreen = true;
 			OnResize(s_Hwnd);
 		}
-		else {
+		else 
+		{
 			// return back from fullscreen (set window style)
 			::SetWindowLong(s_Hwnd, GWL_STYLE, s_WindowStyle_W);
 			::SetWindowPos(
@@ -221,10 +201,8 @@ void WindowsApp::SetFullscreenMode(bool fullscreen)
 				s_WindowedCoords.bottom - s_WindowedCoords.top,
 				SWP_SHOWWINDOW
 			);
-			//
 			s_isFullScreen = false;
 			OnResize(s_Hwnd);
 		}
-
 	}
 }

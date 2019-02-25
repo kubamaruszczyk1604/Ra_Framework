@@ -28,7 +28,7 @@ namespace RA_FRAMEWORK
 		virtual ~Material();
 	public:
 		void Use();
-		ShaderProgram* GetShaderProgram() { return p_Shader; }
+		ShaderProgram* GetShaderProgram()							   { return p_Shader; }
 		void AddShaderVariable(const String& name, int value)		   { m_IntList.Add(new ShaderVariable<int>(name, value));}
 		void AddShaderVariable(const String& name, const Vec2i& value) { m_V2IntList.Add(new ShaderVariable<Vec2i>(name, value));}
 		void AddShaderVariable(const String& name, const Vec3i& value) { m_V3IntList.Add(new ShaderVariable<Vec3i>(name, value));}

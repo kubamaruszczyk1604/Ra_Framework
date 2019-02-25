@@ -26,7 +26,7 @@ public:
 	}
 	void Update(float deltaTime, float totalTime)
 	{
-		GetParent()->GetTransform()->SetRotationX(totalTime*3.0);
+		GetParent()->GetTransform()->SetRotationX(totalTime*3.0f);
 	}
 	void OnExit()
 	{
@@ -189,19 +189,18 @@ public:
 		Entity* e2 = new Entity("Test 2");
 		e2->AddComponent(std::unique_ptr<TestBehaviour>(new TestBehaviour()));
 		e2->AddComponent(std::unique_ptr<ModelComponent>(m_pModel2));
-		e2->GetTransform()->SetScale(0.3, 0.3, 1);
-		e2->GetTransform()->SetPosition(-8, 0, 0);
+		e2->GetTransform()->SetScale(0.3f, 0.3f, 1.0f);
+		e2->GetTransform()->SetPosition(-8.0f, 0.0f, 0.0f);
 		AddEntity(e2);
 		e1->AddChild(e2);
 
 		Entity* eCam = new Entity("Camera");
-		m_pCamera = new Camera(ProjectionType::PERSPECTIVE, 60.0f, 0.1, 1000.0);
+		m_pCamera = new Camera(ProjectionType::PERSPECTIVE, 60.0f, 0.1f, 1000.0f);
 		GLRenderer::SetActiveCamera(m_pCamera);
 		eCam->AddComponent(std::unique_ptr<Camera>(m_pCamera));
-		eCam->GetTransform()->SetPosition(Vec3(-6.8, 0, -24.98));
+		eCam->GetTransform()->SetPosition(Vec3(-6.8f, 0.0f, -24.98f));
 		eCam->CalculateTransform();
 		AddEntity(eCam);
-
 		//GLRenderer::SetFillMode(FillMode::WIREFRAME);
 	}
 

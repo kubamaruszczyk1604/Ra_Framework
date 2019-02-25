@@ -1,7 +1,7 @@
 #include "GLVBO.h"
 namespace RA_FRAMEWORK
 {
-	const std::array<int, 5> const GLVBO::LookupTableTopologyType =
+	const std::array<int, 5> GLVBO::LookupTableTopologyType =
 	{
 		GL_POINTS,
 		GL_LINES,
@@ -18,7 +18,7 @@ namespace RA_FRAMEWORK
 
 	GLVBO::~GLVBO(){}
 
-	bool GLVBO::Create(Vertex * vertices, int numVertices)
+	bool GLVBO::Create(Vertex * vertices,const int numVertices)
 	{
 		//VBO
 		glGenBuffers(2, ptr_VBO);// two buffers: [0] - for vertex buffer, [1] - for index buffer.
@@ -58,7 +58,7 @@ namespace RA_FRAMEWORK
 	bool GLVBO::CreateIndexBuffer(unsigned * const indices, const unsigned numInidices)
 	{
 		if (numInidices < 1) return false;
-		for (int i = 0; i < numInidices; ++i)
+		for (unsigned i = 0; i < numInidices; ++i)
 		{
 			m_Indices.push_back(indices[i]);
 		}

@@ -1,13 +1,13 @@
 #pragma once
 #include "VBO.h"
 #include "RAUtils.h"
-#include<array>
+#include <array>
 namespace RA_FRAMEWORK
 {
 	class GLVBO : public VBO
 	{
 	private:
-		static const std::array<int, 5> const LookupTableTopologyType;
+		static const std::array<int, 5> LookupTableTopologyType;
 		GLuint ptr_VBO[2];
 		GLuint ptr_VAO;
 		int m_VertexCount;
@@ -20,9 +20,9 @@ namespace RA_FRAMEWORK
 		GLVBO& operator=(const GLVBO&) = delete;
 		~GLVBO();
 	public:
-		bool Create(Vertex* vertices, int numVertices);
+		bool Create(Vertex* vertices, const int numVertices);
 		void Draw(PrimitiveType primitiveType) const;
 		bool CreateIndexBuffer(unsigned * const indices, const unsigned numInidices);
-		const std::vector<unsigned> const& GetIndices()const { return m_Indices; };
+		const std::vector<unsigned>& GetIndices()const { return m_Indices; };
 	};
 }

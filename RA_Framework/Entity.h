@@ -38,7 +38,7 @@ namespace RA_FRAMEWORK
 		void SetParent(Entity* const entity)	 { m_pParent = entity; }	
 		Entity* GetParent() const	 			 { return m_pParent; }
 		const std::string& GetName() const		 { return m_ID; }
-		int GetComponentCount() const			 { return m_pComponents.Count(); }
+		unsigned long long GetComponentCount() const			 { return m_pComponents.Count(); }
 		Component* GetComponent(int const index) { m_pComponents[index]; }
 		Transform* GetTransform()     	 { return &m_Transform; }		
 	};
