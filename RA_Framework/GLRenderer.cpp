@@ -118,7 +118,7 @@ namespace RA_FRAMEWORK
 #endif //ENABLE__uCameraPosition
 #ifdef ENABLE__uTime
 		material->GetShaderProgram()->SetFloat("uTime", s_TotalTime);
-#endif//ENABLE__uTime
+#endif//ENABLE__uTime 
 		model->GetMesh()->GetVBO()->Draw(PrimitiveType::TRIANGLES);
 	}
 
