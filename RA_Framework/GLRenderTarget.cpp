@@ -7,9 +7,9 @@ namespace RA_FRAMEWORK
 		glViewport(0, 0, w, h);
 	}
 
-	GLRenderTarget::GLRenderTarget(GLTexture* destination, bool depthOn):
+	GLRenderTarget::GLRenderTarget(GLTexture* destination):
 		m_TargetTex(destination),
-		m_DepthFlag(depthOn)
+		m_DepthFlag(0)
 	{
 		glGenFramebuffers(1, &m_Fbo);
 		glBindFramebuffer(GL_FRAMEBUFFER, m_Fbo);

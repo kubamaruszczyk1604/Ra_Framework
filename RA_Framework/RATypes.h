@@ -10,8 +10,6 @@
 #include "GLM\GTC\type_ptr.hpp"
 #include <GLM\GTC\matrix_transform.hpp>
 
-
-
 namespace RA_FRAMEWORK
 {
 	using RAbyte = char;
@@ -44,7 +42,18 @@ namespace RA_FRAMEWORK
 	class Entity;
 	using EntityUnique = std::unique_ptr<Entity>;
 	using ListOfEntities = std::vector<EntityUnique>;
+	using RENDER_MASK = unsigned;
+	enum  RENDER_MASK_ELEMENT
+	{
+		RENDERABLE					= 1,
+		LIGHT_RECEIVER				= 1 << 1,
+		REFLECTION_RECEIVER			= 1 << 2,
+		SHADOW_RECEIVER				= 1 << 3,
+		REFLECTION_CASTER			= 1 << 4,
+		SHADOW_CASTER				= 1 << 5,
+		UI							= 1 << 6
 
+	};
 	enum class GfxAPI
 	{
 		D3D11 = 0,

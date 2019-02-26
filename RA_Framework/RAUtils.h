@@ -162,14 +162,75 @@ namespace RA_FRAMEWORK
 		return glm::rotate(matrix, degrees, Vec3(0, 0, 1));
 	}
 
-	inline Vec3 LerpVector(const Vec3& a, const Vec3& b, float speed)
+	inline float Lerp(const float a, const float b, const float t)
 	{
-		Vec3 vec = (b - a);
-		glm::normalize(vec);
-		return (a + (vec*speed));
+		return a * (1.0f - t) + b * t;
 	}
 
+	inline Vec2 Lerp(const Vec2& a, const Vec2& b, const float t)
+	{
+		return a * (1.0f - t) + b * t;
+	}
 
-	
+	inline Vec3 Lerp(const Vec3& a, const Vec3& b,const float t)
+	{
+		return a * (1.0f - t) + b * t;
+	}
 
+	inline Vec4 Lerp(const Vec4& a, const Vec4& b, float t)
+	{
+		return a * (1.0f - t) + b * t;
+	}
+
+	inline void AddToMask(RENDER_MASK& mask, RENDER_MASK_ELEMENT element)
+	{
+		mask |= element;
+	}
+
+	inline void RemoveFromMask(RENDER_MASK& mask, RENDER_MASK_ELEMENT element)
+	{
+		mask &= (~element);
+	}
+
+	inline bool CheckMask(RENDER_MASK& mask, RENDER_MASK_ELEMENT element)
+	{
+		return (bool)(mask&element);
+	}
+
+	inline void Dec2Bin(unsigned mask)
+	{
+		String s;
+		while (mask > 0)
+		{
+			s += " " + std::to_string(mask % 2);
+			mask /= 2;
+		}
+		std::reverse(s.begin(), s.end());
+		std::cout << s << std::endl;
+	}
+
+	inline void PrintMask(unsigned mask, unsigned places)
+	{
+		while (places>0)
+		{
+			const bool on = (bool)(mask & (1 << (places-1)));
+			std::cout << on << " ";
+			places--;
+		}
+		std::cout << std::endl;
+	}
+
+	//same as print mask but impeleneted with logically -slower than PrintMask()
+	/*inline void Dec2Bin(unsigned mask, unsigned places)
+	{
+		int div = pow(2, places);
+		while (div > 0)
+		{
+			int r = mask / div;
+			std::cout << r << " ";
+			if (r > 0) mask -= div;
+			div /= 2;
+		}
+		std::cout << std::endl;
+	}*/
 }

@@ -74,8 +74,21 @@ namespace RA_FRAMEWORK
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		return true;
 	}
+
+	void GLRenderer::RenderPass(ListOfEntities* entities, GLRenderTarget* target)
+	{
+		if (target != nullptr)
+		{
+			target->Bind();
+		}
+		for (int i = 0; i < entities->size(); ++i)
+		{
+			Entity* e = (*entities)[i].get();
+			GLRenderer::RenderEntity(e);
+		}
+	}
 	
-	void GLRenderer::Render(Entity* entity)
+	void GLRenderer::RenderEntity(Entity* entity)
 	{
 		Component* c;
         if (!entity->TryGetCachedModel(c))  return;

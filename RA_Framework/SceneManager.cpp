@@ -34,16 +34,10 @@ namespace RA_FRAMEWORK
 			m_upCurrentScene->GetEntityManager()->Update(deltaTime, totalTime);
 			ListOfEntities* list = m_upCurrentScene->GetEntityManager()->GetListOfEntities();
 			BehaviourManager::Update(list, deltaTime, totalTime);
+
 			GLRenderer::ClearScreen(Colour(0,0,0,1));	
-			for (int i = 0; i < list->size(); ++i)
-			{
-				Entity* e = (*list)[i].get();
-				GLRenderer::Render(e);
-				//PRINTL("ENTITY: " + e->GetName() + " is at position: " + ToString(e->GetTransform()->GetWorldPosition()));
-			}
+			GLRenderer::RenderPass(list, nullptr);
 			GLRenderer::Update(deltaTime, totalTime);
-			//TODO: SYSTEMS ACT ON ENTITIES HERE
-			//DXRenderer::Update(deltaTime, totalTime);
 			GLRenderer::SwapBuffers();
 			m_upCurrentScene->PostUpdate();
 		}

@@ -1,8 +1,9 @@
 #pragma once
 #include "GLTexture.h"
+#include "RenderTarget.h"
 namespace RA_FRAMEWORK
 {
-	class GLRenderTarget
+	class GLRenderTarget:public RenderTarget
 	{
 	private:
 		GLuint m_Fbo;
@@ -12,7 +13,7 @@ namespace RA_FRAMEWORK
 	public:
 		static void SetScreen(int w, int h);
 	public:
-		explicit GLRenderTarget(GLTexture* destination, bool depthOn);
+		explicit GLRenderTarget(GLTexture* destination);
 		GLRenderTarget(const GLRenderTarget&) = delete;
 		GLRenderTarget& operator=(const GLRenderTarget&) = delete;
 		~GLRenderTarget();

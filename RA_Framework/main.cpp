@@ -231,24 +231,16 @@ public:
 	}
 };
 
+
+
+
 int main()
 {
-	// Create application in 1280x720 window
-	WindowsApp::Create(1280, 720, "EMPTY WINDOW");
+	WindowsApp::Create(1280, 720, "RA WINDOW");
 	//WindowsApp::SetFullscreenMode(true);
 	SceneManager::Load(new ExampleScene2());
 	const int appState = WindowsApp::Run();
-	//int* i = new int(10);
-	//std::unique_ptr<int> p(i);
-	/*KLMList<String> list;
-	list.Add("A");
-	list.Add("Br");
-	list.Add("Cr");
-	String* s = list.Find(UNARY_PRED1(String, Object.size() == 2));
-	if(s != nullptr) std::cout << *s << std::endl;
-	else std::cout << "s is null" << std::endl;
-	*/
-	//std::cout << "Application has been closed - press any key" << std::endl;
-    //WaitForKeypress();
-	return 0;
+
+   // WaitForKeypress();
+	return appState;
 }

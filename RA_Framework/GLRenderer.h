@@ -3,6 +3,7 @@
 #include "Camera.h"
 #include "RendererModes.h"
 #include "ModelComponent.h"
+#include "GLRenderTarget.h"
 namespace RA_FRAMEWORK
 {
 	class Transform;
@@ -27,7 +28,9 @@ namespace RA_FRAMEWORK
 		GLRenderer& operator=(const GLRenderer&) = delete;
 	public:
 		static bool Initialize(const int width, const int height, const HWND handle);
-		static void Render(Entity* entity);
+
+		static void RenderPass(ListOfEntities* entities, GLRenderTarget* target);
+		static void RenderEntity(Entity* entity);
 		static void Render(ModelComponent* model, Camera* camera, Transform* transform, const String& name);
 		static void Update(const float deltaTime, const float totalTime);
 		static void ShutDown();
