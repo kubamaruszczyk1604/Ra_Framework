@@ -19,7 +19,7 @@ namespace RA_FRAMEWORK
 		Shader& operator=(const Shader&) = delete;
 		virtual ~Shader();
 	public:
-		ShaderType GetType() { return m_ShaderType; }
-		GfxAPI GetAPI() { return m_API; }	
+		ShaderType		GetType()	{ return m_ShaderType; }
+		GfxAPI			GetAPI()	{ return m_API; }	
 	};
 }

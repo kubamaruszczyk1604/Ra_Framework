@@ -7,7 +7,6 @@ namespace RA_FRAMEWORK
 		FRONT = 1,
 		FRONT_AND_BACK = 2
 	};
-
 	enum class FillMode
 	{
 		SOLID = 0,

@@ -23,15 +23,15 @@ namespace RA_FRAMEWORK
 		InputSystem(const InputSystem&) = delete;
 		InputSystem& operator=(const InputSystem&) = delete;
 	public: // Called by window's msgproc
-		static void PropagateOnKeyDown(const int key);
-		static void PropagateOnKeyUp(const int key);
-		static void PropagateOnMouseMove(const int mouseX, const int mouseY);
-		static void PropagateOnMouseUp(const int button);
-		static void PropagateOnMouseDown(const int button);
+		static void			PropagateOnKeyDown(const int key);
+		static void			PropagateOnKeyUp(const int key);
+		static void			PropagateOnMouseMove(const int mouseX, const int mouseY);
+		static void			PropagateOnMouseUp(const int button);
+		static void			PropagateOnMouseDown(const int button);
 	public: //Called by client
-		static void SetKeyboardCallback(KeyboardCallback callback) { s_KeyboardCallback = callback; }
-		static void SetMouseMoveCallback(MouseMoveCallback callback) { s_MouseMoveCallback = callback; }
-		static void SetMouseButtonCallback(MouseButtonUpCallback callbackUp, MouseButtonDownCallback callbackDown) { s_MouseButtonUpCallback = callbackUp; s_MouseButtonDownCallback = callbackDown; }
-		static const Vec2i& GetMousePosition() { return s_MousePos; };
+		static void			SetKeyboardCallback(KeyboardCallback callback)		{ s_KeyboardCallback = callback; }
+		static void			SetMouseMoveCallback(MouseMoveCallback callback)	{ s_MouseMoveCallback = callback; }
+		static const Vec2i& GetMousePosition()									{ return s_MousePos; };
+		static void			SetMouseButtonCallback(MouseButtonUpCallback callbackUp, MouseButtonDownCallback callbackDown) {s_MouseButtonUpCallback = callbackUp; s_MouseButtonDownCallback = callbackDown;}
 	};
 }

@@ -31,8 +31,8 @@ namespace RA_FRAMEWORK
 		ShaderVariable& operator=(const ShaderVariable&) = delete;
 		~ShaderVariable() {}
 	public:
-		void SetData(const T& data) { m_Data = data; }
-		const T& GetData() { return m_Data; }
-		const String& GetName() const { return m_Name; }
+		void				SetData(const T& data)	{ m_Data = data; }
+		const T&			GetData()				{ return m_Data; }
+		const String&		GetName()const			{ return m_Name; }
 	};
 }

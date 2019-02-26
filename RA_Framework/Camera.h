@@ -29,20 +29,20 @@ namespace RA_FRAMEWORK
 		Camera &operator=(const Camera&) = delete;
 		virtual ~Camera();
 	public:
-		float GetFOV()const { return m_FOV; }
-		float GetNear()const { return  m_Near; }
-		float GetFar()const { return m_Far; }
-		ProjectionType GetProjectionType()const { return m_ProjectionType; }
-		const Vec4& GetWorldPosition()const { return m_TransformMat * Vec4(0, 0, 0, 1); }
-		const Vec3& GetLocalPosition()const { return m_NoParrentPos; }
-		const Vec3& GetLocalRotation()const { return m_NoParrentRotation; }
-		const Mat4& GetWorldMatrix()const { return m_TransformMat; }
-		const Mat4& GetViewMatrix()const { return m_ViewMat; }
-		const Mat4& GetProjectionMatrix(const int& scrWidth, const int& scrHeight);
-
-		void SetActive(bool active) { m_Active = active; }
-		bool isActive()const { return  m_Active; }
-		const Mat4& SetTransformMatrix(const Vec3& translation, const Vec3& rotation);
-		void SetTransformMatrix(const glm::mat4& mat);
+		float			GetFOV()const				{ return m_FOV; }
+		float			GetNear()const				{ return  m_Near; }
+		float			GetFar()const				{ return m_Far; }
+		ProjectionType	GetProjectionType()const	{ return m_ProjectionType; }
+		const Vec4&		GetWorldPosition()const		{ return m_TransformMat * Vec4(0, 0, 0, 1); }
+		const Vec3&		GetLocalPosition()const		{ return m_NoParrentPos; }
+		const Vec3&		GetLocalRotation()const		{ return m_NoParrentRotation; }
+		const Mat4&		GetWorldMatrix()const		{ return m_TransformMat; }
+		const Mat4&		GetViewMatrix()const		{ return m_ViewMat; }
+		void			SetActive(bool active)		{ m_Active = active; }
+		bool			isActive()const				{ return  m_Active; }
+	public:
+		const			Mat4& GetProjectionMatrix(const int& scrWidth, const int& scrHeight);
+		const			Mat4& SetTransformMatrix(const Vec3& translation, const Vec3& rotation);
+		void			SetTransformMatrix(const glm::mat4& mat);
 	};
 }

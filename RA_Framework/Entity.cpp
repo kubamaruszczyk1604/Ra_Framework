@@ -99,7 +99,7 @@ namespace RA_FRAMEWORK
 	{
 		//WORLD TRANSFORM CALCULATION
 		m_Transform.SetWorld(m_Transform.GetParentTransformStack() *
-			glm::translate(s_Identity, m_Transform.GetPosition()));
+			glm::translate(s_Identity, m_Transform.GetLocalPosition()));
 
 		const Vec3& rotation = m_Transform.GetRotation();
 		m_Transform.SetWorld(glm::rotate(m_Transform.GetWorldMat(), rotation.x, glm::vec3(1, 0, 0)));

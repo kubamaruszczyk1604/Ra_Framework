@@ -1,8 +1,9 @@
 #pragma once
 class RenderTarget
 {
-public:
+protected:
 	RenderTarget() {}
+public:
 	RenderTarget(const RenderTarget&) = delete;
 	RenderTarget& operator=(const RenderTarget&) = delete;
 	virtual ~RenderTarget() {}

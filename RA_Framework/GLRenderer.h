@@ -27,17 +27,16 @@ namespace RA_FRAMEWORK
 		GLRenderer(const GLRenderer&) = delete;
 		GLRenderer& operator=(const GLRenderer&) = delete;
 	public:
-		static bool Initialize(const int width, const int height, const HWND handle);
-
-		static void RenderPass(ListOfEntities* entities, GLRenderTarget* target);
-		static void RenderEntity(Entity* entity);
-		static void Render(ModelComponent* model, Camera* camera, Transform* transform, const String& name);
-		static void Update(const float deltaTime, const float totalTime);
-		static void ShutDown();
-		static void ClearScreen(const Colour& colour);
-		static void SwapBuffers();
-		static void SetCullMode(const CullMode mode);
-		static void SetFillMode(const FillMode mode);
-		static void SetActiveCamera(Camera* camera);
+		static bool		Initialize(const int width, const int height, const HWND handle);
+		static void		RenderPass(ListOfEntities* entities, GLRenderTarget* target);
+		static void		RenderEntity(Entity* entity);
+		static void		Render(ModelComponent* model, Camera* camera, Transform* transform, const String& name);
+		static void		Update(const float deltaTime, const float totalTime);
+		static void		ShutDown();
+		static void		ClearScreen(const Colour& colour);
+		static void		SwapBuffers();
+		static void		SetCullMode(const CullMode mode);
+		static void		SetFillMode(const FillMode mode);
+		static void		SetActiveCamera(Camera* camera);
 	};
 }

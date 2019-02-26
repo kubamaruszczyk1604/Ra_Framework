@@ -14,10 +14,9 @@ namespace RA_FRAMEWORK
 		ModelComponent operator=(const ModelComponent&) = delete;
 		ModelComponent(const ModelComponent&) = delete;
 		ModelComponent() = delete;
-	public:
-		Mesh* GetMesh();
-		Material* GetMaterial();
-	public:
 		virtual ~ModelComponent();
+	public:
+		Mesh*		GetMesh();
+		Material*	GetMaterial();
 	};
 }

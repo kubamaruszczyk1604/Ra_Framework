@@ -21,10 +21,10 @@ namespace RA_FRAMEWORK
 		Stopwatch &operator=(const Stopwatch&) = delete;
 		~Stopwatch();
 	public:
-		void Start();
-		void Stop();
-		void UnPause();
-		void Pause();
-		double ElapsedTime()const;
+		void		Start();
+		void		Stop();
+		void		UnPause();
+		void		Pause();
+		double		ElapsedTime()const;
 	};
 }

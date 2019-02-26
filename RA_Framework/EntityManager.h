@@ -14,11 +14,12 @@ namespace RA_FRAMEWORK
 		EntityManager(const EntityManager&) = delete;
 		EntityManager& operator=(const EntityManager&) = delete;
 	public:
-		void      AddEntity(EntityUnique entity);
-		void      RemoveEntity(const std::string& id);
-		Entity*   FindEntity(const std::string& id);
-		void      Update(float deltaTime, float totalTime = 0);
-		void      RemoveAllEntities();
-		ListOfEntities* GetListOfEntities() { return &m_pEntities; }
+		void				AddEntity(EntityUnique entity);
+		void				RemoveEntity(const std::string& id);
+		Entity*				FindEntity(const std::string& id);
+		void				Update(float deltaTime, float totalTime = 0);
+		void				RemoveAllEntities();
+	public:
+		ListOfEntities*		GetListOfEntities() { return &m_pEntities; }
 	};
 }

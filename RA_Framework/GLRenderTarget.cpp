@@ -8,6 +8,7 @@ namespace RA_FRAMEWORK
 	}
 
 	GLRenderTarget::GLRenderTarget(GLTexture* destination):
+		RenderTarget(),
 		m_TargetTex(destination),
 		m_DepthFlag(0)
 	{

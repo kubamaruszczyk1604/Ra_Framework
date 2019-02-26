@@ -13,9 +13,9 @@ namespace RA_FRAMEWORK
 		GLShader& operator=(const GLShader&) = delete;
 		virtual ~GLShader();
 	public:
-		bool LoadFromFile(const std::string& path);
-		void SetShaderString(const std::string& content);
-		bool Compile(std::string& log);
-		GLuint GetID();
+		bool			LoadFromFile(const std::string& path);
+		void			SetShaderString(const std::string& content);
+		bool			Compile(std::string& log);
+		GLuint			GetID();
 	};
 }

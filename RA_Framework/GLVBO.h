@@ -20,9 +20,9 @@ namespace RA_FRAMEWORK
 		GLVBO& operator=(const GLVBO&) = delete;
 		~GLVBO();
 	public:
-		bool Create(Vertex* vertices, const int numVertices);
-		void Draw(PrimitiveType primitiveType) const;
-		bool CreateIndexBuffer(unsigned * const indices, const unsigned numInidices);
-		const std::vector<unsigned>& GetIndices()const { return m_Indices; };
+		bool							Create(Vertex* vertices, const int numVertices);
+		void							Draw(PrimitiveType primitiveType) const;
+		bool							CreateIndexBuffer(unsigned * const indices, const unsigned numInidices);
+		const std::vector<unsigned>&	GetIndices()const { return m_Indices; };
 	};
 }

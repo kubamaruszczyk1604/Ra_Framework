@@ -17,15 +17,16 @@ namespace RA_FRAMEWORK
 		GLTexture(int w, int h, TextureFormat format);
 		~GLTexture();
 	public:
-		GLuint GetID() { return m_ID; }
 		//Assigns shader's uniform to the same slot as the texture.
-		void Bind(const std::string& uniformName, GLuint shaderProgID, GLuint slot = 0);
+		void		Bind(const std::string& uniformName, GLuint shaderProgID, GLuint slot = 0);
 		//Assigns texture to the slot and binds it as current texture.
-		void Bind(GLuint slot);
+		void		Bind(GLuint slot);
 		//Binds texture as current at default slot.
-		void Bind();
-		void Unbind();
-		int Width() { return c_Width; }
-		int Height() {return c_Height; }
+		void		Bind();
+		void		Unbind();
+	public:
+		int			Width()		{ return c_Width; }
+		int			Height()	{ return c_Height; }
+		GLuint		GetID()		{ return m_ID; }
 	};
 }

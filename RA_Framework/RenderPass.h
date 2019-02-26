@@ -14,22 +14,10 @@ namespace RA_FRAMEWORK
 		RenderPass& operator=(const RenderPass&) = delete;
 		virtual ~RenderPass();
 	public:
-		inline RENDER_MASK GetMask()const { return m_Mask; }
-		inline RenderTarget* GetRenderTarget()const { return p_RenderTarget; }
-		
-		inline void AddMaskElements(RENDER_MASK elements)
-		{
-			m_Mask |= elements;
-		}
-
-		inline void RemoveMaskElements(RENDER_MASK elements)
-		{
-			m_Mask &= (~elements);
-		}
-
-		inline bool HasElement(RENDER_MASK_ELEMENT element)
-		{
-			return (bool)(m_Mask&element);
-		}
+		inline RENDER_MASK			GetMask()const								{ return m_Mask; }
+		inline RenderTarget*		GetRenderTarget()const						{ return p_RenderTarget; }	
+		inline void					AddMaskElements(RENDER_MASK elements)		{ m_Mask |= elements; }
+		inline void					RemoveMaskElements(RENDER_MASK elements)	{ m_Mask &= (~elements); }
+		inline bool					HasElement(RENDER_MASK_ELEMENT element)		{ return (bool)(m_Mask&element); }
 	};
 }

@@ -1,11 +1,9 @@
 #pragma once
 #include "RAUtils.h"
-
 namespace RA_FRAMEWORK
 {
 	struct Vertex
 	{
-
 		Vec3 Position;
 		Vec3 Normal;
 		Vec3 Tangent;
@@ -31,8 +29,6 @@ namespace RA_FRAMEWORK
 			Texcoord0.y = v;
 		}
 
-	
-
 		Vertex(const Vec3& pos)
 		{
 			Position = pos;
@@ -57,5 +53,4 @@ namespace RA_FRAMEWORK
 			Texcoord0 = texcoord;
 		}
 	};
-
 }

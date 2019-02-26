@@ -25,10 +25,10 @@ namespace RA_FRAMEWORK
 		Component(const std::string& ID, const ComponentType type);
 		virtual ~Component();
 	public:
-		const std::string& GetID()const { return m_ID; }
-		ComponentType GetType()const { return m_Type; };
-		void SetParent(Entity* parent) { m_pParent = parent; }
-		Entity* GetParent()const { return m_pParent; }
+		const std::string&		GetID()const				{ return m_ID; }
+		ComponentType			GetType()const				{ return m_Type; };
+		void					SetParent(Entity* parent)	{ m_pParent = parent; }
+		Entity*					GetParent()const			{ return m_pParent; }
 	};
 	using ComponentUnique = std::unique_ptr<Component>;
 }
