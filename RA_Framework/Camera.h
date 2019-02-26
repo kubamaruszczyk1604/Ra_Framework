@@ -46,3 +46,4 @@ namespace RA_FRAMEWORK
 		void			SetTransformMatrix(const glm::mat4& mat);
 	};
 }
+
