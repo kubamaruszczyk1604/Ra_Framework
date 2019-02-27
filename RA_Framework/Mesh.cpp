@@ -21,14 +21,14 @@ namespace RA_FRAMEWORK
 	const VBO* Mesh::CreateVertexBuffer()
 	{
 		m_BuffersCreated = true;
-		m_pVBO->Create(&m_Vertices[0], m_Vertices.size());
+		m_pVBO->Create(&m_Vertices[0], static_cast<unsigned>(m_Vertices.size()));
 		return m_pVBO;
 	}
 
 	const VBO * Mesh::CreateVertexBuffer(std::vector<unsigned>& indices)
 	{
 		CreateVertexBuffer();
-		m_pVBO->CreateIndexBuffer(&indices[0], indices.size());
+		m_pVBO->CreateIndexBuffer(&indices[0], static_cast<unsigned>(indices.size()));
 		return m_pVBO;
 	}
 }

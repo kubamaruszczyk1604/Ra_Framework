@@ -7,8 +7,8 @@ namespace RA_FRAMEWORK
 	{
 	private:
 		GLuint m_ProgId;
-		GLShader* p_VertexShader;
-		GLShader* p_FragmentShader;
+		const GLShader* p_VertexShader;
+		const GLShader* p_FragmentShader;
 		bool m_Created{ false };
 	public:
 		GLShaderProgram(GLShader* vertexShader, GLShader* fragmentShader);
@@ -33,6 +33,6 @@ namespace RA_FRAMEWORK
 		void		SetMat2x2(const String& varname, const Mat2& value)override;
 		void		SetMat3x3(const String& varname, const Mat3& value)override;
 		void		SetMat4x4(const String& varname, const Mat4& value)override;
-		void		SetTexture(const String& varname, int textureID)override;
+		void		SetTexture(const String& varname, int textureID, unsigned slot)override;
 	};
 }

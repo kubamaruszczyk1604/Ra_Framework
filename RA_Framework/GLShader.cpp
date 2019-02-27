@@ -74,7 +74,7 @@ namespace RA_FRAMEWORK
 		glShaderSource(m_Id, 1, &c, NULL);
 	}
 
-	GLuint GLShader::GetID()
+	GLuint GLShader::GetID()const
 	{
 		return m_Id;
 	}

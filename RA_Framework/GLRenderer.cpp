@@ -44,7 +44,7 @@ namespace RA_FRAMEWORK
 		pfd.bReserved = 0;
 		pfd.dwLayerMask = pfd.dwVisibleMask = pfd.dwDamageMask = 0;
 		// choose pixel format returns the number most similar pixel format available
-		int n = ChoosePixelFormat(hdc, &pfd);
+		const int n = ChoosePixelFormat(hdc, &pfd);
 		// set pixel format returns whether it sucessfully set the pixel format
 		return SetPixelFormat(hdc, n, &pfd);
 	}
@@ -112,7 +112,7 @@ namespace RA_FRAMEWORK
 			camera->SetTransformMatrix(parent->GetTransform()->GetWorldMat());
 			worldView = camera->GetViewMatrix() * transform->GetWorldMat();
 		}
-		Mat4 MVP = camera->GetProjectionMatrix(s_ScreenWidth, s_ScreenHeight) * worldView;
+		const Mat4 MVP = camera->GetProjectionMatrix(s_ScreenWidth, s_ScreenHeight) * worldView;
 		material->Use();
 #ifdef ENABLE__uWORLD
 		material->GetShaderProgram()->SetMat4x4("uWORLD", transform->GetWorldMat());

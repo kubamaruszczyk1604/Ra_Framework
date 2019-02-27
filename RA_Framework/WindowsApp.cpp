@@ -92,7 +92,7 @@ int WindowsApp::Run()
 		{
 			s_FrameTimer.Start();
 			//Updates scene and then renderer
-			SceneManager::Update(s_FrameTimer.ElapsedTime()* s_TimeScale, s_GlobalTimer.ElapsedTime() * s_TimeScale);
+			SceneManager::Update(static_cast<float>(s_FrameTimer.ElapsedTime())* s_TimeScale, static_cast<float>(s_GlobalTimer.ElapsedTime()) * s_TimeScale);
 			s_FrameTimer.Stop();
 		}
 	}
@@ -118,10 +118,10 @@ LRESULT WindowsApp::MsgProc(HWND const hWnd, UINT const msg, WPARAM const wParam
 		PostQuitMessage(0);
 		return 0;
 	case WM_KEYDOWN:
-		InputSystem::PropagateOnKeyDown(wParam);
+		InputSystem::PropagateOnKeyDown(static_cast<int>(wParam));
 		break;
 	case WM_KEYUP:
-		InputSystem::PropagateOnKeyUp(wParam);
+		InputSystem::PropagateOnKeyUp(static_cast<int>(wParam));
 		break;
 	case WM_MOUSEMOVE:
 		InputSystem::PropagateOnMouseMove(LOWORD(lParam), HIWORD(lParam));

@@ -206,7 +206,7 @@ public:
 
 	void Update(float deltaTime, float totalTime = 0)
 	{
-		e1->GetTransform()->SetRotationZ(sin(totalTime));
+		e1->GetTransform()->SetRotationY(totalTime);
 	}
 
 	void OnExit()

@@ -42,6 +42,7 @@ namespace RA_FRAMEWORK
 		void AddShaderVariable(const String& name, const Mat3& value)	{ m_Mat3List.Add(new ShaderVariable<Mat3>(name, value));}
 		void AddShaderVariable(const String& name, const Mat4& value)	{ m_Mat4List.Add(new ShaderVariable<Mat4>(name, value));}
 		void AddShaderVariable(const String& name, Texture* value)		{ m_Texture2DList.Add(new ShaderVariable<Texture*>(name, value));}
+		
 		//ShaderVariable* FindVariable(ShaderVariableType type, const String& name);
 		//bool SetVariable(ShaderVariableType type, const String& name, void* value);
 	};

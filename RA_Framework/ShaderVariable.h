@@ -23,7 +23,7 @@ namespace RA_FRAMEWORK
 	class ShaderVariable
 	{
 	private:
-		String m_Name;
+		const String m_Name;
 		T m_Data;
 	public:
 		ShaderVariable(const String& name, const T& data) :m_Name{ name }, m_Data{ data }{}

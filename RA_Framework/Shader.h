@@ -10,8 +10,8 @@ namespace RA_FRAMEWORK
 	class Shader
 	{
 	private:
-		ShaderType m_ShaderType;
-		GfxAPI m_API;
+		const ShaderType m_ShaderType;
+		const GfxAPI m_API;
 	protected:
 		Shader(GfxAPI api, ShaderType type);
 	public:
@@ -19,7 +19,7 @@ namespace RA_FRAMEWORK
 		Shader& operator=(const Shader&) = delete;
 		virtual ~Shader();
 	public:
-		ShaderType		GetType()	{ return m_ShaderType; }
-		GfxAPI			GetAPI()	{ return m_API; }	
+		ShaderType		GetType()const	{ return m_ShaderType; }
+		GfxAPI			GetAPI()const	{ return m_API; }	
 	};
 }

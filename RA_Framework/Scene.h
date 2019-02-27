@@ -7,7 +7,7 @@ namespace RA_FRAMEWORK
 	class Scene
 	{
 	private:
-		EntityManager * m_pEntityManager;
+		EntityManager* m_pEntityManager;
 	protected:
 		void AddEntity(Entity* entity);
 		void RemoveEntity(const std::string& ID);
@@ -28,7 +28,7 @@ namespace RA_FRAMEWORK
 		virtual void OnMouseButtonUp(MouseButton const button);
 		virtual void OnMouseButtonDown(MouseButton const button);
 	public:
-		EntityManager* GetEntityManager() { return m_pEntityManager; }
+		EntityManager* GetEntityManager()const { return m_pEntityManager; }
 	};
 	using SceneUniquePtr = std::unique_ptr<Scene>;
 }

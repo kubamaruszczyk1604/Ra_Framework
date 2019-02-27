@@ -118,7 +118,7 @@ namespace RA_FRAMEWORK
 		for (int i = 0; i < m_Texture2DList.Count(); ++i)
 		{
 			auto temp = m_Texture2DList[i];
-			p_Shader->SetTexture(temp->GetName(), temp->GetData()->GetID());
+			p_Shader->SetTexture(temp->GetName(), temp->GetData()->GetID(),temp->GetData()->GetSlot());
 			
 		}
 	}

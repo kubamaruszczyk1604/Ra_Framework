@@ -52,7 +52,6 @@ namespace RA_FRAMEWORK
 		REFLECTION_CASTER			= 1 << 4,
 		SHADOW_CASTER				= 1 << 5,
 		UI							= 1 << 6
-
 	};
 	enum class GfxAPI
 	{

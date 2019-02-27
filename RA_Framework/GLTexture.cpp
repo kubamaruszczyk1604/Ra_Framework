@@ -11,7 +11,7 @@ namespace RA_FRAMEWORK
 	};
 
 	GLTexture::GLTexture(int w, int h, TextureFormat format, void* data, TextureFilterMode minFilterMode, TextureAddressMode magFilterMode, TextureAddressMode addressMode) :
-		Texture(GfxAPI::GL,0),
+		Texture(GfxAPI::GL,0,0),
 		c_Width(w),
 		c_Height(h)
 	{
@@ -25,7 +25,7 @@ namespace RA_FRAMEWORK
 	}
 	//www.opengl-tutorial.org/intermediate-tutorials/tutorial-14-render-to-texture/
 	GLTexture::GLTexture(int w, int h, TextureFormat format, void* data):
-		Texture(GfxAPI::GL,0),
+		Texture(GfxAPI::GL,0,0),
 		c_Width(w),
 		c_Height(h)
 	{
@@ -39,7 +39,7 @@ namespace RA_FRAMEWORK
 	}
 
 	GLTexture::GLTexture(int w, int h, TextureFormat format):
-		Texture(GfxAPI::GL,0),
+		Texture(GfxAPI::GL, 0, 0),
 		c_Width(w),
 		c_Height(h)
 	{
