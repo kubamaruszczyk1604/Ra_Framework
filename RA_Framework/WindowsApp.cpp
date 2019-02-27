@@ -141,6 +141,7 @@ LRESULT WindowsApp::MsgProc(HWND const hWnd, UINT const msg, WPARAM const wParam
 	case WM_ENTERSIZEMOVE:
 		break;
 	case WM_EXITSIZEMOVE:
+		OnResize(s_Hwnd);
 		break;
 	case WM_SIZE:
 		break;
@@ -160,7 +161,7 @@ void WindowsApp::OnResize(HWND const hWnd) {
 	// store windowed coords loally (if not fullscreen)
 	if (!IsFullscreen) ::GetWindowRect(s_Hwnd, &s_WindowedCoords);
 	// Window size is different? true = SIZE (not a MOVE)
-	//TODO: GLRenderer::Resize(hWnd, (r.right - r.left), (r.bottom - r.top));
+	GLRenderer::ResizeWindow((r.right - r.left), (r.bottom - r.top));
 }
 
 void WindowsApp::SetFullscreenMode(bool fullscreen)

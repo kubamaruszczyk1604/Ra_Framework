@@ -13,7 +13,7 @@ namespace RA_FRAMEWORK
 	HWND GLRenderer::s_hWnd{ 0 };
 	HGLRC GLRenderer::s_hGLRC{ nullptr };
 	HDC GLRenderer::s_hDevCtx{ nullptr };
-	GLuint GLRenderer::s_CullMode{ GL_FRONT_AND_BACK };
+	GLuint GLRenderer::s_CullMode{ GL_BACK };
 	Camera* GLRenderer::s_CurrentCamera{ nullptr };
 	int GLRenderer::s_ScreenWidth{ 800 };
 	int GLRenderer::s_ScreenHeight{ 600 };
@@ -51,28 +51,34 @@ namespace RA_FRAMEWORK
 
 	bool GLRenderer::Initialize(const int width, const int height, const HWND handle)
 	{
-		s_ScreenWidth = width;
-		s_ScreenHeight = height;
+		// WINDOWS-SPECIFIC PART
 		s_hWnd = handle;
 		if ((s_hDevCtx = GetDC(s_hWnd)) == NULL) return false;
-		// set the pixel format
 		if (!KLMSetPixelFormat(s_hDevCtx)) return false;
-		// Create context 
 		if ((s_hGLRC = wglCreateContext(s_hDevCtx)) == NULL) return false;
 		wglMakeCurrent(s_hDevCtx, s_hGLRC);
+		// \WINDOWS SPECIFIC PART
+
+		glewInit();
+		s_ScreenWidth = width;
+		s_ScreenHeight = height;
 		// set defaults
-		glEnable(GL_DEPTH_TEST);
-		glDepthFunc(GL_LEQUAL);
-		glCullFace(GL_FRONT_AND_BACK);
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		EnableDepthTest();
+		SetCullMode(CullMode::NONE);
+		EnableAlphaBlending();
 		glEnable(GL_MULTISAMPLE);
 		glHint(GL_MULTISAMPLE_FILTER_HINT_NV, GL_NICEST);
 		glViewport(0, 0, width, height);
-		s_IsRunning = true;
-		glewInit();
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		s_IsRunning = true;
 		return true;
+	}
+
+	void GLRenderer::ResizeWindow(unsigned width, unsigned height)
+	{
+		s_ScreenWidth = width;
+		s_ScreenHeight = height;
+		glViewport(0, 0, width, height);
 	}
 
 	void GLRenderer::RenderPass(ListOfEntities* entities, GLRenderTarget* target)
@@ -169,18 +175,26 @@ namespace RA_FRAMEWORK
 		switch (mode)
 		{
 		case(CullMode::FRONT_AND_BACK):
+			glEnable(GL_CULL_FACE);
 			s_CullMode = GL_FRONT_AND_BACK;
+			glCullFace(s_CullMode);
 			break;
 		case(CullMode::FRONT):
+			glEnable(GL_CULL_FACE);
 			s_CullMode = GL_FRONT;
+			glCullFace(s_CullMode);
 			break;
 		case(CullMode::BACK):
+			glEnable(GL_CULL_FACE);
 			s_CullMode = GL_BACK;
+			glCullFace(s_CullMode);
+			break;
+		case(CullMode::NONE):
+			glDisable(GL_CULL_FACE);
 			break;
 		default:
 			break;
-		}
-		glCullFace(s_CullMode);
+		}		
 	}
 
 	void GLRenderer::SetFillMode(const FillMode mode)
@@ -201,5 +215,27 @@ namespace RA_FRAMEWORK
 	void GLRenderer::SetActiveCamera(Camera * camera)
 	{
 		s_CurrentCamera = camera;
+	}
+
+	void GLRenderer::EnableAlphaBlending(bool enabled)
+	{
+		if (enabled) 
+		{ 
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			return;
+		}
+		glDisable(GL_BLEND);
+	}
+	void GLRenderer::EnableDepthTest(bool enabled, DepthQualifier qualifier)
+	{
+		if (enabled)
+		{
+			glEnable(GL_DEPTH_TEST);
+			glDepthFunc(DEPTH_QALIF_LUT_GL[static_cast<int>(qualifier)]);
+			std::cout << static_cast<unsigned>(qualifier);
+			return;
+		}
+		glDisable(GL_DEPTH_TEST);
 	}
 }

@@ -1,4 +1,5 @@
 #pragma once
+#include "GLTypeLUTs.h"
 #include "RAUtils.h"
 #include "Camera.h"
 #include "RendererModes.h"
@@ -28,6 +29,7 @@ namespace RA_FRAMEWORK
 		GLRenderer& operator=(const GLRenderer&) = delete;
 	public:
 		static bool		Initialize(const int width, const int height, const HWND handle);
+		static void		ResizeWindow(unsigned width, unsigned height);
 		static void		RenderPass(ListOfEntities* entities, GLRenderTarget* target);
 		static void		RenderEntity(Entity* entity);
 		static void		Render(ModelComponent* model, Camera* camera, Transform* transform, const String& name);
@@ -38,5 +40,7 @@ namespace RA_FRAMEWORK
 		static void		SetCullMode(const CullMode mode);
 		static void		SetFillMode(const FillMode mode);
 		static void		SetActiveCamera(Camera* camera);
+		static void		EnableAlphaBlending(bool enabled = true);
+		static void		EnableDepthTest(bool enabled = true, DepthQualifier qualifier = DepthQualifier::LESS);
 	};
 }
