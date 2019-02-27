@@ -215,6 +215,7 @@ namespace RA_FRAMEWORK
 		{
 			const bool on = (bool)(mask & (1 << (places-1)));
 			std::cout << on << " ";
+
 			places--;
 		}
 		std::cout << std::endl;
