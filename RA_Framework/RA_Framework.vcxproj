@@ -178,6 +178,7 @@
     <ClInclude Include="GLTexture.h" />
     <ClInclude Include="GLVBO.h" />
     <ClInclude Include="GLTypeLUTs.h" />
+    <ClInclude Include="RABuiltInShaders.h" />
     <ClInclude Include="RendererDirectives.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="KLMList.h" />

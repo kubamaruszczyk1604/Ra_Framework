@@ -24,7 +24,7 @@ namespace RA_FRAMEWORK
 	using RAuint16 = unsigned short;
 	using RAuint32 = unsigned int;
 	using RAuint64 = unsigned __int64;
-
+	using uint = unsigned;
 	using RAfloat = float;
 
 	using Vec2i = glm::ivec2;

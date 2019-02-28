@@ -1,15 +1,12 @@
 #pragma once
 #include "RAUtils.h"
-//#include "GLTexture.h"
 namespace RA_FRAMEWORK
 {
-
 	enum class TextureType
 	{
 		D3D11TEXTURE = 0,
 		GLTEXTURE = 1
 	};
-
 
 	enum class TextureAddressMode
 	{
@@ -22,26 +19,21 @@ namespace RA_FRAMEWORK
 
 	enum class TextureFilterMode
 	{
-		NEAREST = GL_NEAREST,
-		BILINEAR = GL_LINEAR,
-		NEAREST_MIPMAP_NEAREST = GL_NEAREST_MIPMAP_NEAREST,
-		BILINEAR_MIPMAP_NEAREST = GL_LINEAR_MIPMAP_NEAREST,
-		BILINEAR_MIPMAP_LINEAR = GL_LINEAR_MIPMAP_LINEAR
+		NEAREST = 0,
+		BILINEAR = 1,
+		NEAREST_MIPMAP_NEAREST = 2,
+		BILINEAR_MIPMAP_NEAREST = 3,
+		BILINEAR_MIPMAP_LINEAR = 4
 	};
-
 
 	enum class TextureFormat
 	{
-		UBYTE = GL_UNSIGNED_BYTE,
-		BYTE = GL_BYTE,
-		USHORT = GL_UNSIGNED_SHORT,
-		SHORT = GL_SHORT,
-		UINT = GL_UNSIGNED_INT,
-		INT = GL_INT,
-		FLOAT = GL_FLOAT
-	    
+		UBYTE = 0,
+		BYTE = 1,
+		USHORT = 2,
+		SHORT = 3,
+		UINT = 4,
+		INT = 5,
+		FLOAT = 6	    
 	};
-
-
-
 }

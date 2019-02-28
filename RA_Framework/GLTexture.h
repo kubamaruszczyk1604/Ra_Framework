@@ -2,13 +2,12 @@
 #include "RAUtils.h"
 #include "TextureModes.h"
 #include "Texture.h"
-
+#include "GLTypeLUTs.h"
 namespace RA_FRAMEWORK
 {
 	class GLTexture: public Texture
 	{
 	private:
-		static const GLuint s_TextureAddresModeLookupTable[5];
 		const int c_Width;
 		const int c_Height;
 	public:
@@ -18,15 +17,15 @@ namespace RA_FRAMEWORK
 		~GLTexture();
 	public:
 		//Assigns shader's uniform to the same slot as the texture.
-		void		Bind(const std::string& uniformName, GLuint shaderProgID, GLuint slot = 0);
+		void		Bind(const String& uniformName, uint shaderProgID, uint slot = 0);
 		//Assigns texture to the slot and binds it as current texture.
-		void		Bind(GLuint slot);
+		void		Bind(uint slot);
 		//Binds texture as current at default slot.
-		void		Bind();
+		void		Bind()override;
 		void		Unbind();
 	public:
 		int			Width()		{ return c_Width; }
 		int			Height()	{ return c_Height; }
-		GLuint		GetID()		{ return m_ID; }
+		uint		GetID()		{ return m_ID; }
 	};
 }

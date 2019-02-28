@@ -22,11 +22,11 @@ namespace RA_FRAMEWORK
 		glDeleteShader(m_Id);
 	}
 
-	bool GLShader::LoadFromFile(const std::string & path)
+	bool GLShader::LoadFromFile(const String& path)
 	{
 		std::ifstream ifs(path);
 		if (!ifs.is_open()) return false;
-		std::string result;
+		String result;
 		char buffer;
 		while (ifs.get(buffer))
 		{
@@ -40,7 +40,7 @@ namespace RA_FRAMEWORK
 		return true;
 	}
 
-	bool GLShader::Compile(std::string& log)
+	bool GLShader::Compile(String& log)
 	{
 		glCompileShader(m_Id);
 		GLint isCompiled = 0;
@@ -52,7 +52,7 @@ namespace RA_FRAMEWORK
 			// The maxLength includes the NULL character
 			std::vector<char> errorLog(maxLength);
 			glGetShaderInfoLog(m_Id, maxLength, &maxLength, &errorLog[0]);
-			log = std::string(errorLog.begin(), errorLog.end());
+			log = String(errorLog.begin(), errorLog.end());
 			// Provide the infolog in whatever manor you deem best.
 			// Exit with failure.
 			glDeleteShader(m_Id); // Don't leak the shader.
@@ -65,7 +65,7 @@ namespace RA_FRAMEWORK
 		}
 	}
 
-	void GLShader::SetShaderString(const std::string & content)
+	void GLShader::LoadFromString(const String& content)
 	{
 #ifdef PRINT_SHADERS
 		std::cout << content << std::endl;
@@ -74,7 +74,7 @@ namespace RA_FRAMEWORK
 		glShaderSource(m_Id, 1, &c, NULL);
 	}
 
-	GLuint GLShader::GetID()const
+	uint GLShader::GetID()const
 	{
 		return m_Id;
 	}

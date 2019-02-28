@@ -6,16 +6,16 @@ namespace RA_FRAMEWORK
 	class GLShader : public Shader
 	{
 	private:
-		GLuint m_Id;
+		uint m_Id;
 	public:
 		GLShader(ShaderType type);
 		GLShader(const GLShader&) = delete;
 		GLShader& operator=(const GLShader&) = delete;
 		virtual ~GLShader();
 	public:
-		bool			LoadFromFile(const std::string& path);
-		void			SetShaderString(const std::string& content);
-		bool			Compile(std::string& log);
-		GLuint			GetID()const;
+		bool			LoadFromFile(const String& path);
+		void			LoadFromString(const String& content);
+		bool			Compile(String& log);
+		uint			GetID()const;
 	};
 }

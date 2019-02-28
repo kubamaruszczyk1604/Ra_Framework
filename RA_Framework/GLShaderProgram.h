@@ -16,7 +16,7 @@ namespace RA_FRAMEWORK
 		GLShaderProgram(const GLShaderProgram&) = delete;
 		virtual ~GLShaderProgram();
 	public:
-		GLuint		GetID()const		{ return m_ProgId; }
+		uint		GetID()const		{ return m_ProgId; }
 		bool		Created()const		{ return m_Created; }
 	public:
 		bool		Create()override;

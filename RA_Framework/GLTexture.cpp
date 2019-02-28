@@ -1,15 +1,6 @@
 #include "GLTexture.h"
 namespace RA_FRAMEWORK
 {
-	const GLuint GLTexture::s_TextureAddresModeLookupTable[5] =
-	{	
-		GL_REPEAT,
-		GL_MIRRORED_REPEAT,
-		GL_CLAMP,
-		GL_CLAMP_TO_BORDER,
-		GL_MIRROR_CLAMP_TO_EDGE
-	};
-
 	GLTexture::GLTexture(int w, int h, TextureFormat format, void* data, TextureFilterMode minFilterMode, TextureAddressMode magFilterMode, TextureAddressMode addressMode) :
 		Texture(GfxAPI::GL,0,0),
 		c_Width(w),
@@ -17,11 +8,11 @@ namespace RA_FRAMEWORK
 	{
 		glGenTextures(1, &m_ID);
 		glBindTexture(GL_TEXTURE_2D, m_ID);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, w, h, 0, GL_RGB, static_cast<GLuint>(format), data);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, static_cast<GLuint>(minFilterMode));
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, static_cast<GLuint>(magFilterMode));
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, s_TextureAddresModeLookupTable[static_cast<GLuint>(addressMode)]);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, s_TextureAddresModeLookupTable[static_cast<GLuint>(addressMode)]);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, w, h, 0, GL_RGB, TEX_FORMAT_LUT_GL[static_cast<uint>(format)], data);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, TEX_FILTER_LUT_GL[static_cast<uint>(minFilterMode)]);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, TEX_FILTER_LUT_GL[static_cast<uint>(magFilterMode)]);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, TEX_ADDRESS_MODE_LUT_GL[static_cast<uint>(addressMode)]);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, TEX_ADDRESS_MODE_LUT_GL[static_cast<uint>(addressMode)]);
 	}
 	//www.opengl-tutorial.org/intermediate-tutorials/tutorial-14-render-to-texture/
 	GLTexture::GLTexture(int w, int h, TextureFormat format, void* data):
@@ -31,11 +22,11 @@ namespace RA_FRAMEWORK
 	{
 		glGenTextures(1, &m_ID);
 		glBindTexture(GL_TEXTURE_2D, m_ID);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, w, h, 0, GL_RGB, static_cast<GLuint>(format), data);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, static_cast<GLuint>(TextureFilterMode::NEAREST));
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, static_cast<GLuint>(TextureFilterMode::NEAREST));
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, s_TextureAddresModeLookupTable[static_cast<GLuint>(TextureAddressMode::WRAP)]);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, s_TextureAddresModeLookupTable[static_cast<GLuint>(TextureAddressMode::WRAP)]);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, w, h, 0, GL_RGB, TEX_FORMAT_LUT_GL[static_cast<uint>(format)], data);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, TEX_FILTER_LUT_GL[0]);// nearest
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, TEX_FILTER_LUT_GL[0]);// nearest
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, TEX_ADDRESS_MODE_LUT_GL[0]);// wrap
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, TEX_ADDRESS_MODE_LUT_GL[0]);// wrap
 	}
 
 	GLTexture::GLTexture(int w, int h, TextureFormat format):
@@ -45,14 +36,14 @@ namespace RA_FRAMEWORK
 	{
 		glGenTextures(1, &m_ID);
 		glBindTexture(GL_TEXTURE_2D, m_ID);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, w, h, 0, GL_RGB, static_cast<GLuint>(format), 0);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, static_cast<GLuint>(TextureFilterMode::NEAREST));
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, static_cast<GLuint>(TextureFilterMode::NEAREST));
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, s_TextureAddresModeLookupTable[static_cast<GLuint>(TextureAddressMode::WRAP)]);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, s_TextureAddresModeLookupTable[static_cast<GLuint>(TextureAddressMode::WRAP)]);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, w, h, 0, GL_RGB, TEX_FORMAT_LUT_GL[static_cast<uint>(format)], 0);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, TEX_FILTER_LUT_GL[0]);// nearest
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, TEX_FILTER_LUT_GL[0]);// neatest
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, TEX_ADDRESS_MODE_LUT_GL[0]);// wrap
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, TEX_ADDRESS_MODE_LUT_GL[0]);// wrap
 	}
 
-	void GLTexture::Bind(GLuint slot)
+	void GLTexture::Bind(uint slot)
 	{
 		glActiveTexture(GL_TEXTURE0 + slot);
 		glBindTexture(GL_TEXTURE_2D, m_ID);
@@ -63,9 +54,9 @@ namespace RA_FRAMEWORK
 		glBindTexture(GL_TEXTURE_2D, m_ID);
 	}
 
-	void GLTexture::Bind(const std::string& uniformName, GLuint shaderProgID, GLuint slot)
+	void GLTexture::Bind(const String& uniformName, uint shaderProgID, uint slot)
 	{
-		GLuint samplerID = glGetUniformLocation(shaderProgID, uniformName.c_str());
+		const uint samplerID = glGetUniformLocation(shaderProgID, uniformName.c_str());
 		glUniform1i(samplerID, slot);
 		glActiveTexture(GL_TEXTURE0 + slot);
 		glBindTexture(GL_TEXTURE_2D, m_ID);

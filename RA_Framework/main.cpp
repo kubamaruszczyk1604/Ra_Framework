@@ -4,6 +4,7 @@
 #include "ModelComponent.h"
 #include "GLShaderProgram.h"
 #include "GLRenderer.h"
+#include "RABuiltInShaders.h"
 
 struct AtExit
 {
@@ -162,8 +163,8 @@ public:
 
 		m_pQuadMesh->CreateVertexBuffer(indices);
 
-		m_pVertexShader = new GLShader(ShaderType::VERTEX);
-		m_pVertexShader->LoadFromFile("C:/Zapas/glVert.txt");
+		m_pVertexShader = new GLShader(ShaderType::VERTEX);;
+		m_pVertexShader->LoadFromString(RA_BUILT_IN_SHADERS::GL_Vert_MVPStandard);
 		std::string status;
 		std::cout << "Compile Vertex Shader: " << m_pVertexShader->Compile(status);
 		std::cout << "  Status: "<< status << std::endl;

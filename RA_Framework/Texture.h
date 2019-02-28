@@ -19,5 +19,7 @@ namespace RA_FRAMEWORK
 		inline unsigned GetID()const 				{ return m_ID; }
 		inline unsigned GetSlot()const				{ return m_Slot; }
 		inline void SetSlot(const unsigned slot)	{ m_Slot = slot; }
+	public:
+		virtual void Bind() = 0;
 	};
 }
