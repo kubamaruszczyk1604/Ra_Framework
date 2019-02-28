@@ -10,7 +10,6 @@
 #include "GLM\GTC\type_ptr.hpp"
 //#include <GLM\GTC\matrix_transform.hpp>
 
-
 #include <unordered_map>
 #include <algorithm>
 #include <memory>
@@ -68,18 +67,15 @@ namespace RA_FRAMEWORK
 		return (fabs(b - a) < epsilon);
 	};
 
-
 	inline void PrintVec(const Vec3& vec)
 	{
 		std::cout << "x=" << vec.x << "  y=" << vec.y << "  z=" << vec.z << std::endl;
 	}
 
-
 	inline void PrintCol(const ColorRGBA& col)
 	{
 		std::cout << "r=" << col.r << "  g=" << col.g << "  b=" << col.b << "  a=" << col.a << std::endl;
 	}
-
 
 	inline void DEBUG(const std::string& line)
 	{
@@ -108,7 +104,6 @@ namespace RA_FRAMEWORK
 
 	inline std::string ToString(const Vec3& vec)
 	{
-
 		return   "x=" + std::to_string(vec.x) +
 			"  y=" + std::to_string(vec.y) +
 			"  z=" + std::to_string(vec.z);
@@ -116,7 +111,6 @@ namespace RA_FRAMEWORK
 
 	inline std::string ToString(const Vec4& vec)
 	{
-
 		return   "x=" + std::to_string(vec.x) +
 			"  y=" + std::to_string(vec.y) +
 			"  z=" + std::to_string(vec.z) +
@@ -125,7 +119,6 @@ namespace RA_FRAMEWORK
 
 	inline std::string ColourToString(const ColorRGBA& colour)
 	{
-
 		return   "r=" + std::to_string(colour.r) +
 			"  g=" + std::to_string(colour.g) +
 			"  b=" + std::to_string(colour.b) +
