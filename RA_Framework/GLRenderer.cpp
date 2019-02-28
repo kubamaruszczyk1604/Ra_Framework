@@ -158,7 +158,7 @@ namespace RA_FRAMEWORK
 		DeleteDC(s_hDevCtx);
 	}
 
-	void GLRenderer::ClearScreen(const Colour & colour)
+	void GLRenderer::ClearScreen(const ColorRGBA & colour)
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glClearColor(colour.r, colour.g, colour.b, colour.a);

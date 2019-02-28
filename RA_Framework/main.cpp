@@ -4,7 +4,6 @@
 #include "ModelComponent.h"
 #include "GLShaderProgram.h"
 #include "GLRenderer.h"
-#include "RABuiltInShaders.h"
 
 struct AtExit
 {
@@ -117,7 +116,6 @@ public:
 
 class ExampleScene2 :public Scene
 {
-
 public:
 	ExampleScene2() :Scene() {}
 
@@ -130,14 +128,14 @@ public:
 		delete m_pMaterial;
 	}
 
-	Mesh* m_pQuadMesh;
-	Material* m_pMaterial;
-	ModelComponent* m_pModel;
-	GLShader* m_pVertexShader;
-	GLShader* m_pFragmentShader;
-	GLShaderProgram* m_pShaderProg;
-	Camera* m_pCamera;
-	Entity* e1;
+	Mesh*				m_pQuadMesh;
+	Material*			m_pMaterial;
+	ModelComponent*		m_pModel;
+	GLShader*			m_pVertexShader;
+	GLShader*			m_pFragmentShader;
+	GLShaderProgram*	m_pShaderProg;
+	Camera*				m_pCamera;
+	Entity*				e1;
 
 	void OnStart()
 	{
@@ -231,9 +229,6 @@ public:
 	{
 	}
 };
-
-
-
 
 int main()
 {

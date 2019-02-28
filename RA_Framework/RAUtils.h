@@ -21,7 +21,7 @@
 #include "RATypes.h"
 #include "Stopwatch.h"
 #include "KLMList.h"
-
+#include "RABuiltInShaders.h"
 //#include  <glew.h>  
 //OPENGL HEADERS
 #include "GL\glew.h"
@@ -75,10 +75,10 @@ namespace RA_FRAMEWORK
 	}
 
 
-	/*inline void PrintCol(const Colour& col)
+	inline void PrintCol(const ColorRGBA& col)
 	{
 		std::cout << "r=" << col.r << "  g=" << col.g << "  b=" << col.b << "  a=" << col.a << std::endl;
-	}*/
+	}
 
 
 	inline void DEBUG(const std::string& line)
@@ -123,7 +123,7 @@ namespace RA_FRAMEWORK
 			"  w=" + std::to_string(vec.w);
 	}
 
-	inline std::string ColourToString(const Colour& colour)
+	inline std::string ColourToString(const ColorRGBA& colour)
 	{
 
 		return   "r=" + std::to_string(colour.r) +

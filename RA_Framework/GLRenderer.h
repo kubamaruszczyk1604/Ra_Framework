@@ -35,7 +35,7 @@ namespace RA_FRAMEWORK
 		static void		Render(ModelComponent* model, Camera* camera, Transform* transform, const String& name);
 		static void		Update(const float deltaTime, const float totalTime);
 		static void		ShutDown();
-		static void		ClearScreen(const Colour& colour);
+		static void		ClearScreen(const ColorRGBA& colour);
 		static void		SwapBuffers();
 		static void		SetCullMode(const CullMode mode);
 		static void		SetFillMode(const FillMode mode);
