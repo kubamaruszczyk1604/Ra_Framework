@@ -27,6 +27,7 @@
 //#include "GL\freeglut.h"
 #include <windows.h>
 
+
 #pragma comment(lib, "opengl32.lib")
 //#pragma comment(lib, "glu32.lib")
 //#pragma comment(lib, "freeglut.lib")

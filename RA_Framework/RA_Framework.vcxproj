@@ -70,21 +70,21 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LibraryPath>$(SolutionDir)\packages\nupengl.core.0.1.0.1\build\native\lib\x64;$(LibraryPath)</LibraryPath>
-    <IncludePath>$(SolutionDir)\packages\nupengl.core.0.1.0.1\build\native\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)FreeImg\w64;$(SolutionDir)\packages\nupengl.core.0.1.0.1\build\native\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)FreeImg\Include;$(SolutionDir)\packages\nupengl.core.0.1.0.1\build\native\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LibraryPath>$(SolutionDir)\packages\nupengl.core.0.1.0.1\build\native\lib\Win32;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)FreeImg\x32;$(SolutionDir)\packages\nupengl.core.0.1.0.1\build\native\lib\Win32;$(LibraryPath)</LibraryPath>
     <Linkage-glew>ltcg</Linkage-glew>
     <IncludePath>$(SolutionDir)\packages\nupengl.core.0.1.0.1\build\native\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>$(SolutionDir)\packages\nupengl.core.0.1.0.1\build\native\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)\packages\nupengl.core.0.1.0.1\build\native\lib\Win32;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)FreeImg\x32;$(SolutionDir)\packages\nupengl.core.0.1.0.1\build\native\lib\Win32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)\packages\nupengl.core.0.1.0.1\build\native\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)\packages\nupengl.core.0.1.0.1\build\native\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)FreeImg\Include;$(SolutionDir)\packages\nupengl.core.0.1.0.1\build\native\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)FreeImg\w64;$(SolutionDir)\packages\nupengl.core.0.1.0.1\build\native\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -145,6 +145,7 @@
     <ClCompile Include="GLShaderProgram.cpp" />
     <ClCompile Include="GLTexture.cpp" />
     <ClCompile Include="GLVBO.cpp" />
+    <ClCompile Include="ImageLoader.cpp" />
     <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Material.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="GLTexture.h" />
     <ClInclude Include="GLVBO.h" />
     <ClInclude Include="GLTypeLUTs.h" />
+    <ClInclude Include="ImageLoader.h" />
     <ClInclude Include="RABuiltInShaders.h" />
     <ClInclude Include="RendererDirectives.h" />
     <ClInclude Include="InputSystem.h" />
