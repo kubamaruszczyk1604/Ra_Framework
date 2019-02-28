@@ -123,11 +123,14 @@ public:
 	~ExampleScene2() 
 	{
 		delete m_pQuadMesh;
+		delete m_pMaterial;
 		delete m_pVertexShader;
 		delete m_pFragmentShader;
 		delete m_pShaderProg;
-		delete m_pMaterial;
+		
 		delete m_pImageLoader;
+		delete m_pTexture1;
+		delete m_pTexture2;
 	}
 
 	Mesh*				m_pQuadMesh;
@@ -139,12 +142,21 @@ public:
 	Camera*				m_pCamera;
 	Entity*				e1;
 	ImageLoader*        m_pImageLoader;
+	GLTexture*          m_pTexture1;
+	GLTexture*          m_pTexture2;
 	void OnStart()
 	{
 		PRINTL("OnStart()");
 		m_pImageLoader = new ImageLoader();
+
 		Image image;
-		m_pImageLoader->Load(" ", image);
+		std::cout << "Loading image1: " << m_pImageLoader->Load("C:/Zapas/text2.png", image) << std::endl;
+		m_pTexture1 = new GLTexture(image.GetWidth(), image.GetHeight(), TextureFormat::UBYTE, (void*)image.GetPixels());
+		m_pImageLoader->Free(image);
+		std::cout << "Loading image2: " << m_pImageLoader->Load("C:/Zapas/text.png", image) << std::endl;
+		m_pTexture2 = new GLTexture(image.GetWidth(), image.GetHeight(), TextureFormat::UBYTE, (void*)image.GetPixels());
+		m_pTexture2->SetSlot(1);
+		m_pImageLoader->Free(image);
 		// MESH
 		m_pQuadMesh = new Mesh();
 		float size{ 5.5f };
@@ -165,8 +177,9 @@ public:
 
 		m_pQuadMesh->CreateVertexBuffer(indices);
 
-		m_pVertexShader = new GLShader(ShaderType::VERTEX);;
-		m_pVertexShader->LoadFromString(RA_BUILT_IN_SHADERS::GL_Vert_MVPStandard);
+		m_pVertexShader = new GLShader(ShaderType::VERTEX);
+		m_pVertexShader->LoadFromFile("C:/Zapas/glVert.txt");
+		//m_pVertexShader->LoadFromString(RA_BUILT_IN_SHADERS::GL_Vert_MVPStandard);
 		std::string status;
 		std::cout << "Compile Vertex Shader: " << m_pVertexShader->Compile(status);
 		std::cout << "  Status: "<< status << std::endl;
@@ -181,7 +194,8 @@ public:
 
 		m_pMaterial = new Material(m_pShaderProg);
 		m_pMaterial->AddShaderVariable("aa", Vec3(0.0, 0.0, 1.0));
-
+		m_pMaterial->AddShaderVariable("tex1", m_pTexture1);
+		m_pMaterial->AddShaderVariable("tex2", m_pTexture2);
 		
         m_pModel = new ModelComponent("model", m_pQuadMesh, m_pMaterial);
 	    e1 = new Entity("Test 1");
@@ -210,6 +224,7 @@ public:
 	void Update(float deltaTime, float totalTime = 0)
 	{
 		e1->GetTransform()->SetRotationY(totalTime);
+		//m_pTexture->Bind("tex", m_pShaderProg->GetID(), 0);
 	}
 
 	void OnExit()

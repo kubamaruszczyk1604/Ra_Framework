@@ -109,8 +109,11 @@ namespace RA_FRAMEWORK
 	void GLShaderProgram::SetTexture(const String & varname, int textureID, unsigned slot)
 	{
 		GLuint samplerID = glGetUniformLocation(m_ProgId, varname.c_str());
-		glUniform1i(samplerID, textureID);
+		glUniform1i(samplerID, slot); 
 		glActiveTexture(GL_TEXTURE0 + slot);
 		glBindTexture(GL_TEXTURE_2D, textureID);
+
+
+
 	}
 }
