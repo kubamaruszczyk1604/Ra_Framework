@@ -33,8 +33,8 @@ namespace RA_FRAMEWORK
 		ImageLoader(const ImageLoader&) = delete;
 		ImageLoader& operator=(const ImageLoader) = delete;
 	public:
-		BITMAP_DATA* LoadImage(const String& path);
-		bool LoadImage(const String& path, Image& output);
+		BITMAP_DATA* Load(const String& path);
+		bool Load(const String& path, Image& output);
 		void Free(BITMAP_DATA*& data);
 		void Free(Image& image);
 	};

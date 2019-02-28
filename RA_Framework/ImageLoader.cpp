@@ -4,7 +4,7 @@ namespace RA_FRAMEWORK
 	ImageLoader::ImageLoader(){}
 	ImageLoader::~ImageLoader(){}
 
-	BITMAP_DATA* ImageLoader::LoadImage(const String& path)
+	BITMAP_DATA* ImageLoader::Load(const String& path)
 	{
 		FREE_IMAGE_FORMAT texFormat = FreeImage_GetFileType(path.c_str(), 0);
 		FIBITMAP* image = FreeImage_Load(texFormat, path.c_str());
@@ -16,9 +16,9 @@ namespace RA_FRAMEWORK
 		return image;
 	}
 
-	bool ImageLoader::LoadImage(const String& path, Image& output)
+	bool ImageLoader::Load(const String& path, Image& output)
 	{
-		output.DATA = LoadImage(path);
+		output.DATA = Load(path);
 		if (!output.DATA) return false;
 		return true;
 	}

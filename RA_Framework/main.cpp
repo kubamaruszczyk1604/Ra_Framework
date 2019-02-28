@@ -4,6 +4,7 @@
 #include "ModelComponent.h"
 #include "GLShaderProgram.h"
 #include "GLRenderer.h"
+#include "ImageLoader.h"
 
 struct AtExit
 {
@@ -126,6 +127,7 @@ public:
 		delete m_pFragmentShader;
 		delete m_pShaderProg;
 		delete m_pMaterial;
+		delete m_pImageLoader;
 	}
 
 	Mesh*				m_pQuadMesh;
@@ -136,11 +138,13 @@ public:
 	GLShaderProgram*	m_pShaderProg;
 	Camera*				m_pCamera;
 	Entity*				e1;
-
+	ImageLoader*        m_pImageLoader;
 	void OnStart()
 	{
 		PRINTL("OnStart()");
-
+		m_pImageLoader = new ImageLoader();
+		Image image;
+		m_pImageLoader->Load(" ", image);
 		// MESH
 		m_pQuadMesh = new Mesh();
 		float size{ 5.5f };
