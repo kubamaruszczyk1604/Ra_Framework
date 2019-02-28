@@ -100,20 +100,21 @@ namespace RA_FRAMEWORK
 		glUniformMatrix3fv(loc, 1, GL_FALSE, &value[0][0]);
 	}
 
-	void GLShaderProgram::SetMat4x4(const String & varname, const Mat4 & value)
+	void GLShaderProgram::SetMat4x4(const String& varname, const Mat4 & value)
 	{
 		GLuint loc = glGetUniformLocation(m_ProgId, varname.c_str());
 		glUniformMatrix4fv(loc, 1, GL_FALSE, &value[0][0]);
 	}
 
-	void GLShaderProgram::SetTexture(const String & varname, int textureID, unsigned slot)
+	void GLShaderProgram::SetTexture(const String& varname, int textureID, unsigned slot)
 	{
+		// This function:
+		//1 binds shader sampler to texture unit of index "slot"
+		//2 binds textureID to texture unit of index "slot"
+
 		GLuint samplerID = glGetUniformLocation(m_ProgId, varname.c_str());
-		glUniform1i(samplerID, slot); 
-		glActiveTexture(GL_TEXTURE0 + slot);
-		glBindTexture(GL_TEXTURE_2D, textureID);
-
-
-
+		glUniform1i(samplerID, slot); // assign sampler to texture unit index
+		glActiveTexture(GL_TEXTURE0 + slot);// make current texture unit active (ie. GL_TEXTURE_2D  will refer to it)
+		glBindTexture(GL_TEXTURE_2D, textureID);//bind texture
 	}
 }
