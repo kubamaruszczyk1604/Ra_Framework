@@ -2,9 +2,7 @@
 #include "RAUtils.h"
 namespace RA_FRAMEWORK
 {
-
-
-	enum class TextureAddressMode
+	enum class TextureWrapMode
 	{
 		WRAP = 0,
 		MIRROR = 1,
@@ -42,7 +40,6 @@ namespace RA_FRAMEWORK
 		BGRA = 3,
 		DEPTH_COMPONENT = 4,
 		DEPTH_STENCIL = 5
-
 	};
 
 	enum class TextureDataFormat
@@ -72,6 +69,5 @@ namespace RA_FRAMEWORK
 		RGB32F = 22,
 		RGBA16F = 23,
 		RGBA32F = 24
-
 	};
 }

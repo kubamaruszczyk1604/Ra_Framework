@@ -12,10 +12,11 @@ namespace RA_FRAMEWORK
 		const int c_Width;
 		const int c_Height;
 	public:
-		GLTexture(int w, int h, InputPixelDataType format, void* data, TextureFilterMode minFilterMode, TextureFilterMode magFilterMode, TextureAddressMode addressMode);
-		GLTexture(int w, int h, InputPixelDataType format, void* data);
-		GLTexture(InputPixelDataType format, Image& image);
-		GLTexture(int w, int h, InputPixelDataType format);
+		GLTexture(int w, int h, const TextureFormatDescriptor& desc, void* data);
+		GLTexture(int w, int h, const TextureFormatDescriptor& desc);
+		GLTexture(InputPixelDataType inputPixelFormat, TextureDataFormat internalFormat, Image& image);
+		GLTexture(TextureDataFormat internalFormat, Image& image);
+		GLTexture(Image& image);
 		~GLTexture();
 	public:
 		//Assigns shader's uniform to the same slot as the texture.
@@ -23,8 +24,13 @@ namespace RA_FRAMEWORK
 		//Assigns texture to the slot and binds it as current texture.
 		void		Bind(uint slot);
 		//Binds texture as current at default slot.
-		void		Bind()override;
-		void		Unbind()override;
+		void			Bind()override;
+		void			Unbind()override;
+		void			GenerateMipmaps()override;
+		void			SetWrapMode(TextureWrapMode mode);
+		void			SetMinFilterMode(TextureFilterMode filterMode);
+		void			SetMagFilterMode(TextureFilterMode filterMode);
+		void			SetFilterMode(TextureFilterMode minMode, TextureFilterMode magMode);
 	public:
 		int			Width()		{ return c_Width; }
 		int			Height()	{ return c_Height; }

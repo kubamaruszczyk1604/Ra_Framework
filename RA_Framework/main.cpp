@@ -144,8 +144,9 @@ public:
 	Camera*				m_pCamera;
 	Entity*				e1;
 	ImageLoader*        m_pImageLoader;
-	GLTexture*          m_pTexture1;
-	GLTexture*          m_pTexture2;
+	Texture*          m_pTexture1;
+	Texture*          m_pTexture2;
+
 	void OnStart()
 	{
 		PRINTL("OnStart()");
@@ -153,15 +154,15 @@ public:
 
 		Image image;
 		std::cout << "Loading image1: " << m_pImageLoader->Load("C:/Zapas/text1.png", image) << std::endl;
-		m_pTexture1 = new GLTexture(InputPixelDataType::UNISGNED_BYTE, image);
+		m_pTexture1 = new GLTexture(image);
 		m_pImageLoader->Free(image);
 		std::cout << "Loading image2: " << m_pImageLoader->Load("C:/Zapas/text2.png", image) << std::endl;
-		m_pTexture2 = new GLTexture(InputPixelDataType::UNISGNED_BYTE, image);
+		m_pTexture2 = new GLTexture(image);
 		m_pTexture2->SetSlot(1);
 		m_pImageLoader->Free(image);
 		// MESH
 		m_pQuadMesh = new Mesh();
-		float size{ 5.5f };
+		float size{ 7.5f };
 		float fbDist = 0.01f;
 		//front
 		m_pQuadMesh->AddVertex(Vertex(-size, -size, -fbDist, 0, 0, -1, 0, 0));
