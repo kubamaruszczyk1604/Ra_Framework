@@ -228,6 +228,7 @@ namespace RA_FRAMEWORK
 		}
 		glDisable(GL_BLEND);
 	}
+
 	void GLRenderer::EnableDepthTest(bool enabled, DepthQualifier qualifier)
 	{
 		if (enabled)

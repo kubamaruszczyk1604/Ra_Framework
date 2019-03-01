@@ -12,10 +12,10 @@ namespace RA_FRAMEWORK
 		const int c_Width;
 		const int c_Height;
 	public:
-		GLTexture(int w, int h, TextureFormat format, void* data, TextureFilterMode minFilterMode, TextureAddressMode magFilterMode, TextureAddressMode addressMode);
-		GLTexture(int w, int h, TextureFormat format, void* data);
-		GLTexture(TextureFormat format, Image& image);
-		GLTexture(int w, int h, TextureFormat format);
+		GLTexture(int w, int h, InputPixelDataType format, void* data, TextureFilterMode minFilterMode, TextureFilterMode magFilterMode, TextureAddressMode addressMode);
+		GLTexture(int w, int h, InputPixelDataType format, void* data);
+		GLTexture(InputPixelDataType format, Image& image);
+		GLTexture(int w, int h, InputPixelDataType format);
 		~GLTexture();
 	public:
 		//Assigns shader's uniform to the same slot as the texture.

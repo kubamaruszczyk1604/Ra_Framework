@@ -153,10 +153,10 @@ public:
 
 		Image image;
 		std::cout << "Loading image1: " << m_pImageLoader->Load("C:/Zapas/text1.png", image) << std::endl;
-		m_pTexture1 = new GLTexture(TextureFormat::UBYTE, image);
+		m_pTexture1 = new GLTexture(InputPixelDataType::UNISGNED_BYTE, image);
 		m_pImageLoader->Free(image);
 		std::cout << "Loading image2: " << m_pImageLoader->Load("C:/Zapas/text2.png", image) << std::endl;
-		m_pTexture2 = new GLTexture(TextureFormat::UBYTE, image);
+		m_pTexture2 = new GLTexture(InputPixelDataType::UNISGNED_BYTE, image);
 		m_pTexture2->SetSlot(1);
 		m_pImageLoader->Free(image);
 		// MESH
