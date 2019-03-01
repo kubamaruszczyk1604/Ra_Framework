@@ -42,5 +42,6 @@ namespace RA_FRAMEWORK
 		static void		SetActiveCamera(Camera* camera);
 		static void		EnableAlphaBlending(bool enabled = true);
 		static void		EnableDepthTest(bool enabled = true, DepthQualifier qualifier = DepthQualifier::LESS);
+
 	};
 }

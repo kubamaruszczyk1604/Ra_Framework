@@ -35,100 +35,19 @@ public:
 	}
 };
 
-
 class ExampleScene :public Scene
 {
-
 public:
-	ExampleScene() :Scene()
-	{
+	ExampleScene() :Scene() {}
 
-	}
-	~ExampleScene() {}
-
-
-	void OnStart()
-	{
-		PRINTL("OnStart()");
-		Entity* e1 = new Entity("Test 1");
-		e1->AddComponent(std::unique_ptr<TestBehaviour>(new TestBehaviour()));
-		e1->GetTransform()->SetPositionY(10.0f);
-
-		Entity* e2 = new Entity("Test 2");
-		e2->GetTransform()->SetPositionY(10.0f);
-		e1->AddChild(e2);
-
-		Entity* e3 = new Entity("Test 3");
-		e3->GetTransform()->SetPositionY(10.0f);
-		e2->AddChild(e3);
-
-		AddEntity(e1);
-		AddEntity(e2);
-		AddEntity(e3);
-
-	}
-	void Update(float deltaTime, float totalTime = 0)
-	{
-		//PRINTL("Update(" + ToString(deltaTime) + ", " + ToString(totalTime) + ")");
-	}
-	void OnExit()
-	{
-		PRINTL("OnExit()");
-	}
-
-	void PostUpdate() {}
-
-	//InputCallbacks
-	void OnKeyPressed(const int key, const KeyState state)
-	{
-		PRINTL("Key Pressed: " + ToString(key));
-
-		GetEntityManager()->RemoveEntity("Test 3");
-
-		Entity* entity = FindEntity("Test 1");
-		if (entity)
-		{
-			PRINTL("ENTITY: " + entity->GetName());
-			Entity* child = entity->FindInChildreen("Test 2");
-
-			if (child)
-			{
-				PRINTL("CHILD: " + child->GetName());
-			}
-		}
-
-	}
-	void OnMouseMove(const int x, const int y)
-	{
-	//	//PRINTL("Mouse Move: " + ToString(x) + ", " + ToString(y));
-	}
-	void OnMouseButtonUp(MouseButton const button)
-	{
-		PRINTL("Mouse Button Up: " + ToString(static_cast<int>(button)));
-	}
-	void OnMouseButtonDown(MouseButton const button)
-	{
-		PRINTL("Mouse Button Down: " + ToString(static_cast<int>(button)));
-		WindowsApp::SetFullscreenMode(false);
-	}
-
-};
-
-
-class ExampleScene2 :public Scene
-{
-public:
-	ExampleScene2() :Scene() {}
-
-	~ExampleScene2() 
+	~ExampleScene() 
 	{
 		delete m_pQuadMesh;
 		delete m_pMaterial1;
 		delete m_pMaterial2;
 		delete m_pVertexShader;
 		delete m_pFragmentShader;
-		delete m_pShaderProg;
-		
+		delete m_pShaderProg;		
 		delete m_pImageLoader;
 		delete m_pTexture1;
 		delete m_pTexture2;
@@ -205,7 +124,6 @@ public:
 	    e1->AddComponent(std::unique_ptr<ModelComponent>(m_pModel1));
 		AddEntity(e1);
 
-
 		m_pMaterial2 = new Material(m_pShaderProg);
 		m_pMaterial2->AddShaderVariable("col", Vec3(0.0, 0.0, 1.0));
 		m_pMaterial2->AddShaderVariable("tex2", m_pTexture2);
@@ -214,7 +132,7 @@ public:
 		e2->AddComponent(std::unique_ptr<TestBehaviour>(new TestBehaviour()));
 		e2->AddComponent(std::unique_ptr<ModelComponent>(m_pModel2));
 		e2->GetTransform()->SetScale(0.3f, 0.3f, 1.0f);
-		e2->GetTransform()->SetPosition(-8.0f, 0.0f, 0.0f);
+		e2->GetTransform()->SetPosition(-8.0f, 3.0f, 0.0f);
 		AddEntity(e2);
 		e1->AddChild(e2);
 
@@ -272,7 +190,7 @@ int main()
 {
 	WindowsApp::Create(1280, 720, "RA WINDOW");
 	//WindowsApp::SetFullscreenMode(true);
-	SceneManager::Load(new ExampleScene2());
+	SceneManager::Load(new ExampleScene());
 	const int appState = WindowsApp::Run();
 
    // WaitForKeypress();

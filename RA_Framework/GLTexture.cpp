@@ -48,10 +48,7 @@ namespace RA_FRAMEWORK
 		GLTexture(InputPixelDataType::UNISGNED_BYTE, internalFormat, image){}
 
 	GLTexture::GLTexture(Image& image):
-		GLTexture(InputPixelDataType::UNISGNED_BYTE,TextureDataFormat::RGBA,image)
-	{}
-
-	
+		GLTexture(InputPixelDataType::UNISGNED_BYTE,TextureDataFormat::RGBA,image){}
 
 	void GLTexture::Bind(uint slot)
 	{

@@ -53,12 +53,23 @@ namespace RA_FRAMEWORK
 		SHADOW_RECEIVER				= 1 << 3,
 		REFLECTION_CASTER			= 1 << 4,
 		SHADOW_CASTER				= 1 << 5,
-		UI							= 1 << 6
+		UI							= 1 << 6,
+		TRANSPARENT_OBJECT			= 1 << 7
 	};
+
 	enum class GfxAPI
 	{
 		D3D11 = 0,
 		GL = 1
+	};
+
+	enum ClearMode
+	{
+		DONT_CLEAR = 0,
+		COLOR = 1,
+		COLOR_GRADIENT = 2,
+		TEXTURE = 3,
+		SKYBOX = 4
 	};
 
 #define PRINT(P) std::cout<<P<<std::endl;
@@ -66,7 +77,6 @@ namespace RA_FRAMEWORK
 	//Example PREDICATE(int,Object==2)
 #define UNARY_PRED1(T,condition) [](T const& Object) { return condition; }
 #define UNARY_PRED2(T,condition) [](T const& ObjectA,T const& ObjectB) { return condition; }
-
 }
 
 #endif

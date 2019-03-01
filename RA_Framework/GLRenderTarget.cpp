@@ -14,14 +14,14 @@ namespace RA_FRAMEWORK
 	{
 		glGenFramebuffers(1, &m_Fbo);
 		glBindFramebuffer(GL_FRAMEBUFFER, m_Fbo);
-		if (m_DepthFlag)
+	/*	if (m_DepthFlag)
 		{
 			///http://www.songho.ca/opengl/gl_fbo.html
 			glGenRenderbuffers(1, &m_DepthBuffer);
 			glBindRenderbuffer(GL_RENDERBUFFER, m_DepthBuffer);
 			glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, destination->Width(), destination->Height());
 			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_DepthBuffer);
-		}
+		}*/
 		// Set m_TargetTex as colour attachement #0
 		glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, m_TargetTex->GetID(), 0);
 		// Set the list of draw buffers.
