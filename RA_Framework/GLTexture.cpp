@@ -20,6 +20,7 @@ namespace RA_FRAMEWORK
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, TEX_FILTER_LUT_GL[static_cast<uint>(desc.MAG_FILTER_MODE)]);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, TEX_ADDRESS_MODE_LUT_GL[static_cast<uint>(desc.WRAP_MODE)]);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, TEX_ADDRESS_MODE_LUT_GL[static_cast<uint>(desc.WRAP_MODE)]);
+		if(desc.GEN_MIPMAPS)glGenerateMipmap(GL_TEXTURE_2D);
 	}
 
 	GLTexture::GLTexture(int w, int h, const TextureFormatDescriptor & desc): 
@@ -40,7 +41,7 @@ namespace RA_FRAMEWORK
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, TEX_FILTER_LUT_GL[1]);// nearest
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, TEX_ADDRESS_MODE_LUT_GL[0]);// wrap
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, TEX_ADDRESS_MODE_LUT_GL[0]);// wrap
-		//glGenerateTextureMipmap(m_ID);
+		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 
 	GLTexture::GLTexture(TextureDataFormat internalFormat, Image& image):

@@ -11,6 +11,7 @@ namespace RA_FRAMEWORK
 		InputPixelDataType INPUT_DATA_TYPE { InputPixelDataType::UNISGNED_BYTE };
 		InputPixelFormat INPUT_PIXEL_FORMAT { InputPixelFormat::RGBA };
 		TextureDataFormat TEXTURE_DATA_FORMAT { TextureDataFormat::RGBA };
+		bool GEN_MIPMAPS{ false };
 	};
 
 	class Texture
