@@ -139,6 +139,7 @@ namespace RA_FRAMEWORK
 		material->GetShaderProgram()->SetFloat("uTime", s_TotalTime);
 #endif//ENABLE__uTime 
 		model->GetMesh()->GetVBO()->Draw(PrimitiveType::TRIANGLES);
+		material->UnbindTextures();
 	}
 
 	void GLRenderer::Update(const float deltaTime, const float totalTime)

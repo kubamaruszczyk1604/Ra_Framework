@@ -21,5 +21,6 @@ namespace RA_FRAMEWORK
 		inline void SetSlot(const unsigned slot)	{ m_Slot = slot; }
 	public:
 		virtual void Bind() = 0;
+		virtual void Unbind() = 0;
 	};
 }

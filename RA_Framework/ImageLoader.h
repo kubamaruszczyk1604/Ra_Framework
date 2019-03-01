@@ -8,6 +8,7 @@ namespace RA_FRAMEWORK
 	struct Image
 	{
 		BITMAP_DATA* DATA = nullptr;
+		bool HAS_TRANSPARENCY = true;
 		int GetWidth() 
 		{ 
 			if(DATA) return FreeImage_GetWidth(DATA); 
@@ -33,8 +34,8 @@ namespace RA_FRAMEWORK
 		ImageLoader(const ImageLoader&) = delete;
 		ImageLoader& operator=(const ImageLoader) = delete;
 	public:
-		BITMAP_DATA* Load(const String& path);
-		bool Load(const String& path, Image& output);
+		BITMAP_DATA* Load(const String& path, bool transparent = true);
+		bool Load(const String& path, Image& output, bool alphaChannel = true);
 		void Free(BITMAP_DATA*& data);
 		void Free(Image& image);
 	};

@@ -33,6 +33,6 @@ namespace RA_FRAMEWORK
 		void		SetMat2x2(const String& varname, const Mat2& value)override;
 		void		SetMat3x3(const String& varname, const Mat3& value)override;
 		void		SetMat4x4(const String& varname, const Mat4& value)override;
-		void		SetTexture(const String& varname, int textureID, unsigned slot)override;
+		void		SetTexture(const String& varname, Texture* texture)override;
 	};
 }

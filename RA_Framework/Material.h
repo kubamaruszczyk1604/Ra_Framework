@@ -28,6 +28,7 @@ namespace RA_FRAMEWORK
 		virtual ~Material();
 	public:
 		void			Use();
+		void			UnbindTextures();
 		ShaderProgram*	GetShaderProgram()								{ return p_Shader; }
 	public:
 		void AddShaderVariable(const String& name, int value)			{ m_IntList.Add(new ShaderVariable<int>(name, value));}

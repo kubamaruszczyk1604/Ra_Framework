@@ -1,5 +1,6 @@
 #pragma once
 #include "Shader.h"
+#include "Texture.h"
 namespace RA_FRAMEWORK
 {
 	class ShaderProgram
@@ -28,6 +29,6 @@ namespace RA_FRAMEWORK
 		virtual void	SetMat2x2(const String& varname, const Mat2& value) = 0;
 		virtual void	SetMat3x3(const String& varname, const Mat3& value) = 0;
 		virtual void	SetMat4x4(const String& varname, const Mat4& value) = 0;
-		virtual void	SetTexture(const String& varname, int textureID, unsigned slot) = 0;
+		virtual void	SetTexture(const String& varname, Texture* texture) = 0;
 	};
 }

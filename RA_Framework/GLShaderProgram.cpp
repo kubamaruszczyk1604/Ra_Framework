@@ -1,4 +1,5 @@
 #include "GLShaderProgram.h"
+#include "GLTexture.h"
 namespace RA_FRAMEWORK
 {
 	GLShaderProgram::GLShaderProgram(GLShader * vertexShader, GLShader * fragmentShader) :
@@ -106,15 +107,9 @@ namespace RA_FRAMEWORK
 		glUniformMatrix4fv(loc, 1, GL_FALSE, &value[0][0]);
 	}
 
-	void GLShaderProgram::SetTexture(const String& varname, int textureID, unsigned slot)
+	void GLShaderProgram::SetTexture(const String& varname, Texture* texture)
 	{
-		// This function:
-		//1 binds shader sampler to texture unit of index "slot"
-		//2 binds textureID to texture unit of index "slot"
-
-		GLuint samplerID = glGetUniformLocation(m_ProgId, varname.c_str());
-		glUniform1i(samplerID, slot); // assign sampler to texture unit index
-		glActiveTexture(GL_TEXTURE0 + slot);// make current texture unit active (ie. GL_TEXTURE_2D  will refer to it)
-		glBindTexture(GL_TEXTURE_2D, textureID);//bind texture
+		auto gltex = (GLTexture*)texture;
+		gltex->Bind(varname, m_ProgId);
 	}
 }

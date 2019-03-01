@@ -123,7 +123,8 @@ public:
 	~ExampleScene2() 
 	{
 		delete m_pQuadMesh;
-		delete m_pMaterial;
+		delete m_pMaterial1;
+		delete m_pMaterial2;
 		delete m_pVertexShader;
 		delete m_pFragmentShader;
 		delete m_pShaderProg;
@@ -134,8 +135,9 @@ public:
 	}
 
 	Mesh*				m_pQuadMesh;
-	Material*			m_pMaterial;
-	ModelComponent*		m_pModel;
+	Material*			m_pMaterial1;
+	Material*			m_pMaterial2;
+	ModelComponent*		m_pModel1;
 	GLShader*			m_pVertexShader;
 	GLShader*			m_pFragmentShader;
 	GLShaderProgram*	m_pShaderProg;
@@ -150,11 +152,11 @@ public:
 		m_pImageLoader = new ImageLoader();
 
 		Image image;
-		std::cout << "Loading image1: " << m_pImageLoader->Load("C:/Zapas/text2.png", image) << std::endl;
-		m_pTexture1 = new GLTexture(image.GetWidth(), image.GetHeight(), TextureFormat::UBYTE, (void*)image.GetPixels());
+		std::cout << "Loading image1: " << m_pImageLoader->Load("C:/Zapas/text1.png", image) << std::endl;
+		m_pTexture1 = new GLTexture(TextureFormat::UBYTE, image);
 		m_pImageLoader->Free(image);
-		std::cout << "Loading image2: " << m_pImageLoader->Load("C:/Zapas/text.png", image) << std::endl;
-		m_pTexture2 = new GLTexture(image.GetWidth(), image.GetHeight(), TextureFormat::UBYTE, (void*)image.GetPixels());
+		std::cout << "Loading image2: " << m_pImageLoader->Load("C:/Zapas/text2.png", image) << std::endl;
+		m_pTexture2 = new GLTexture(TextureFormat::UBYTE, image);
 		m_pTexture2->SetSlot(1);
 		m_pImageLoader->Free(image);
 		// MESH
@@ -192,17 +194,21 @@ public:
 		m_pShaderProg = new GLShaderProgram(m_pVertexShader, m_pFragmentShader);
 		std::cout << "Shader Program linking status: " << m_pShaderProg->Created() << std::endl;
 
-		m_pMaterial = new Material(m_pShaderProg);
-		m_pMaterial->AddShaderVariable("aa", Vec3(0.0, 0.0, 1.0));
-		m_pMaterial->AddShaderVariable("tex1", m_pTexture1);
-		m_pMaterial->AddShaderVariable("tex2", m_pTexture2);
+		m_pMaterial1 = new Material(m_pShaderProg);
+		m_pMaterial1->AddShaderVariable("col", Vec3(0.0, 0.0, 0.0));
+		m_pMaterial1->AddShaderVariable("tex1", m_pTexture1);
+		m_pMaterial1->AddShaderVariable("tex2", m_pTexture2);
 		
-        m_pModel = new ModelComponent("model", m_pQuadMesh, m_pMaterial);
+        m_pModel1 = new ModelComponent("model", m_pQuadMesh, m_pMaterial1);
 	    e1 = new Entity("Test 1");
-	    e1->AddComponent(std::unique_ptr<ModelComponent>(m_pModel));
+	    e1->AddComponent(std::unique_ptr<ModelComponent>(m_pModel1));
 		AddEntity(e1);
 
-		ModelComponent* m_pModel2 = new ModelComponent("model2", m_pQuadMesh, m_pMaterial);
+
+		m_pMaterial2 = new Material(m_pShaderProg);
+		m_pMaterial2->AddShaderVariable("col", Vec3(0.0, 0.0, 1.0));
+		m_pMaterial2->AddShaderVariable("tex2", m_pTexture2);
+		ModelComponent* m_pModel2 = new ModelComponent("model2", m_pQuadMesh, m_pMaterial2);
 		Entity* e2 = new Entity("Test 2");
 		e2->AddComponent(std::unique_ptr<TestBehaviour>(new TestBehaviour()));
 		e2->AddComponent(std::unique_ptr<ModelComponent>(m_pModel2));
@@ -237,6 +243,18 @@ public:
 	//InputCallbacks
 	void OnKeyPressed(const int key, const KeyState state)
 	{
+		if(key == VK_SPACE) RemoveEntity("Test 2");
+		if (key == VK_RETURN)
+		{
+			ModelComponent* m_pModel2 = new ModelComponent("model2", m_pQuadMesh, m_pMaterial2);
+			Entity* e2 = new Entity("Test 2");
+			e2->AddComponent(std::unique_ptr<TestBehaviour>(new TestBehaviour()));
+			e2->AddComponent(std::unique_ptr<ModelComponent>(m_pModel2));
+			e2->GetTransform()->SetScale(0.3f, 0.73f, 1.0f);
+			e2->GetTransform()->SetPosition(-8.0f, 0.0f, 0.0f);
+			AddEntity(e2);
+			e1->AddChild(e2);
+		}
 	}
 	void OnMouseMove(const int x, const int y)
 	{
