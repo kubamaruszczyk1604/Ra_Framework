@@ -24,7 +24,7 @@ namespace RA_FRAMEWORK
 		float m_Far;
 		ProjectionType m_ProjectionType;
 		bool m_Active;
-		//KLMList<RenderTarget*> m_RenderTarget;
+		//KLMList<RenderTarget*> m_RenderTarget; 
 	public:
 		Camera(const ProjectionType& projection, const float& fovDeg, const float& fnear, const float& ffar);
 		Camera(const Camera&) = delete;
