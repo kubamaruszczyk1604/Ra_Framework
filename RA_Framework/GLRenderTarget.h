@@ -13,10 +13,10 @@ namespace RA_FRAMEWORK
 	public:
 		static void SetScreen(int w, int h);
 	public:
-		explicit GLRenderTarget(GLTexture* destination);
+		GLRenderTarget(GLTexture* destination);
 		GLRenderTarget(const GLRenderTarget&) = delete;
 		GLRenderTarget& operator=(const GLRenderTarget&) = delete;
-		~GLRenderTarget();
+		virtual ~GLRenderTarget();
 	public:
 		void Bind() override;	
 	};

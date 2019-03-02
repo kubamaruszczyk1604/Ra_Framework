@@ -35,10 +35,10 @@ namespace RA_FRAMEWORK
 			ListOfEntities* list = m_upCurrentScene->GetEntityManager()->GetListOfEntities();
 			BehaviourManager::Update(list, deltaTime, totalTime);
 
-			GLRenderer::ClearScreen(ColorRGBA(0,0,1,1));	
-			GLRenderer::Render(list, nullptr);
+			//GLRenderer::ClearScreen(ColorRGB(0,0,1));	
+			GLRenderer::RenderAllPasses(list);
 			GLRenderer::Update(deltaTime, totalTime);
-			GLRenderer::SwapBuffers();
+			//GLRenderer::SwapBuffers();
 			m_upCurrentScene->PostUpdate();
 		}
 	}

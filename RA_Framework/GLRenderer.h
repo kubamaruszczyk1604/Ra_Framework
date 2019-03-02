@@ -32,7 +32,7 @@ namespace RA_FRAMEWORK
 	public:
 		static bool		Initialize(const int width, const int height, const HWND handle);
 		static void		ResizeWindow(unsigned width, unsigned height);
-		static void		Render(ListOfEntities* entities, GLRenderTarget* target);
+		//static void		Render(ListOfEntities* entities, GLRenderTarget* target);
 		static void		RenderAllPasses(ListOfEntities* entities);
 		static void		RenderPass(RARenderPass* pass, ListOfEntities* entities);
 		static void		RenderEntity(Entity* entity);

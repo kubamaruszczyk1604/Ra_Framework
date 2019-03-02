@@ -31,6 +31,7 @@ namespace RA_FRAMEWORK
 
 	void GLRenderTarget::Bind()
 	{
+		//m_TargetTex->Bind();
 		glBindFramebuffer(GL_FRAMEBUFFER, m_Fbo);
 		glViewport(0, 0, m_TargetTex->Width(), m_TargetTex->Height());
 	}

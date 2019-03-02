@@ -84,7 +84,7 @@ namespace RA_FRAMEWORK
 		glViewport(0, 0, width, height);
 	}
 
-	void GLRenderer::Render(ListOfEntities* entities, GLRenderTarget* target)
+	/*void GLRenderer::Render(ListOfEntities* entities, GLRenderTarget* target)
 	{
 		if (target != nullptr)
 		{
@@ -95,7 +95,7 @@ namespace RA_FRAMEWORK
 			Entity* e = (*entities)[i].get();
 			GLRenderer::RenderEntity(e);
 		}
-	}
+	}*/
 
 	void GLRenderer::RenderAllPasses(ListOfEntities* entities)
 	{
@@ -103,20 +103,27 @@ namespace RA_FRAMEWORK
 		{
 			RenderPass(s_RenderPassList[i].get(), entities);
 		}
+		GLRenderer::SwapBuffers();
 	}
 
 	void GLRenderer::RenderPass(RARenderPass* pass, ListOfEntities* entities)
 	{
-		pass->GetRenderTarget()->Bind();
-		if (pass->GetClearMode() == ClearMode::COLOR)
-		{
-			ClearScreen(pass->GetClearColor(), pass->GetClearDepthFlag());
+		if (pass->GetRenderTarget()) {
+			pass->GetRenderTarget()->Bind();
 		}
+		else {
+			GLRenderTarget::SetScreen(s_ScreenWidth, s_ScreenHeight); 
+		}
+		if (pass->GetClearMode() == ClearMode::COLOR) {
+			ClearScreen(pass->GetClearColor(), pass->GetClearDepthFlag()); 
+		}
+
 		for (int i = 0; i < entities->size(); ++i)
 		{
 			Entity* e = (*entities)[i].get();
 			GLRenderer::RenderEntity(e);
 		}
+		glFlush();
 	}
 	
 	void GLRenderer::RenderEntity(Entity* entity)
@@ -186,8 +193,9 @@ namespace RA_FRAMEWORK
 
 	void GLRenderer::ClearScreen(const ColorRGB& colour, bool clearDepth)
 	{
-		glClear(GL_COLOR_BUFFER_BIT | (GL_DEPTH_BUFFER_BIT*(int)clearDepth));
 		glClearColor(colour.r, colour.g, colour.b, 1.0);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		
 	}
 
 	void GLRenderer::SwapBuffers()
