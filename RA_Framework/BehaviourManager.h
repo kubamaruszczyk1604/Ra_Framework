@@ -1,6 +1,5 @@
 #pragma once
 #include "BehaviourComponent.h"
-
 namespace RA_FRAMEWORK
 {
 	class BehaviourManager

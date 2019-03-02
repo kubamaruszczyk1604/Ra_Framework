@@ -27,7 +27,7 @@ public:
 	}
 	void Update(float deltaTime, float totalTime)
 	{
-		GetParent()->GetTransform()->SetRotationX(totalTime*3.0f);
+		GetParent()->GetTransform()->SetRotationZ(totalTime*0.2f);
 	}
 	void OnExit()
 	{
@@ -78,6 +78,9 @@ public:
 		m_pTexture1 = new GLTexture(image);
 		m_pImageLoader->Free(image);
 
+		TextureFormatDescriptor desc;
+		m_pRenderTexture = new GLTexture(1280, 720, desc);
+
 		// MESH
 		m_pQuadMesh = new Mesh();
 		float size{ 7.5f };
@@ -112,19 +115,19 @@ public:
 		m_pMaterial1 = new Material(m_pShaderProg);
 		m_pMaterial1->AddShaderVariable("tex1", m_pTexture1);
 		
-
         m_pModel1 = new ModelComponent("model", m_pQuadMesh, m_pMaterial1);
 	    e1 = new Entity("Test 1");
 	    e1->AddComponent(std::unique_ptr<ModelComponent>(m_pModel1));
 		AddEntity(e1);
 
 		m_pMaterial2 = new Material(m_pShaderProg);
+		m_pMaterial2->AddShaderVariable("tex1", m_pRenderTexture);
 		ModelComponent* m_pModel2 = new ModelComponent("model2", m_pQuadMesh, m_pMaterial2);
 		Entity* e2 = new Entity("Test 2");
 		e2->AddComponent(std::unique_ptr<TestBehaviour>(new TestBehaviour()));
 		e2->AddComponent(std::unique_ptr<ModelComponent>(m_pModel2));
-		e2->GetTransform()->SetScale(0.3f, 0.3f, 1.0f);
-		e2->GetTransform()->SetPosition(-8.0f, 3.0f, 0.0f);
+		e2->GetTransform()->SetScale(0.5f, 0.5f, 1.0f);
+		e2->GetTransform()->SetPosition(-14.0f, 3.0f, 0.0f);
 		AddEntity(e2);
 		e1->AddChild(e2);
 
@@ -132,23 +135,18 @@ public:
 		m_pCamera = new Camera(ProjectionType::PERSPECTIVE, 60.0f, 0.1f, 1000.0f);
 		GLRenderer::SetActiveCamera(m_pCamera);
 		eCam->AddComponent(std::unique_ptr<Camera>(m_pCamera));
-		eCam->GetTransform()->SetPosition(Vec3(-6.8f, 0.0f, -24.98f));
+		eCam->GetTransform()->SetPosition(Vec3(-3.8f, 0.0f, -24.98f));
 		eCam->CalculateTransform();
 		AddEntity(eCam);
 		//GLRenderer::SetFillMode(FillMode::WIREFRAME);
 
-		TextureFormatDescriptor desc;
-		m_pRenderTexture = new GLTexture(1280, 720, desc);
-		m_pRenderTexture->SetSlot(0);
-		m_pMaterial2->AddShaderVariable("tex1",m_pRenderTexture);
-
 		m_pRenderTarget = new GLRenderTarget(m_pRenderTexture);
 		RARenderPass* pass1 = new RARenderPass(m_pRenderTarget, 0);
-		pass1->SetClearColor(ColorRGB(0.0, 0, 0));
+		pass1->SetClearColor(ColorRGB(0.3, 0.3, 0.3));
 		GLRenderer::AddRenderPass(std::unique_ptr<RARenderPass>(pass1));
 
 		RARenderPass* pass2 = new RARenderPass(nullptr, 1);
-		pass2->SetClearColor(ColorRGB(0, 0, 1));
+		pass2->SetClearColor(ColorRGB(0.15, 0.19, 0.4));
 		GLRenderer::AddRenderPass(std::unique_ptr<RARenderPass>(pass2));
 	}
 
@@ -182,11 +180,11 @@ public:
 
 int main()
 {
+	//int tt = _CrtSetBreakAlloc(132);
 	WindowsApp::Create(1280, 720, "RA WINDOW");
 	//WindowsApp::SetFullscreenMode(true);
 	SceneManager::Load(new ExampleScene());
 	const int appState = WindowsApp::Run();
-
    // WaitForKeypress();
 	return appState;
 }

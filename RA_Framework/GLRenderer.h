@@ -47,6 +47,6 @@ namespace RA_FRAMEWORK
 		static void		EnableAlphaBlending(bool enabled = true);
 		static void		EnableDepthTest(bool enabled = true, DepthQualifier qualifier = DepthQualifier::LESS);
 		static void		AddRenderPass(std::unique_ptr<RARenderPass> pass);
-
+		static void		ClearRenderPassList();
 	};
 }

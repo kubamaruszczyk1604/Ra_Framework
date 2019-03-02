@@ -29,7 +29,8 @@ namespace RA_FRAMEWORK
 			KLMList<T>& data = const_cast<KLMList<T>&>(list);
 			m_Data = data.GetStdVectorRef();
 		}
-		virtual ~KLMList() {}
+		virtual ~KLMList() { std::vector<T>().swap(m_Data); }
+		void Free() { std::vector<T>().swap(m_Data); }
 		void Add(const T& element) { m_Data.push_back(element); }
 		void Remove(const T& element) noexcept
 		{

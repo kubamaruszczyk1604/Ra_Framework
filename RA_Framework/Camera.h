@@ -1,6 +1,7 @@
 #pragma once
 #include "RAUtils.h"
 #include "Component.h"
+#include "RenderTarget.h"
 namespace RA_FRAMEWORK
 {
 	enum class ProjectionType
@@ -23,6 +24,7 @@ namespace RA_FRAMEWORK
 		float m_Far;
 		ProjectionType m_ProjectionType;
 		bool m_Active;
+		//KLMList<RenderTarget*> m_RenderTarget;
 	public:
 		Camera(const ProjectionType& projection, const float& fovDeg, const float& fnear, const float& ffar);
 		Camera(const Camera&) = delete;

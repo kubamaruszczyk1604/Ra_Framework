@@ -84,19 +84,6 @@ namespace RA_FRAMEWORK
 		glViewport(0, 0, width, height);
 	}
 
-	/*void GLRenderer::Render(ListOfEntities* entities, GLRenderTarget* target)
-	{
-		if (target != nullptr)
-		{
-			target->Bind();
-		}
-		for (int i = 0; i < entities->size(); ++i)
-		{
-			Entity* e = (*entities)[i].get();
-			GLRenderer::RenderEntity(e);
-		}
-	}*/
-
 	void GLRenderer::RenderAllPasses(ListOfEntities* entities)
 	{
 		for (int i = 0; i < s_RenderPassList.Count(); ++i)
@@ -108,22 +95,17 @@ namespace RA_FRAMEWORK
 
 	void GLRenderer::RenderPass(RARenderPass* pass, ListOfEntities* entities)
 	{
-		if (pass->GetRenderTarget()) {
-			pass->GetRenderTarget()->Bind();
-		}
-		else {
-			GLRenderTarget::SetScreen(s_ScreenWidth, s_ScreenHeight); 
-		}
-		if (pass->GetClearMode() == ClearMode::COLOR) {
-			ClearScreen(pass->GetClearColor(), pass->GetClearDepthFlag()); 
-		}
+		if (pass->GetRenderTarget()) { pass->GetRenderTarget()->Bind(); }
+		else { GLRenderTarget::SetScreen(s_ScreenWidth, s_ScreenHeight); }
+
+		if (pass->GetClearMode() == ClearMode::COLOR) { ClearScreen(pass->GetClearColor(), pass->GetClearDepthFlag()); }
 
 		for (int i = 0; i < entities->size(); ++i)
 		{
 			Entity* e = (*entities)[i].get();
 			GLRenderer::RenderEntity(e);
 		}
-		glFlush();
+		//glFlush();
 	}
 	
 	void GLRenderer::RenderEntity(Entity* entity)
@@ -181,6 +163,8 @@ namespace RA_FRAMEWORK
 
 	void GLRenderer::ShutDown()
 	{
+		s_RenderPassList.Free();
+		s_RenderPassList.Clear();
 		// release device context
 		ReleaseDC(s_hWnd, s_hDevCtx);
 		// default to no context
@@ -194,8 +178,7 @@ namespace RA_FRAMEWORK
 	void GLRenderer::ClearScreen(const ColorRGB& colour, bool clearDepth)
 	{
 		glClearColor(colour.r, colour.g, colour.b, 1.0);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		
+		glClear(GL_COLOR_BUFFER_BIT | (GL_DEPTH_BUFFER_BIT*(int)clearDepth));	
 	}
 
 	void GLRenderer::SwapBuffers()
@@ -276,5 +259,9 @@ namespace RA_FRAMEWORK
 	void GLRenderer::AddRenderPass(std::unique_ptr<RARenderPass> pass)
 	{
 		s_RenderPassList.GetStdVectorRef().push_back(std::move(pass));
+	}
+	void GLRenderer::ClearRenderPassList()
+	{
+		s_RenderPassList.Clear();
 	}
 }
