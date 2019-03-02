@@ -24,7 +24,7 @@ namespace RA_FRAMEWORK
 		float m_Far;
 		ProjectionType m_ProjectionType;
 		bool m_Active;
-		//KLMList<RenderTarget*> m_RenderTarget; 
+		KLMList<RenderTarget*> m_RenderTargetList; 
 	public:
 		Camera(const ProjectionType& projection, const float& fovDeg, const float& fnear, const float& ffar);
 		Camera(const Camera&) = delete;
@@ -46,6 +46,12 @@ namespace RA_FRAMEWORK
 		const			Mat4& GetProjectionMatrix(const int& scrWidth, const int& scrHeight);
 		const			Mat4& SetTransformMatrix(const Vec3& translation, const Vec3& rotation);
 		void			SetTransformMatrix(const glm::mat4& mat);
+	public:
+		void			AddRenderTarget(RenderTarget* target);
+		RenderTarget*	GetRenderTarget(int index);
+		int				FindRenderTarget(int id);
+		int				RenderTargetCount();
+		
 	};
 }
 

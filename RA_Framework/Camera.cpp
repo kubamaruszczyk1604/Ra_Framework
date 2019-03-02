@@ -45,4 +45,25 @@ namespace RA_FRAMEWORK
 		m_TransformMat = mat;
 		m_ViewMat = glm::inverse(m_TransformMat);
 	}
+
+	void Camera::AddRenderTarget(RenderTarget* target)
+	{
+		m_RenderTargetList.Add(target);
+	}
+
+	RenderTarget* Camera::GetRenderTarget(int index)
+	{
+		if (m_RenderTargetList.Count() == 0) return nullptr;
+		if (index >= m_RenderTargetList.Count()) return nullptr;
+		return m_RenderTargetList[index];
+	}
+
+	int Camera::FindRenderTarget(int id)
+	{
+		return 0;
+	}
+	int Camera::RenderTargetCount()
+	{
+		return m_RenderTargetList.Count();
+	}
 }

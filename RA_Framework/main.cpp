@@ -140,7 +140,7 @@ public:
 		AddEntity(eCam);
 		//GLRenderer::SetFillMode(FillMode::WIREFRAME);
 
-		m_pRenderTarget = new GLRenderTarget(m_pRenderTexture);
+		m_pRenderTarget = new GLRenderTarget(m_pRenderTexture,0);
 		RARenderPass* pass1 = new RARenderPass(m_pRenderTarget, 0);
 		pass1->SetClearColor(ColorRGB(0.3, 0.3, 0.3));
 		GLRenderer::AddRenderPass(std::unique_ptr<RARenderPass>(pass1));

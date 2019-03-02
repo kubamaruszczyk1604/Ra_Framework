@@ -7,8 +7,8 @@ namespace RA_FRAMEWORK
 		glViewport(0, 0, w, h);
 	}
 
-	GLRenderTarget::GLRenderTarget(GLTexture* destination):
-		RenderTarget(),
+	GLRenderTarget::GLRenderTarget(GLTexture* destination, int id):
+		RenderTarget(id),
 		m_TargetTex(destination),
 		m_DepthFlag(0)
 	{
