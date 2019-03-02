@@ -20,6 +20,8 @@ namespace RA_FRAMEWORK
 	bool GLRenderer::s_MakeCurrentCalled{ false };
 	Vec4 GLRenderer::VectorVariableTest{ Vec4(1.0f) };
 	float GLRenderer::s_TotalTime{ 0 };
+	KLMList<std::unique_ptr<RARenderPass>> GLRenderer::s_RenderPassList;
+	//vector<B> A::vector_of_B;
 
 	bool GLRenderer::KLMSetPixelFormat(HDC hdc)
 	{
@@ -60,6 +62,7 @@ namespace RA_FRAMEWORK
 		// \WINDOWS SPECIFIC PART
 
 		glewInit();
+		
 		s_ScreenWidth = width;
 		s_ScreenHeight = height;
 		// set defaults
@@ -81,11 +84,33 @@ namespace RA_FRAMEWORK
 		glViewport(0, 0, width, height);
 	}
 
-	void GLRenderer::RenderPass(ListOfEntities* entities, GLRenderTarget* target)
+	void GLRenderer::Render(ListOfEntities* entities, GLRenderTarget* target)
 	{
 		if (target != nullptr)
 		{
 			target->Bind();
+		}
+		for (int i = 0; i < entities->size(); ++i)
+		{
+			Entity* e = (*entities)[i].get();
+			GLRenderer::RenderEntity(e);
+		}
+	}
+
+	void GLRenderer::RenderAllPasses(ListOfEntities* entities)
+	{
+		for (int i = 0; i < s_RenderPassList.Count(); ++i)
+		{
+			RenderPass(s_RenderPassList[i].get(), entities);
+		}
+	}
+
+	void GLRenderer::RenderPass(RARenderPass* pass, ListOfEntities* entities)
+	{
+		pass->GetRenderTarget()->Bind();
+		if (pass->GetClearMode() == ClearMode::COLOR)
+		{
+			ClearScreen(pass->GetClearColor(), pass->GetClearDepthFlag());
 		}
 		for (int i = 0; i < entities->size(); ++i)
 		{
@@ -159,10 +184,10 @@ namespace RA_FRAMEWORK
 		DeleteDC(s_hDevCtx);
 	}
 
-	void GLRenderer::ClearScreen(const ColorRGBA & colour)
+	void GLRenderer::ClearScreen(const ColorRGB& colour, bool clearDepth)
 	{
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glClearColor(colour.r, colour.g, colour.b, colour.a);
+		glClear(GL_COLOR_BUFFER_BIT | (GL_DEPTH_BUFFER_BIT*(int)clearDepth));
+		glClearColor(colour.r, colour.g, colour.b, 1.0);
 	}
 
 	void GLRenderer::SwapBuffers()
@@ -239,5 +264,9 @@ namespace RA_FRAMEWORK
 			return;
 		}
 		glDisable(GL_DEPTH_TEST);
+	}
+	void GLRenderer::AddRenderPass(std::unique_ptr<RARenderPass> pass)
+	{
+		s_RenderPassList.GetStdVectorRef().push_back(std::move(pass));
 	}
 }

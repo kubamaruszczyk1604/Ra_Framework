@@ -45,7 +45,8 @@ namespace RA_FRAMEWORK
 	using EntityUnique = std::unique_ptr<Entity>;
 	using ListOfEntities = std::vector<EntityUnique>;
 	using RENDER_MASK = unsigned;
-	enum  RENDER_MASK_ELEMENT
+
+	enum RENDER_MASK_ELEMENT
 	{
 		RENDERABLE					= 1,
 		LIGHT_RECEIVER				= 1 << 1,
@@ -63,13 +64,10 @@ namespace RA_FRAMEWORK
 		GL = 1
 	};
 
-	enum ClearMode
+	enum class ClearMode
 	{
 		DONT_CLEAR = 0,
 		COLOR = 1,
-		COLOR_GRADIENT = 2,
-		TEXTURE = 3,
-		SKYBOX = 4
 	};
 
 #define PRINT(P) std::cout<<P<<std::endl;

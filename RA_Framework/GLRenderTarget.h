@@ -18,6 +18,6 @@ namespace RA_FRAMEWORK
 		GLRenderTarget& operator=(const GLRenderTarget&) = delete;
 		~GLRenderTarget();
 	public:
-		void Bind();	
+		void Bind() override;	
 	};
 }
