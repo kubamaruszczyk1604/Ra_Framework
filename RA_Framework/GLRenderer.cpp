@@ -21,6 +21,7 @@ namespace RA_FRAMEWORK
 	Vec4 GLRenderer::VectorVariableTest{ Vec4(1.0f) };
 	float GLRenderer::s_TotalTime{ 0 };
 	KLMList<std::unique_ptr<RARenderPass>> GLRenderer::s_RenderPassList;
+	KLMList<Camera*> GLRenderer::s_CameraList;
 	//vector<B> A::vector_of_B;
 
 	bool GLRenderer::KLMSetPixelFormat(HDC hdc)
@@ -90,6 +91,12 @@ namespace RA_FRAMEWORK
 		{
 			RenderPass(s_RenderPassList[i].get(), entities);
 		}
+
+		for (int i = 0; i < s_CameraList.Count(); ++i)
+		{
+			RenderPass(s_CameraList[i], entities);
+		}
+
 		GLRenderer::SwapBuffers();
 	}
 
@@ -106,6 +113,42 @@ namespace RA_FRAMEWORK
 			GLRenderer::RenderEntity(e);
 		}
 		//glFlush();
+	}
+
+	void GLRenderer::RenderPass(Camera * camera, ListOfEntities * entities)
+	{
+		/*if (camera->RenderTargetCount() == 0)
+		{ 
+			GLRenderTarget::SetScreen(s_ScreenWidth, s_ScreenHeight); 
+			if (camera->GetClearMode() == ClearMode::COLOR)
+			{
+				ClearScreen(camera->GetClearColor(), camera->GetClearDepthFlag());
+			}
+
+			for (int i = 0; i < entities->size(); ++i)
+			{
+				Entity* e = (*entities)[i].get();
+				GLRenderer::RenderEntity(e);
+			}
+			return;
+		}	*/
+
+		for (int i = 0; i < camera->RenderTargetCount(); ++i)
+		{
+			auto rt = camera->GetRenderTarget(i);
+			if (rt->IsScreen()) { GLRenderTarget::SetScreen(s_ScreenWidth, s_ScreenHeight); }
+			else { rt->Bind(); }
+			if (camera->GetClearMode() == ClearMode::COLOR)
+			{
+				ClearScreen(camera->GetClearColor(), camera->GetClearDepthFlag());
+			}
+
+			for (int i = 0; i < entities->size(); ++i)
+			{
+				Entity* e = (*entities)[i].get();
+				GLRenderer::RenderEntity(e);
+			}
+		}
 	}
 	
 	void GLRenderer::RenderEntity(Entity* entity)

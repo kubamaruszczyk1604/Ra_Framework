@@ -11,8 +11,8 @@ namespace RA_FRAMEWORK
 	public:
 		EntityManager();
 		~EntityManager();
-		EntityManager(const EntityManager&) = delete;
-		EntityManager& operator=(const EntityManager&) = delete;
+		EntityManager(const EntityManager&)					= delete;
+		EntityManager& operator=(const EntityManager&)		= delete;
 	public:
 		void				AddEntity(EntityUnique entity);
 		void				RemoveEntity(const std::string& id);

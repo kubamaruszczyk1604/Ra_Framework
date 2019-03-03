@@ -25,6 +25,7 @@ namespace RA_FRAMEWORK
 		static Vec4 VectorVariableTest;
 		static float s_TotalTime;
 		static KLMList<std::unique_ptr<RARenderPass>> s_RenderPassList;
+		static KLMList<Camera*> s_CameraList;
 	public:
 		GLRenderer()								= delete;
 		GLRenderer(const GLRenderer&)				= delete;
@@ -35,6 +36,7 @@ namespace RA_FRAMEWORK
 		//static void		Render(ListOfEntities* entities, GLRenderTarget* target);
 		static void		RenderAllPasses(ListOfEntities* entities);
 		static void		RenderPass(RARenderPass* pass, ListOfEntities* entities);
+		static void		RenderPass(Camera* camera, ListOfEntities* entities);
 		static void		RenderEntity(Entity* entity);
 		static void		Render(ModelComponent* model, Camera* camera, Transform* transform, const String& name);
 		static void		Update(const float deltaTime, const float totalTime);

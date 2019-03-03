@@ -18,21 +18,21 @@ namespace RA_FRAMEWORK
 		int m_ComponentMask;
 		bool m_DeleteMeFlag{ false };
 	public:
-		explicit Entity() = default;
 		explicit Entity(const std::string& ID);
-		Entity(const Entity&) = delete;
-		Entity& operator=(const Entity&) = delete;
+		explicit Entity()							= default;
+		Entity(const Entity&)						= delete;
+		Entity& operator=(const Entity&)			= delete;
 		virtual ~Entity();		
 	public:
-		void AddChild(Entity* child);
-		Entity* FindInChildreen(const std::string& name);
-		void RemoveFromChildreen(Entity* child);
-		void DeleteAllChildreen();
-		void AddComponent(ComponentUnique component);
-		Component* GetFirstComponentOfType(ComponentType type);
-		bool TryGetCachedModel(Component*& outModel)const;
-		void CalculateTransform();
-		void Delete();
+		void				AddChild(Entity* child);
+		Entity*				FindInChildreen(const std::string& name);
+		void				RemoveFromChildreen(Entity* child);
+		void				DeleteAllChildreen();
+		void				AddComponent(ComponentUnique component);
+		Component*			GetFirstComponentOfType(ComponentType type);
+		bool				TryGetCachedModel(Component*& outModel)const;
+		void				CalculateTransform();
+		void				Delete();
 
 		bool				ShouldDelete()const					{ return m_DeleteMeFlag; }
 		void				SetParent(Entity* const entity)		{ m_pParent = entity; }	

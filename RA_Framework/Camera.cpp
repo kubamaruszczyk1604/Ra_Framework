@@ -12,7 +12,11 @@ namespace RA_FRAMEWORK
 		m_FOV(fovDeg),
 		m_Near(fnear),
 		m_Far(ffar),
-		m_Active(true){}
+		m_Active(true),
+		m_Mask{RENDER_MASK_ELEMENT::RENDERABLE},
+		m_ClearMode{ClearMode::COLOR},
+		m_ClearColor{ColorRGB(0,0,1)},
+		m_ClearDepthFlag{true}{}
 
 	Camera::~Camera(){}
 
@@ -58,12 +62,22 @@ namespace RA_FRAMEWORK
 		return m_RenderTargetList[index];
 	}
 
-	int Camera::FindRenderTarget(int id)
+	RenderTarget* Camera::FindRenderTarget(int id)
 	{
-		return 0;
+		RenderTarget** r = m_RenderTargetList.Find([id](RenderTarget*  o) { return (id == o->GetID()); });
+		return *r;
 	}
+
 	int Camera::RenderTargetCount()
 	{
 		return m_RenderTargetList.Count();
+	}
+
+	bool Camera::TryBindRenderTarget(int index)
+	{
+		if (m_RenderTargetList.Count() == 0) return false;
+		if (index >= m_RenderTargetList.Count()) return false;
+		m_RenderTargetList[index]->Bind();
+		return true;
 	}
 }

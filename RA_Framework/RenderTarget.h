@@ -10,9 +10,9 @@ public:
 	RenderTarget& operator=(const RenderTarget&) = delete;
 	virtual ~RenderTarget() {}
 public:
-	int GetID() { return m_ID; }
+	int GetID()const { return m_ID; }
 public:
 	virtual void Bind() = 0;
-
+	virtual bool IsScreen() = 0;
 };
 

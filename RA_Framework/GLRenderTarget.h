@@ -19,5 +19,6 @@ namespace RA_FRAMEWORK
 		virtual ~GLRenderTarget();
 	public:
 		void Bind() override;	
+		bool IsScreen() override;
 	};
 }
