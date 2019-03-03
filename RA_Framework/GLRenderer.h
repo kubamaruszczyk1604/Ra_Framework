@@ -37,7 +37,7 @@ namespace RA_FRAMEWORK
 		static void		RenderAllPasses(ListOfEntities* entities);
 		static void		RenderPass(RARenderPass* pass, ListOfEntities* entities);
 		static void		RenderPass(Camera* camera, ListOfEntities* entities);
-		static void		RenderEntity(Entity* entity);
+		static void		RenderEntity(Entity* entity, Camera* camera);
 		static void		Render(ModelComponent* model, Camera* camera, Transform* transform, const String& name);
 		static void		Update(const float deltaTime, const float totalTime);
 		static void		ShutDown();
@@ -50,5 +50,6 @@ namespace RA_FRAMEWORK
 		static void		EnableDepthTest(bool enabled = true, DepthQualifier qualifier = DepthQualifier::LESS);
 		static void		AddRenderPass(std::unique_ptr<RARenderPass> pass);
 		static void		ClearRenderPassList();
+		static void		AddCamera(Camera* camera) { s_CameraList.Add(camera); }
 	};
 }

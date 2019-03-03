@@ -87,10 +87,10 @@ namespace RA_FRAMEWORK
 
 	void GLRenderer::RenderAllPasses(ListOfEntities* entities)
 	{
-		for (int i = 0; i < s_RenderPassList.Count(); ++i)
+	/*	for (int i = 0; i < s_RenderPassList.Count(); ++i)
 		{
 			RenderPass(s_RenderPassList[i].get(), entities);
-		}
+		}*/
 
 		for (int i = 0; i < s_CameraList.Count(); ++i)
 		{
@@ -110,14 +110,14 @@ namespace RA_FRAMEWORK
 		for (int i = 0; i < entities->size(); ++i)
 		{
 			Entity* e = (*entities)[i].get();
-			GLRenderer::RenderEntity(e);
+			GLRenderer::RenderEntity(e,s_CurrentCamera);
 		}
 		//glFlush();
 	}
 
-	void GLRenderer::RenderPass(Camera * camera, ListOfEntities * entities)
+	void GLRenderer::RenderPass(Camera* camera, ListOfEntities* entities)
 	{
-		/*if (camera->RenderTargetCount() == 0)
+		if (camera->RenderTargetCount() == 0)
 		{ 
 			GLRenderTarget::SetScreen(s_ScreenWidth, s_ScreenHeight); 
 			if (camera->GetClearMode() == ClearMode::COLOR)
@@ -128,10 +128,10 @@ namespace RA_FRAMEWORK
 			for (int i = 0; i < entities->size(); ++i)
 			{
 				Entity* e = (*entities)[i].get();
-				GLRenderer::RenderEntity(e);
+				GLRenderer::RenderEntity(e,camera);
 			}
 			return;
-		}	*/
+		}	
 
 		for (int i = 0; i < camera->RenderTargetCount(); ++i)
 		{
@@ -146,17 +146,17 @@ namespace RA_FRAMEWORK
 			for (int i = 0; i < entities->size(); ++i)
 			{
 				Entity* e = (*entities)[i].get();
-				GLRenderer::RenderEntity(e);
+				GLRenderer::RenderEntity(e, camera);
 			}
 		}
 	}
 	
-	void GLRenderer::RenderEntity(Entity* entity)
+	void GLRenderer::RenderEntity(Entity* entity, Camera* camera)
 	{
 		Component* c;
         if (!entity->TryGetCachedModel(c))  return;
 		ModelComponent* mc = static_cast<ModelComponent*>(c);
-		Render(mc, s_CurrentCamera, entity->GetTransform(),entity->GetName());
+		Render(mc, camera, entity->GetTransform(),entity->GetName());
 	}
 
 	void GLRenderer::Render(ModelComponent* model, Camera* camera, Transform* transform, const String& name)
@@ -184,7 +184,7 @@ namespace RA_FRAMEWORK
 		material->GetShaderProgram()->SetMat4x4("uWORLD_INVERSE", glm::inverse(transform->GetWorldMat()));
 #endif // ENABLE__uWORLD_INVERSE
 #ifdef ENABLE__uVIEW
-		material->GetShaderProgram()->SetMat4x4("uVIEW", s_CurrentCamera->GetViewMatrix());
+		material->GetShaderProgram()->SetMat4x4("uVIEW", camera->GetViewMatrix());
 #endif //ENABLE__uVIEW
 #ifdef ENABLE__uMVP
 		material->GetShaderProgram()->SetMat4x4("uMVP", MVP);

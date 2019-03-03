@@ -61,7 +61,6 @@ public:
 	GLShader*			m_pVertexShader;
 	GLShader*			m_pFragmentShader;
 	GLShaderProgram*	m_pShaderProg;
-	Camera*				m_pCamera;
 	Entity*				e1;
 	ImageLoader*        m_pImageLoader;
 	Texture*			m_pTexture1;
@@ -131,28 +130,43 @@ public:
 		AddEntity(e2);
 		e1->AddChild(e2);
 
-		Entity* eCam = new Entity("Camera");
-		m_pCamera = new Camera(ProjectionType::PERSPECTIVE, 60.0f, 0.1f, 1000.0f);
-		GLRenderer::SetActiveCamera(m_pCamera);
-		eCam->AddComponent(std::unique_ptr<Camera>(m_pCamera));
-		eCam->GetTransform()->SetPosition(Vec3(-3.8f, 0.0f, -24.98f));
-		eCam->CalculateTransform();
-		AddEntity(eCam);
+
+
+		Entity* EntityCamera1 = new Entity("Camera1");
+		Camera* camera1 = new Camera(ProjectionType::PERSPECTIVE, 60.0f, 0.1f, 1000.0f);
+		camera1->SetClearColor(ColorRGB(0.3, 0.3, 0.3));
+		m_pRenderTarget = new GLRenderTarget(m_pRenderTexture, 0);
+		camera1->AddRenderTarget(m_pRenderTarget);
+		EntityCamera1->AddComponent(std::unique_ptr<Camera>(camera1));
+		EntityCamera1->GetTransform()->SetPosition(Vec3(-3.8f, 0.0f, -74.98f));
+		AddEntity(EntityCamera1);
+
+
+		Entity* EntityCamera2 = new Entity("Camera2");
+		Camera* camera2 = new Camera(ProjectionType::PERSPECTIVE, 60.0f, 0.1f, 1000.0f);
+		camera2->SetClearColor(ColorRGB(0.15, 0.19, 0.4));
+		//GLRenderer::SetActiveCamera(camera2);
+		EntityCamera2->AddComponent(std::unique_ptr<Camera>(camera2));
+		EntityCamera2->GetTransform()->SetPosition(Vec3(2.8f, 0.0f, -24.98f));
+		AddEntity(EntityCamera2);
+
+		GLRenderer::AddCamera(camera1);
+		GLRenderer::AddCamera(camera2);
 		//GLRenderer::SetFillMode(FillMode::WIREFRAME);
 
-		m_pRenderTarget = new GLRenderTarget(m_pRenderTexture,0);
-		RARenderPass* pass1 = new RARenderPass(m_pRenderTarget, 0);
+		
+		/*RARenderPass* pass1 = new RARenderPass(m_pRenderTarget, 0);
 		pass1->SetClearColor(ColorRGB(0.3, 0.3, 0.3));
 		GLRenderer::AddRenderPass(std::unique_ptr<RARenderPass>(pass1));
 
 		RARenderPass* pass2 = new RARenderPass(nullptr, 1);
 		pass2->SetClearColor(ColorRGB(0.15, 0.19, 0.4));
-		GLRenderer::AddRenderPass(std::unique_ptr<RARenderPass>(pass2));
+		GLRenderer::AddRenderPass(std::unique_ptr<RARenderPass>(pass2));*/
 	}
 
 	void Update(float deltaTime, float totalTime = 0)
 	{
-		e1->GetTransform()->SetRotationY(totalTime);
+		//e1->GetTransform()->SetRotationY(totalTime);
 		//m_pTexture->Bind("tex", m_pShaderProg->GetID(), 0);
 	}
 
