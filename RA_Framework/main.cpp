@@ -51,6 +51,7 @@ public:
 		delete m_pImageLoader;
 		delete m_pTexture1;
 		delete m_pRenderTexture1;
+		delete m_pRenderTexture2;
 		delete m_pRenderTarget;
 	}
 
@@ -84,22 +85,15 @@ public:
 
 		// MESH
 		m_pQuadMesh = new Mesh();
-		float size{ 7.5f };
+		float size{ 1.0f };
 		float fbDist = 0.01f;
 		//front
-		m_pQuadMesh->AddVertex(Vertex(-size, -size, -fbDist, 0, 0, -1, 0, 0));
-		m_pQuadMesh->AddVertex(Vertex(size, -size, -fbDist, 0, 0, -1, 1, 0));
-		m_pQuadMesh->AddVertex(Vertex(size, size, -fbDist, 0, 0, -1, 1, 1));
-		m_pQuadMesh->AddVertex(Vertex(-size, size, -fbDist, 0, 0, -1, 0, 1));
+		m_pQuadMesh->AddVertex(Vertex(-size, -size, fbDist, 0, 0, -1, 0, 0));
+		m_pQuadMesh->AddVertex(Vertex(size, -size, fbDist, 0, 0, -1, 1, 0));
+		m_pQuadMesh->AddVertex(Vertex(size, size, fbDist, 0, 0, -1, 1, 1));
+		m_pQuadMesh->AddVertex(Vertex(-size, size, fbDist, 0, 0, -1, 0, 1));
 
-		std::vector<unsigned> indices;
-		indices.push_back(0);
-		indices.push_back(1);
-		indices.push_back(2);
-		indices.push_back(0);
-		indices.push_back(2);
-		indices.push_back(3);
-
+		std::vector<unsigned> indices{0, 1, 2, 0, 2, 3};
 		m_pQuadMesh->CreateVertexBuffer(indices);
 
 		m_pVertexShader = new GLShader(ShaderType::VERTEX);
@@ -119,6 +113,7 @@ public:
         m_pModel1 = new ModelComponent("model", m_pQuadMesh, m_pMaterial1);
 	    e1 = new Entity("Test 1");
 	    e1->AddComponent(std::unique_ptr<ModelComponent>(m_pModel1));
+		e1->GetTransform()->SetScale(7.5f, 7.5f, 1.0f);
 		AddEntity(e1);
 
 		m_pMaterial2 = new Material(m_pShaderProg);
@@ -127,24 +122,21 @@ public:
 		Entity* e2 = new Entity("Test 2");
 		e2->AddComponent(std::unique_ptr<TestBehaviour>(new TestBehaviour()));
 		e2->AddComponent(std::unique_ptr<ModelComponent>(m_pModel2));
-		e2->GetTransform()->SetScale(0.5f, 0.5f, 1.0f);
-		e2->GetTransform()->SetPosition(-14.0f, 3.0f, 0.0f);
+		//e2->GetTransform()->SetScale(1.0f,1.0f, 1.0f);
+		e2->GetTransform()->SetPosition(-2.5f, 0.0f, 1.0f);
 		AddEntity(e2);
 		e1->AddChild(e2);
-
 
 		Entity* EntityCamera1 = new Entity("Camera1");
 		Camera* camera1 = new Camera(ProjectionType::PERSPECTIVE, 60.0f, 0.1f, 1000.0f);
 		camera1->SetClearColor(ColorRGB(0.3, 0.3, 0.3));
-		std::vector<GLTexture*> ve;
-		ve.push_back((GLTexture*)m_pRenderTexture1);
-		ve.push_back((GLTexture*)m_pRenderTexture2);
+		std::vector<GLTexture*> ve{ (GLTexture*)m_pRenderTexture1,(GLTexture*)m_pRenderTexture2 };
 		m_pRenderTarget = new GLRenderTarget(ve);
+		std::cout << "Render Target status: " << m_pRenderTarget->IsOK() << std::endl;
 		camera1->AddRenderTarget(m_pRenderTarget);
 		EntityCamera1->AddComponent(std::unique_ptr<Camera>(camera1));
 		EntityCamera1->GetTransform()->SetPosition(Vec3(-3.8f, 0.0f, -14.98f));
 		AddEntity(EntityCamera1);
-
 
 		Entity* EntityCamera2 = new Entity("Camera2");
 		Camera* camera2 = new Camera(ProjectionType::PERSPECTIVE, 60.0f, 0.1f, 1000.0f);
@@ -169,7 +161,7 @@ public:
 
 	void Update(float deltaTime, float totalTime = 0)
 	{
-		//e1->GetTransform()->SetRotationY(totalTime);
+		e1->GetTransform()->SetRotationY(totalTime);
 		//m_pTexture->Bind("tex", m_pShaderProg->GetID(), 0);
 	}
 

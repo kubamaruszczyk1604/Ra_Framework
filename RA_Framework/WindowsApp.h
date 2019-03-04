@@ -22,8 +22,8 @@ private:
 	static bool				s_ExitFlag;
 	static bool				s_isFullScreen;
 private:
-	static LRESULT CALLBACK MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-	static void OnResize(HWND hWnd);
+	static LRESULT CALLBACK			MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+	static void						OnResize(HWND hWnd);
 public:
 	WindowsApp()								= delete;
 	WindowsApp(const WindowsApp&)				= delete;

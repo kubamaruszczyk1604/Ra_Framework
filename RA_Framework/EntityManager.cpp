@@ -9,7 +9,7 @@ namespace RA_FRAMEWORK
 		m_pEntities.push_back(std::move(entity));
 	}
 
-	void EntityManager::RemoveEntity(const std::string& name)
+	void EntityManager::RemoveEntity(const String& name)
 	{
 		for (int i = 0; i < m_pEntities.size(); ++i)
 		{
@@ -21,7 +21,7 @@ namespace RA_FRAMEWORK
 		}
 	}
 
-	Entity * EntityManager::FindEntity(const std::string & name)
+	Entity * EntityManager::FindEntity(const String& name)
 	{
 		for (int i = 0; i < m_pEntities.size(); ++i)
 		{
