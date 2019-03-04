@@ -6,14 +6,14 @@ namespace RA_FRAMEWORK
 	class GLShaderProgram: public ShaderProgram
 	{
 	private:
-		GLuint m_ProgId;
-		const GLShader* p_VertexShader;
-		const GLShader* p_FragmentShader;
-		bool m_Created{ false };
+		GLuint					m_ProgId;
+		const GLShader*			p_VertexShader;
+		const GLShader*			p_FragmentShader;
+		bool					m_Created{ false };
 	public:
 		GLShaderProgram(GLShader* vertexShader, GLShader* fragmentShader);
-		GLShaderProgram& operator=(GLShaderProgram&) = delete;
-		GLShaderProgram(const GLShaderProgram&) = delete;
+		GLShaderProgram& operator=(GLShaderProgram&)				= delete;
+		GLShaderProgram(const GLShaderProgram&)						= delete;
 		virtual ~GLShaderProgram();
 	public:
 		uint		GetID()const		{ return m_ProgId; }

@@ -12,20 +12,20 @@ namespace RA_FRAMEWORK
 	class GLRenderer
 	{
 	private:
-		static bool	s_IsRunning;
-		static HWND	s_hWnd;
-		static HGLRC s_hGLRC;
-		static HDC s_hDevCtx;
-		static GLuint s_CullMode;
-		static Camera* s_CurrentCamera;
-		static int s_ScreenWidth;
-		static int s_ScreenHeight;
-		static bool s_MakeCurrentCalled;
+		static bool										s_IsRunning;
+		static HWND										s_hWnd;
+		static HGLRC									s_hGLRC;
+		static HDC										s_hDevCtx;
+		static GLuint									s_CullMode;
+		static Camera*									s_CurrentCamera;
+		static int										s_ScreenWidth;
+		static int										s_ScreenHeight;
+		static bool										s_MakeCurrentCalled;
+		static float									s_TotalTime;
+		static KLMList<std::unique_ptr<RARenderPass>>	s_RenderPassList;
+		static KLMList<Camera*>							s_CameraList;
+	private:
 		static bool KLMSetPixelFormat(HDC hdc);
-		static Vec4 VectorVariableTest;
-		static float s_TotalTime;
-		static KLMList<std::unique_ptr<RARenderPass>> s_RenderPassList;
-		static KLMList<Camera*> s_CameraList;
 	public:
 		GLRenderer()								= delete;
 		GLRenderer(const GLRenderer&)				= delete;

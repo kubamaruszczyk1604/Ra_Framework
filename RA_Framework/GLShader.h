@@ -9,8 +9,8 @@ namespace RA_FRAMEWORK
 		uint m_Id;
 	public:
 		GLShader(ShaderType type);
-		GLShader(const GLShader&) = delete;
-		GLShader& operator=(const GLShader&) = delete;
+		GLShader(const GLShader&)					= delete;
+		GLShader& operator=(const GLShader&)		= delete;
 		virtual ~GLShader();
 	public:
 		bool			LoadFromFile(const String& path);

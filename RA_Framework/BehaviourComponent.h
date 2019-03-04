@@ -9,16 +9,14 @@ namespace RA_FRAMEWORK
 	private:
 		bool m_StartCalled;
 	public:
-		BehaviourComponent() = delete;
-		BehaviourComponent(const BehaviourComponent&) = delete;
-		BehaviourComponent& operator=(const BehaviourComponent&) = delete;
+		BehaviourComponent()										= delete;
+		BehaviourComponent(const BehaviourComponent&)				= delete;
+		BehaviourComponent& operator=(const BehaviourComponent&)	= delete;
 		explicit BehaviourComponent(const std::string& ID);
 		virtual ~BehaviourComponent();
 	public:
-		virtual void OnStart() = 0;
-		virtual void Update(float deltaTime, float totalTime) = 0;
-		virtual void OnExit() = 0;
-
+		virtual void	OnStart() = 0;
+		virtual void	Update(float deltaTime, float totalTime) = 0;
+		virtual void	OnExit() = 0;
 	};
-
 }

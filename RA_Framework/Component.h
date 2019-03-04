@@ -15,13 +15,13 @@ namespace RA_FRAMEWORK
 	class Component
 	{
 	private:
-		const std::string m_ID;
-		const ComponentType m_Type;
-		Entity* m_pParent;
+		const std::string		m_ID;
+		const ComponentType		m_Type;
+		Entity*					m_pParent;
 	public:
 		Component() = default;
-		Component(const Component&) = default;
-		Component& operator=(const Component&) = default;
+		Component(const Component&)						= default;
+		Component& operator=(const Component&)			= default;
 		Component(const std::string& ID, const ComponentType type);
 		virtual ~Component();
 	public:

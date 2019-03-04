@@ -6,14 +6,14 @@ namespace RA_FRAMEWORK
 	class RARenderPass
 	{
 	private:
-		RENDER_MASK m_Mask;
-		RenderTarget* p_RenderTarget;
-		int m_PassID;
-		ClearMode m_ClearMode; 
-		ColorRGB m_ClearColor;
-		bool m_ClearDepthFlag;
+		RENDER_MASK					m_Mask;
+		RenderTarget*				p_RenderTarget;
+		int							m_PassID;
+		ClearMode					m_ClearMode; 
+		ColorRGB					m_ClearColor;
+		bool						m_ClearDepthFlag;
 	public:
-		RARenderPass() = default;
+		RARenderPass()										= default;
 		RARenderPass(RenderTarget* target, int id);												
 		RARenderPass(const RARenderPass&)					= delete;
 		RARenderPass& operator=(const RARenderPass&)		= delete;

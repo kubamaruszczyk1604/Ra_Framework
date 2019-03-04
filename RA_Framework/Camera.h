@@ -13,22 +13,22 @@ namespace RA_FRAMEWORK
 	class Camera : public Component
 	{
 	private:
-		static glm::mat4 s_IdentityMat;
-		glm::mat4 m_ProjectionMat;
-		glm::mat4 m_TransformMat;
-		glm::mat4 m_ViewMat;
-		glm::vec3 m_NoParrentPos;
-		glm::vec3 m_NoParrentRotation;
-		float m_FOV;
-		float m_Near;
-		float m_Far;
-		ProjectionType m_ProjectionType;
-		bool m_Active;
-		RENDER_MASK m_Mask;
-		ClearMode m_ClearMode;
-		ColorRGB m_ClearColor;
-		bool m_ClearDepthFlag;
-		KLMList<RenderTarget*> m_RenderTargetList; 
+		static Mat4					s_IdentityMat;
+		Mat4						m_ProjectionMat;
+		Mat4						m_TransformMat;
+		Mat4						m_ViewMat;
+		Vec3						m_NoParrentPos;
+		Vec3						m_NoParrentRotation;
+		float						m_FOV;
+		float						m_Near;
+		float						m_Far;
+		ProjectionType				m_ProjectionType;
+		bool						m_Active;
+		RENDER_MASK					m_Mask;
+		ClearMode					m_ClearMode;
+		ColorRGB					m_ClearColor;
+		bool						m_ClearDepthFlag;
+		KLMList<RenderTarget*>		m_RenderTargetList; 
 	public:
 		Camera(const ProjectionType& projection, const float& fovDeg, const float& fnear, const float& ffar);
 		Camera(const Camera&)				= delete;

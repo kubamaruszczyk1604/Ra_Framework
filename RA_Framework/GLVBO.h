@@ -7,13 +7,13 @@ namespace RA_FRAMEWORK
 	class GLVBO : public VBO
 	{
 	private:
-		static const std::array<int, 5> LookupTableTopologyType;
-		GLuint ptr_VBO[2];
-		GLuint ptr_VAO;
-		int m_VertexCount;
-		int m_IndexCount;
-		int* m_indicesPtr;
-		std::vector<unsigned> m_Indices;
+		static const std::array<int, 5>		LookupTableTopologyType;
+		GLuint								ptr_VBO[2];
+		GLuint								ptr_VAO;
+		int									m_VertexCount;
+		int									m_IndexCount;
+		int*								m_indicesPtr;
+		std::vector<unsigned>				m_Indices;
 	public:
 		GLVBO();
 		GLVBO(const GLVBO&) = delete;

@@ -8,15 +8,15 @@ namespace RA_FRAMEWORK
 	class Entity
 	{
 	private:
-		static Mat4 s_Identity;
-		KLMList<Entity*> m_pChildren;
-		KLMList<ComponentUnique> m_pComponents;
-		Component* m_pCachedComponent_Model;
-		std::string m_ID;
-		Entity* m_pParent;
-		Transform m_Transform;
-		int m_ComponentMask;
-		bool m_DeleteMeFlag{ false };
+		static Mat4							s_Identity;
+		KLMList<Entity*>					m_pChildren;
+		KLMList<ComponentUnique>			m_pComponents;
+		Component*							m_pCachedComponent_Model;
+		std::string							m_ID;
+		Entity*								m_pParent;
+		Transform							m_Transform;
+		int									m_ComponentMask;
+		bool								m_DeleteMeFlag{ false };
 	public:
 		explicit Entity(const std::string& ID);
 		explicit Entity()							= default;

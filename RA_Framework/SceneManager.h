@@ -7,9 +7,9 @@ namespace RA_FRAMEWORK
 	private:
 		static SceneUniquePtr m_upCurrentScene;
 	public:
-		SceneManager() = delete;
-		SceneManager(const SceneManager&) = delete;
-		SceneManager& operator=(const SceneManager&) = delete;
+		SceneManager()									= delete;
+		SceneManager(const SceneManager&)				= delete;
+		SceneManager& operator=(const SceneManager&)	= delete;
 	public:
 		//InputCallbacks
 		static void		OnKeyPressed(const int key, const KeyState state);

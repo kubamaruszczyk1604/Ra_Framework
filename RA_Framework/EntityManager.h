@@ -2,8 +2,8 @@
 #include "Entity.h"
 namespace RA_FRAMEWORK
 {
-	using EntityUnique = std::unique_ptr<Entity>;
-	using ListOfEntities = std::vector<EntityUnique>;
+	using EntityUnique			= std::unique_ptr<Entity>;
+	using ListOfEntities		= std::vector<EntityUnique>;
 	class EntityManager
 	{
 	private:

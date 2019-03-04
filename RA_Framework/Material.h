@@ -8,23 +8,23 @@ namespace RA_FRAMEWORK
 	class Material
 	{
 	private:	
-		KLMList<ShaderVariable<int>*> m_IntList;
-		KLMList<ShaderVariable<Vec2i>*> m_V2IntList;
-		KLMList<ShaderVariable<Vec3i>*> m_V3IntList;
-		KLMList<ShaderVariable<Vec4i>*> m_V4IntList;
-		KLMList<ShaderVariable<float>*> m_FloatList;
-		KLMList<ShaderVariable<Vec2>*> m_V2FloatList;
-		KLMList<ShaderVariable<Vec3>*> m_V3FloatList;
-		KLMList<ShaderVariable<Vec4>*> m_V4FloatList;
-		KLMList<ShaderVariable<Mat2>*> m_Mat2List;
-		KLMList<ShaderVariable<Mat3>*> m_Mat3List;
-		KLMList<ShaderVariable<Mat4>*> m_Mat4List;
-		KLMList<ShaderVariable<Texture*>*> m_Texture2DList;
-		ShaderProgram* p_Shader;
+		KLMList<ShaderVariable<int>*>			m_IntList;
+		KLMList<ShaderVariable<Vec2i>*>			m_V2IntList;
+		KLMList<ShaderVariable<Vec3i>*>			m_V3IntList;
+		KLMList<ShaderVariable<Vec4i>*>			m_V4IntList;
+		KLMList<ShaderVariable<float>*>			m_FloatList;
+		KLMList<ShaderVariable<Vec2>*>			m_V2FloatList;
+		KLMList<ShaderVariable<Vec3>*>			m_V3FloatList;
+		KLMList<ShaderVariable<Vec4>*>			m_V4FloatList;
+		KLMList<ShaderVariable<Mat2>*>			m_Mat2List;
+		KLMList<ShaderVariable<Mat3>*>			m_Mat3List;
+		KLMList<ShaderVariable<Mat4>*>			m_Mat4List;
+		KLMList<ShaderVariable<Texture*>*>		m_Texture2DList;
+		ShaderProgram*							p_Shader;
 	public:
 		Material(ShaderProgram* shaderProg);
-		Material(const Material&) = delete;
-		Material& operator=(const Material&) = delete;
+		Material(const Material&)					= delete;
+		Material& operator=(const Material&)		= delete;
 		virtual ~Material();
 	public:
 		void			Use();

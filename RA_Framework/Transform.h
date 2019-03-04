@@ -6,16 +6,16 @@ namespace RA_FRAMEWORK
 	{
 
 	private:
-		Vec3 m_Position;
-		Vec3 m_Rotation;
-		Vec3 m_Scale;
-		Mat4 m_World = glm::mat4(1.0);
-		Mat4 m_ParentTransformStack = glm::mat4(1.0);
+		Vec3					m_Position;
+		Vec3					m_Rotation;
+		Vec3					m_Scale;
+		Mat4					m_World;
+		Mat4					m_ParentTransformStack;
 
 	public:
 		Transform();
-		Transform(const Transform&) = delete;
-		Transform &operator=(const Transform&) = delete;
+		Transform(const Transform&)					= delete;
+		Transform &operator=(const Transform&)		= delete;
 		virtual ~Transform();
 
 	public:

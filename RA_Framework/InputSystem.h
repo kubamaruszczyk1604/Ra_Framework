@@ -4,24 +4,24 @@ namespace RA_FRAMEWORK
 {
 	enum class KeyState { PRESSED, RELEASED };
 	enum class MouseButton { LEFT, RIGHT };
-	using KeyboardCallback = void(*)(const int key, const KeyState state);	//typedef void(*KeyboardCallback)(const int key, const KeyState state);
-	using MouseMoveCallback = void(*)(const int x, const int y);			//typedef void(*MouseMoveCallback)(const int x, const int y);
-	using MouseButtonUpCallback = void(*)(const MouseButton button);		//typedef void(*MouseButtonUpCallback)(const MouseButton button);
-	using MouseButtonDownCallback = void(*)(const MouseButton button);		//typedef void(*MouseButtonDownCallback)(const MouseButton button);
+	using KeyboardCallback			= void(*)(const int key, const KeyState state);	//typedef void(*KeyboardCallback)(const int key, const KeyState state);
+	using MouseMoveCallback			= void(*)(const int x, const int y);			//typedef void(*MouseMoveCallback)(const int x, const int y);
+	using MouseButtonUpCallback		= void(*)(const MouseButton button);		//typedef void(*MouseButtonUpCallback)(const MouseButton button);
+	using MouseButtonDownCallback	= void(*)(const MouseButton button);		//typedef void(*MouseButtonDownCallback)(const MouseButton button);
 	
 	class InputSystem
 	{
 	private:
-		static Vec2i s_MousePos;
-		static Vec2i s_PreviousMousePos;
-		static KeyboardCallback s_KeyboardCallback;
-		static MouseMoveCallback s_MouseMoveCallback;
-		static MouseButtonUpCallback s_MouseButtonUpCallback;
-		static MouseButtonDownCallback s_MouseButtonDownCallback;
+		static Vec2i						s_MousePos;
+		static Vec2i						s_PreviousMousePos;
+		static KeyboardCallback				s_KeyboardCallback;
+		static MouseMoveCallback			s_MouseMoveCallback;
+		static MouseButtonUpCallback		s_MouseButtonUpCallback;
+		static MouseButtonDownCallback		s_MouseButtonDownCallback;
 	public:
-		InputSystem() = delete;
-		InputSystem(const InputSystem&) = delete;
-		InputSystem& operator=(const InputSystem&) = delete;
+		InputSystem()									= delete;
+		InputSystem(const InputSystem&)					= delete;
+		InputSystem& operator=(const InputSystem&)		= delete;
 	public: // Called by window's msgproc
 		static void			PropagateOnKeyDown(const int key);
 		static void			PropagateOnKeyUp(const int key);

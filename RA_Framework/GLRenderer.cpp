@@ -18,7 +18,6 @@ namespace RA_FRAMEWORK
 	int GLRenderer::s_ScreenWidth{ 800 };
 	int GLRenderer::s_ScreenHeight{ 600 };
 	bool GLRenderer::s_MakeCurrentCalled{ false };
-	Vec4 GLRenderer::VectorVariableTest{ Vec4(1.0f) };
 	float GLRenderer::s_TotalTime{ 0 };
 	KLMList<std::unique_ptr<RARenderPass>> GLRenderer::s_RenderPassList;
 	KLMList<Camera*> GLRenderer::s_CameraList;

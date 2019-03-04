@@ -7,8 +7,8 @@ protected:
 protected:
 	RenderTarget(int id): m_ID{id} {}
 public:
-	RenderTarget(const RenderTarget&) = delete;
-	RenderTarget& operator=(const RenderTarget&) = delete;
+	RenderTarget(const RenderTarget&)					= delete;
+	RenderTarget& operator=(const RenderTarget&)		= delete;
 	virtual ~RenderTarget() {}
 public:
 	int GetID()const { return m_ID; }

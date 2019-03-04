@@ -7,8 +7,8 @@ namespace RA_FRAMEWORK
 	using BITMAP_DATA = FIBITMAP;
 	struct Image
 	{
-		BITMAP_DATA* DATA = nullptr;
-		bool HAS_TRANSPARENCY = true;
+		BITMAP_DATA*				DATA				= nullptr;
+		bool						HAS_TRANSPARENCY	= true;
 		int GetWidth() 
 		{ 
 			if(DATA) return FreeImage_GetWidth(DATA); 
@@ -31,12 +31,12 @@ namespace RA_FRAMEWORK
 	public:
 		ImageLoader();
 		virtual ~ImageLoader();
-		ImageLoader(const ImageLoader&) = delete;
-		ImageLoader& operator=(const ImageLoader) = delete;
+		ImageLoader(const ImageLoader&)					= delete;
+		ImageLoader& operator=(const ImageLoader)		= delete;
 	public:
-		BITMAP_DATA* Load(const String& path, bool transparent = true);
-		bool Load(const String& path, Image& output, bool alphaChannel = true);
-		void Free(BITMAP_DATA*& data);
-		void Free(Image& image);
+		BITMAP_DATA*		Load(const String& path, bool transparent = true);
+		bool				Load(const String& path, Image& output, bool alphaChannel = true);
+		void				Free(BITMAP_DATA*& data);
+		void				Free(Image& image);
 	};
 }

@@ -4,18 +4,18 @@ namespace RA_FRAMEWORK
 {
 	enum class PrimitiveType
 	{
-		POINTS = 0,
-		LINES = 1,
-		LINE_STRIP = 2,
-		TRIANGLES = 3,
-		TRIANGLESTIRP = 4
+		POINTS			= 0,
+		LINES			= 1,
+		LINE_STRIP		= 2,
+		TRIANGLES		= 3,
+		TRIANGLESTIRP	= 4
 	};
 	class VBO
 	{
 	public:
-		VBO() = default;
-		VBO(const VBO&) = delete;
-		VBO& operator=(const VBO&) = delete;
+		VBO()							= default;
+		VBO(const VBO&)					= delete;
+		VBO& operator=(const VBO&)		= delete;
 		virtual ~VBO() {}
 	public:
 		virtual bool							Create(Vertex* vertices, int numVertices) = 0;

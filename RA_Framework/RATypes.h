@@ -13,38 +13,38 @@
 
 namespace RA_FRAMEWORK
 {
-	using RAbyte = char;
-	using Exception = std::exception;
-	using String = std::string;
+	using RAbyte				= char;
+	using Exception				= std::exception;
+	using String				= std::string;
 
-	using RAint8 = signed char;
-	using RAint16 = signed short;
-	using RAint32 = signed int;
-	using RAint64 = signed __int64;
-	using RAuint8 = unsigned char;
-	using RAuint16 = unsigned short;
-	using RAuint32 = unsigned int;
-	using RAuint64 = unsigned __int64;
-	using uint = unsigned;
-	using RAfloat = float;
+	using RAint8				= signed char;
+	using RAint16				= signed short;
+	using RAint32				= signed int;
+	using RAint64				= signed __int64;
+	using RAuint8				= unsigned char;
+	using RAuint16				= unsigned short;
+	using RAuint32				= unsigned int;
+	using RAuint64				= unsigned __int64;
+	using uint					= unsigned;
+	using RAfloat				= float;
 
-	using Vec2i = glm::ivec2;
-	using Vec3i = glm::ivec3;
-	using Vec4i = glm::ivec4;
-	using Vec2 = glm::vec2;
-	using Vec3 = glm::vec3;
-	using Vec4 = glm::vec4;
-	using ColorRGB = glm::vec3;
-	using ColorRGBA = glm::vec4;
-	using Mat2 = glm::mat2;
-	using Mat3 = glm::mat3;
-	using Mat4 = glm::mat4;
-	using Quat = glm::quat;
+	using Vec2i					= glm::ivec2;
+	using Vec3i					= glm::ivec3;
+	using Vec4i					= glm::ivec4;
+	using Vec2					= glm::vec2;
+	using Vec3					= glm::vec3;
+	using Vec4					= glm::vec4;
+	using ColorRGB				= glm::vec3;
+	using ColorRGBA				= glm::vec4;
+	using Mat2					= glm::mat2;
+	using Mat3					= glm::mat3;
+	using Mat4					= glm::mat4;
+	using Quat					= glm::quat;
 
 	class Entity;
-	using EntityUnique = std::unique_ptr<Entity>;
-	using ListOfEntities = std::vector<EntityUnique>;
-	using RENDER_MASK = unsigned;
+	using EntityUnique			= std::unique_ptr<Entity>;
+	using ListOfEntities		= std::vector<EntityUnique>;
+	using RENDER_MASK			= unsigned;
 
 	enum RENDER_MASK_ELEMENT
 	{

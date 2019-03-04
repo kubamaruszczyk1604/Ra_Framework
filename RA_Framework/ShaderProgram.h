@@ -10,8 +10,8 @@ namespace RA_FRAMEWORK
 	protected:
 		ShaderProgram(GfxAPI API);
 	public:
-		ShaderProgram(const ShaderProgram&) = delete;
-		ShaderProgram& operator=(const ShaderProgram&) = delete;
+		ShaderProgram(const ShaderProgram&)					= delete;
+		ShaderProgram& operator=(const ShaderProgram&)		= delete;
 		virtual ~ShaderProgram();
 	public:
 		GfxAPI GetAPI() { return m_API; }

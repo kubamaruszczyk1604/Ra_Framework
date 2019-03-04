@@ -23,12 +23,12 @@ namespace RA_FRAMEWORK
 	class ShaderVariable
 	{
 	private:
-		const String m_Name;
-		T m_Data;
+		const String		m_Name;
+		T					m_Data;
 	public:
 		ShaderVariable(const String& name, const T& data) :m_Name{ name }, m_Data{ data }{}
-		ShaderVariable(const ShaderVariable&) = delete;
-		ShaderVariable& operator=(const ShaderVariable&) = delete;
+		ShaderVariable(const ShaderVariable&)					= delete;
+		ShaderVariable& operator=(const ShaderVariable&)		= delete;
 		~ShaderVariable() {}
 	public:
 		void				SetData(const T& data)	{ m_Data = data; }
