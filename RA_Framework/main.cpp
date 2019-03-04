@@ -5,6 +5,7 @@
 #include "GLShaderProgram.h"
 #include "GLRenderer.h"
 #include "ImageLoader.h"
+#include "GeometryGenerator.h"
 
 struct AtExit
 {
@@ -84,18 +85,8 @@ public:
 		m_pRenderTexture2 = new GLTexture(1280, 720, desc);
 
 		// MESH
-		m_pQuadMesh = new Mesh();
-		float size{ 1.0f };
-		float fbDist = 0.01f;
-		//front
-		m_pQuadMesh->AddVertex(Vertex(-size, -size, fbDist, 0, 0, -1, 0, 0));
-		m_pQuadMesh->AddVertex(Vertex(size, -size, fbDist, 0, 0, -1, 1, 0));
-		m_pQuadMesh->AddVertex(Vertex(size, size, fbDist, 0, 0, -1, 1, 1));
-		m_pQuadMesh->AddVertex(Vertex(-size, size, fbDist, 0, 0, -1, 0, 1));
-
-		std::vector<unsigned> indices{0, 1, 2, 0, 2, 3};
-		m_pQuadMesh->CreateVertexBuffer(indices);
-
+		m_pQuadMesh = //GeometryGenerator::GenerateSphere(1.0, 15, 15);
+			GeometryGenerator::GenerateQuad(2.0, 2.0, true);
 		m_pVertexShader = new GLShader(ShaderType::VERTEX);
 		m_pVertexShader->LoadFromFile("C:/Zapas/glVert.txt");
 		std::string status;
@@ -113,7 +104,7 @@ public:
         m_pModel1 = new ModelComponent("model", m_pQuadMesh, m_pMaterial1);
 	    e1 = new Entity("Test 1");
 	    e1->AddComponent(std::unique_ptr<ModelComponent>(m_pModel1));
-		e1->GetTransform()->SetScale(7.5f, 7.5f, 1.0f);
+		e1->GetTransform()->SetScale(7.5f, 7.5f, 6.0f);
 		AddEntity(e1);
 
 		m_pMaterial2 = new Material(m_pShaderProg);
@@ -175,6 +166,7 @@ public:
 	//InputCallbacks
 	void OnKeyPressed(const int key, const KeyState state)
 	{
+		//SceneManager::Load(new ExampleScene());
 	}
 	void OnMouseMove(const int x, const int y)
 	{
@@ -193,7 +185,9 @@ int main()
 	WindowsApp::Create(1280, 720, "RA WINDOW");
 	//WindowsApp::SetFullscreenMode(true);
 	SceneManager::Load(new ExampleScene());
+	
 	const int appState = WindowsApp::Run();
-   // WaitForKeypress();
+    
+	
 	return appState;
 }

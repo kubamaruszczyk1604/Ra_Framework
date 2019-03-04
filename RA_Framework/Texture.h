@@ -40,4 +40,5 @@ namespace RA_FRAMEWORK
 		virtual void		SetMagFilterMode(TextureFilterMode filterMode) = 0;
 		virtual void		SetFilterMode(TextureFilterMode minMode, TextureFilterMode magMode) = 0;
 	};
+
 }

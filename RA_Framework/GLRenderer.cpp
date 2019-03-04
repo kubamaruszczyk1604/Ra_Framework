@@ -19,7 +19,7 @@ namespace RA_FRAMEWORK
 	int GLRenderer::s_ScreenHeight{ 600 };
 	bool GLRenderer::s_MakeCurrentCalled{ false };
 	float GLRenderer::s_TotalTime{ 0 };
-	KLMList<std::unique_ptr<RARenderPass>> GLRenderer::s_RenderPassList;
+	//KLMList<std::unique_ptr<RARenderPass>> GLRenderer::s_RenderPassList;
 	KLMList<Camera*> GLRenderer::s_CameraList;
 	//vector<B> A::vector_of_B;
 
@@ -102,7 +102,7 @@ namespace RA_FRAMEWORK
 
 	void GLRenderer::RenderPass(RARenderPass* pass, ListOfEntities* entities)
 	{
-		if (pass->GetRenderTarget()) { pass->GetRenderTarget()->Bind(); }
+		/*if (pass->GetRenderTarget()) { pass->GetRenderTarget()->Bind(); }
 		else { GLRenderTarget::SetScreen(s_ScreenWidth, s_ScreenHeight); }
 
 		if (pass->GetClearMode() == ClearMode::COLOR) { ClearScreen(pass->GetClearColor(), pass->GetClearDepthFlag()); }
@@ -111,7 +111,7 @@ namespace RA_FRAMEWORK
 		{
 			Entity* e = (*entities)[i].get();
 			GLRenderer::RenderEntity(e,s_CurrentCamera);
-		}
+		}*/
 		//glFlush();
 	}
 
@@ -212,9 +212,11 @@ namespace RA_FRAMEWORK
 
 	void GLRenderer::ShutDown()
 	{
-		s_RenderPassList.Free();
-		s_RenderPassList.Clear();
+		//s_RenderPassList.Free();
+		//s_RenderPassList.Clear();
 		// release device context
+		s_CameraList.Free();
+		s_CameraList.Clear();
 		ReleaseDC(s_hWnd, s_hDevCtx);
 		// default to no context
 		wglMakeCurrent(0, 0);
@@ -307,10 +309,11 @@ namespace RA_FRAMEWORK
 	}
 	void GLRenderer::AddRenderPass(std::unique_ptr<RARenderPass> pass)
 	{
-		s_RenderPassList.GetStdVectorRef().push_back(std::move(pass));
+		//s_RenderPassList.GetStdVectorRef().push_back(std::move(pass));
 	}
 	void GLRenderer::ClearRenderPassList()
 	{
-		s_RenderPassList.Clear();
+		//s_RenderPassList.Clear();
+		s_CameraList.Clear();
 	}
 }

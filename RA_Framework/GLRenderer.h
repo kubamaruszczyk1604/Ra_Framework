@@ -22,7 +22,7 @@ namespace RA_FRAMEWORK
 		static int										s_ScreenHeight;
 		static bool										s_MakeCurrentCalled;
 		static float									s_TotalTime;
-		static KLMList<std::unique_ptr<RARenderPass>>	s_RenderPassList;
+		//static KLMList<std::unique_ptr<RARenderPass>>	s_RenderPassList;
 		static KLMList<Camera*>							s_CameraList;
 	private:
 		static bool KLMSetPixelFormat(HDC hdc);
