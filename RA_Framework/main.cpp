@@ -50,7 +50,7 @@ public:
 		delete m_pShaderProg;		
 		delete m_pImageLoader;
 		delete m_pTexture1;
-		delete m_pRenderTexture;
+		delete m_pRenderTexture1;
 		delete m_pRenderTarget;
 	}
 
@@ -64,7 +64,8 @@ public:
 	Entity*				e1;
 	ImageLoader*        m_pImageLoader;
 	Texture*			m_pTexture1;
-	GLTexture*			m_pRenderTexture;
+	Texture*			m_pRenderTexture1;
+	Texture*			m_pRenderTexture2;
 	GLRenderTarget*		m_pRenderTarget;
 
 	void OnStart()
@@ -78,7 +79,8 @@ public:
 		m_pImageLoader->Free(image);
 
 		TextureFormatDescriptor desc;
-		m_pRenderTexture = new GLTexture(1280, 720, desc);
+		m_pRenderTexture1 = new GLTexture(1280, 720, desc);
+		m_pRenderTexture2 = new GLTexture(1280, 720, desc);
 
 		// MESH
 		m_pQuadMesh = new Mesh();
@@ -120,7 +122,7 @@ public:
 		AddEntity(e1);
 
 		m_pMaterial2 = new Material(m_pShaderProg);
-		m_pMaterial2->AddShaderVariable("tex1", m_pRenderTexture);
+		m_pMaterial2->AddShaderVariable("tex1", m_pRenderTexture1);
 		ModelComponent* m_pModel2 = new ModelComponent("model2", m_pQuadMesh, m_pMaterial2);
 		Entity* e2 = new Entity("Test 2");
 		e2->AddComponent(std::unique_ptr<TestBehaviour>(new TestBehaviour()));
@@ -131,27 +133,28 @@ public:
 		e1->AddChild(e2);
 
 
-
 		Entity* EntityCamera1 = new Entity("Camera1");
 		Camera* camera1 = new Camera(ProjectionType::PERSPECTIVE, 60.0f, 0.1f, 1000.0f);
 		camera1->SetClearColor(ColorRGB(0.3, 0.3, 0.3));
-		m_pRenderTarget = new GLRenderTarget(m_pRenderTexture, 0);
+		std::vector<GLTexture*> ve;
+		ve.push_back((GLTexture*)m_pRenderTexture1);
+		ve.push_back((GLTexture*)m_pRenderTexture2);
+		m_pRenderTarget = new GLRenderTarget(ve);
 		camera1->AddRenderTarget(m_pRenderTarget);
 		EntityCamera1->AddComponent(std::unique_ptr<Camera>(camera1));
-		EntityCamera1->GetTransform()->SetPosition(Vec3(-3.8f, 0.0f, -74.98f));
+		EntityCamera1->GetTransform()->SetPosition(Vec3(-3.8f, 0.0f, -14.98f));
 		AddEntity(EntityCamera1);
 
 
 		Entity* EntityCamera2 = new Entity("Camera2");
 		Camera* camera2 = new Camera(ProjectionType::PERSPECTIVE, 60.0f, 0.1f, 1000.0f);
 		camera2->SetClearColor(ColorRGB(0.15, 0.19, 0.4));
-		//GLRenderer::SetActiveCamera(camera2);
 		EntityCamera2->AddComponent(std::unique_ptr<Camera>(camera2));
 		EntityCamera2->GetTransform()->SetPosition(Vec3(2.8f, 0.0f, -24.98f));
 		AddEntity(EntityCamera2);
 
-		GLRenderer::AddCamera(camera1);
-		GLRenderer::AddCamera(camera2);
+		GLRenderer::AddRenderPass(camera1);
+		GLRenderer::AddRenderPass(camera2);
 		//GLRenderer::SetFillMode(FillMode::WIREFRAME);
 
 		

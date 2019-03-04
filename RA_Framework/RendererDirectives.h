@@ -14,3 +14,5 @@
   In your vertex shader multiply the position attribute by this matrix:
   -> gl_Position =  uMVP*vec4(vertex_position, 1.0); <-
 */
+
+#define ENABLE__CAMERAS_WITH_NO_RENDER_TARGET_RENDERS_DIRECTLY_TO_SCREEN

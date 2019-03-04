@@ -50,6 +50,6 @@ namespace RA_FRAMEWORK
 		static void		EnableDepthTest(bool enabled = true, DepthQualifier qualifier = DepthQualifier::LESS);
 		static void		AddRenderPass(std::unique_ptr<RARenderPass> pass);
 		static void		ClearRenderPassList();
-		static void		AddCamera(Camera* camera) { s_CameraList.Add(camera); }
+		static void		AddRenderPass(Camera* camera) { s_CameraList.Add(camera); }
 	};
 }

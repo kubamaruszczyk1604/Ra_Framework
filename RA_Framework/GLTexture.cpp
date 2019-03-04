@@ -108,6 +108,11 @@ namespace RA_FRAMEWORK
 		this->SetMagFilterMode(magMode);
 	}
 
+	unsigned GLTexture::GetMipmapLevel()
+	{
+		return 0;
+	}
+
 	GLTexture::~GLTexture()
 	{
 		glDeleteTextures(1, &m_ID);

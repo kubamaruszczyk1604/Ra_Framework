@@ -31,8 +31,8 @@ namespace RA_FRAMEWORK
 		KLMList<RenderTarget*> m_RenderTargetList; 
 	public:
 		Camera(const ProjectionType& projection, const float& fovDeg, const float& fnear, const float& ffar);
-		Camera(const Camera&) = delete;
-		Camera &operator=(const Camera&) = delete;
+		Camera(const Camera&)				= delete;
+		Camera &operator=(const Camera&)	= delete;
 		virtual ~Camera();
 	public:
 		float			GetFOV()const							{ return m_FOV; }
