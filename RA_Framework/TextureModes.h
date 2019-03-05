@@ -70,4 +70,11 @@ namespace RA_FRAMEWORK
 		RGBA16F						= 23,
 		RGBA32F						= 24
 	};
+
+	enum class DeptAttachmentType
+	{
+		NONE				= 0,
+		RENDER_BUFFER		= 1,
+		DEPTH_TEXTURE		= 2
+	};
 }

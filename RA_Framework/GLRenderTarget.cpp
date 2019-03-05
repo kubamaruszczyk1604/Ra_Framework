@@ -12,9 +12,10 @@ namespace RA_FRAMEWORK
 		glViewport(0, 0, w, h);
 	}
 
-	GLRenderTarget::GLRenderTarget(const std::vector<GLTexture*>& renderTextures, bool depthBuffer):
+	GLRenderTarget::GLRenderTarget(const std::vector<GLTexture*>& renderTextures, DeptAttachmentType depthAttachmentType):
 		RenderTarget(0),
-		m_DepthFlag(depthBuffer)
+		m_DepthAttachmentType{depthAttachmentType},
+		m_pColorAttachments{renderTextures}
 	{
 		if (renderTextures.size()>0)
 		{
@@ -23,14 +24,7 @@ namespace RA_FRAMEWORK
 			m_IsScreen = false;
 			glGenFramebuffers(1, &m_Fbo);
 			glBindFramebuffer(GL_FRAMEBUFFER, m_Fbo);
-			if (m_DepthFlag)
-			{
-				///http://www.songho.ca/opengl/gl_fbo.html
-				glGenRenderbuffers(1, &m_DepthBuffer);
-				glBindRenderbuffer(GL_RENDERBUFFER, m_DepthBuffer);
-				glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, m_Width, m_Height);
-				glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_DepthBuffer);
-			}
+
 			//compose list of draw buffers
 			for (unsigned i = 0; i < (int)renderTextures.size(); ++i)
 			{
@@ -38,12 +32,36 @@ namespace RA_FRAMEWORK
 				//glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, renderedTexture, 0);
 			}
 			// Set the list of draw buffers.
-			glDrawBuffers((int)renderTextures.size(), DrawBuffers); // "1" is the size of DrawBuffers
+			glDrawBuffers((int)renderTextures.size(), DrawBuffers); 
+
+			if (m_DepthAttachmentType == DeptAttachmentType::RENDER_BUFFER)
+			{
+				///http://www.songho.ca/opengl/gl_fbo.html
+				glGenRenderbuffers(1, &m_DepthBuffer);
+				glBindRenderbuffer(GL_RENDERBUFFER, m_DepthBuffer);
+				glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, m_Width, m_Height);
+				glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_DepthBuffer);
+			}
+			else if (m_DepthAttachmentType == DeptAttachmentType::DEPTH_TEXTURE)
+			{
+				/*TextureFormatDescriptor desc;
+				desc.INPUT_PIXEL_FORMAT = InputPixelFormat::DEPTH_COMPONENT;
+				desc.TEXTURE_DATA_FORMAT = TextureDataFormat::DEPTH_COMPONENT;
+				desc.INPUT_DATA_TYPE = InputPixelDataType::FLOAT;
+				desc.WRAP_MODE = TextureWrapMode::CLAMP;
+				desc.MIN_FILTER_MODE = TextureFilterMode::NEAREST;
+				desc.MAG_FILTER_MODE = TextureFilterMode::NEAREST;
+				m_pDepthTexture = new GLTexture(m_Width, m_Height, desc);
+				m_pDepthTexture->Bind();*/
+				m_pDepthTexture = new GLTexture(m_Width, m_Height);
+				glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, m_pDepthTexture->GetID(), 0);
+
+			}
 		}
 	}
 
-	GLRenderTarget::GLRenderTarget(GLTexture* renderTexture, bool depthBuffer):
-		GLRenderTarget(std::vector<GLTexture*>(1,renderTexture ), depthBuffer) {}
+	GLRenderTarget::GLRenderTarget(GLTexture* renderTexture, DeptAttachmentType depthAttachmentType):
+		GLRenderTarget(std::vector<GLTexture*>(1,renderTexture ), depthAttachmentType) {}
 
 	void GLRenderTarget::Bind()
 	{
@@ -63,11 +81,27 @@ namespace RA_FRAMEWORK
 		return (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE);
 	}
 
+	GLTexture* GLRenderTarget::GetColorAttachment(unsigned index)
+	{
+		if(m_pColorAttachments.size()==0) return nullptr;
+		if (m_pColorAttachments.size() >= index) return nullptr;
+		return m_pColorAttachments[index];
+	}
+
+	GLTexture * GLRenderTarget::GetDepthTexture()
+	{
+		return m_pDepthTexture;
+	}
+
 	GLRenderTarget::~GLRenderTarget()
 	{
-		if (m_DepthFlag)
+		if (m_DepthAttachmentType == DeptAttachmentType::RENDER_BUFFER)
 		{
 			glDeleteRenderbuffers(1, &m_DepthBuffer);
+		}
+		else if (m_DepthAttachmentType == DeptAttachmentType::DEPTH_TEXTURE)
+		{
+			delete m_pDepthTexture;
 		}
 		glDeleteFramebuffers(1, &m_Fbo);
 	}

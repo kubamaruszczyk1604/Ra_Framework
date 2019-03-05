@@ -13,6 +13,13 @@ in vec3 oCamera_WorldSpace;
 in float oTime;
 out vec4 colorOut;
  out vec4 colorOut1;
+ 
+float zfar = 1000.0f;
+float znear = 1.0f;
+ float linearize(float depth)
+{
+    return (-zfar * znear / (depth * (zfar - znear) - zfar)) / zfar;
+}
 void main()
 {
 

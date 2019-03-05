@@ -16,6 +16,7 @@ namespace RA_FRAMEWORK
 		GLTexture(int w, int h, const TextureFormatDescriptor& desc);
 		GLTexture(InputPixelDataType inputPixelFormat, TextureDataFormat internalFormat, Image& image);
 		GLTexture(TextureDataFormat internalFormat, Image& image);
+		GLTexture(int w, int h);
 		GLTexture(Image& image);
 		~GLTexture();
 	public:

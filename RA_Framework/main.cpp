@@ -121,8 +121,9 @@ public:
 		Camera* camera1 = new Camera(ProjectionType::PERSPECTIVE, 80.0f, 0.1f, 1000.0f);
 		camera1->SetClearColor(ColorRGB(0.3, 0.3, 0.3));
 		std::vector<GLTexture*> ve{ (GLTexture*)m_pRenderTexture1,(GLTexture*)m_pRenderTexture2 };
-		m_pRenderTarget = new GLRenderTarget(ve);
+		m_pRenderTarget = new GLRenderTarget(ve,DeptAttachmentType::DEPTH_TEXTURE);
 		std::cout << "Render Target status: " << m_pRenderTarget->IsOK() << std::endl;
+		//m_pMaterial2->AddShaderVariable("tex1", m_pRenderTarget->GetDepthTexture());
 		camera1->SetRenderTarget(m_pRenderTarget);
 		EntityCamera1->AddComponent(std::unique_ptr<Camera>(camera1));
 		EntityCamera1->GetTransform()->SetPosition(Vec3(-3.8f, 0.0f, -14.98f));
@@ -151,7 +152,7 @@ public:
 
 	void Update(float deltaTime, float totalTime = 0)
 	{
-		//e1->GetTransform()->SetRotationY(totalTime);
+		e1->GetTransform()->SetRotationY(totalTime);
 		//m_pTexture->Bind("tex", m_pShaderProg->GetID(), 0);
 	}
 
