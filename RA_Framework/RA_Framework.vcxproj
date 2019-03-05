@@ -99,7 +99,9 @@
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)FreeImg\x32\FreeImage.dll" "$(TargetDir)"
 md "$(TargetDir)GLShaders"
-copy "$(ProjectDir)GLShaders\*.*" "$(TargetDir)GLShaders"</Command>
+copy "$(ProjectDir)GLShaders\*.*" "$(TargetDir)GLShaders"
+md "$(TargetDir)Textures"
+copy "$(ProjectDir)Textures\*.*" "$(TargetDir)Textures"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -115,7 +117,9 @@ copy "$(ProjectDir)GLShaders\*.*" "$(TargetDir)GLShaders"</Command>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)FreeImg\w64\FreeImage.dll" "$(TargetDir)"
 md "$(TargetDir)GLShaders"
-copy "$(ProjectDir)GLShaders\*.*" "$(TargetDir)GLShaders"</Command>
+copy "$(ProjectDir)GLShaders\*.*" "$(TargetDir)GLShaders"
+md "$(TargetDir)Textures"
+copy "$(ProjectDir)Textures\*.*" "$(TargetDir)Textures"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -134,7 +138,9 @@ copy "$(ProjectDir)GLShaders\*.*" "$(TargetDir)GLShaders"</Command>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)FreeImg\x32\FreeImage.dll" "$(TargetDir)"
 md "$(TargetDir)GLShaders"
-copy "$(ProjectDir)GLShaders\*.*" "$(TargetDir)GLShaders"</Command>
+copy "$(ProjectDir)GLShaders\*.*" "$(TargetDir)GLShaders"
+md "$(TargetDir)Textures"
+copy "$(ProjectDir)Textures\*.*" "$(TargetDir)Textures"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -154,7 +160,9 @@ copy "$(ProjectDir)GLShaders\*.*" "$(TargetDir)GLShaders"</Command>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)FreeImg\w64\FreeImage.dll" "$(TargetDir)"
 md "$(TargetDir)GLShaders"
-copy "$(ProjectDir)GLShaders\*.*" "$(TargetDir)GLShaders"</Command>
+copy "$(ProjectDir)GLShaders\*.*" "$(TargetDir)GLShaders"
+md "$(TargetDir)Textures"
+copy "$(ProjectDir)Textures\*.*" "$(TargetDir)Textures"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

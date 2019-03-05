@@ -76,7 +76,7 @@ public:
 		m_pImageLoader = new ImageLoader();
 
 		Image image;
-		std::cout << "Loading image1: " << m_pImageLoader->Load("C:/Zapas/text1.png", image) << std::endl;
+		std::cout << "Loading image1: " << m_pImageLoader->Load("Textures/test_texture1.png", image) << std::endl;
 		m_pTexture1 = new GLTexture(image);
 		m_pImageLoader->Free(image);
 
