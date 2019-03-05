@@ -3,11 +3,9 @@
 
 namespace RA_FRAMEWORK
 {
-
-
 	void BehaviourManager::Update(ListOfEntities* entityList, const float deltaTime, const float totalTime)
 	{
-		for (int i = 0; i < entityList->size(); ++i)
+		for (int i = 0; i < static_cast<int>(entityList->size()); ++i)
 		{
 			Entity* e = (*entityList)[i].get();
 

@@ -70,7 +70,7 @@ namespace RA_FRAMEWORK
 
 	int Camera::RenderTargetCount()
 	{
-		return m_RenderTargetList.Count();
+		return static_cast<int>(m_RenderTargetList.Count());
 	}
 
 	bool Camera::TryBindRenderTarget(int index)
