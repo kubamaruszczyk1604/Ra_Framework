@@ -98,6 +98,7 @@ public:
 		std::cout << "  Status: " << status << std::endl;
 		m_pShaderProg = new GLShaderProgram(m_pVertexShader, m_pFragmentShader);
 		std::cout << "Shader Program linking status: " << m_pShaderProg->Created() << std::endl;
+
 		m_pMaterial1 = new Material(m_pShaderProg);
 		m_pMaterial1->AddShaderVariable("tex1", m_pTexture1);
 		
@@ -113,13 +114,12 @@ public:
 		Entity* e2 = new Entity("Test 2");
 		e2->AddComponent(std::unique_ptr<TestBehaviour>(new TestBehaviour()));
 		e2->AddComponent(std::unique_ptr<ModelComponent>(m_pModel2));
-		//e2->GetTransform()->SetScale(1.0f,1.0f, 1.0f);
 		e2->GetTransform()->SetPosition(-2.5f, 0.0f, 1.0f);
 		AddEntity(e2);
 		e1->AddChild(e2);
 
 		Entity* EntityCamera1 = new Entity("Camera1");
-		Camera* camera1 = new Camera(ProjectionType::PERSPECTIVE, 60.0f, 0.1f, 1000.0f);
+		Camera* camera1 = new Camera(ProjectionType::PERSPECTIVE, 80.0f, 0.1f, 1000.0f);
 		camera1->SetClearColor(ColorRGB(0.3, 0.3, 0.3));
 		std::vector<GLTexture*> ve{ (GLTexture*)m_pRenderTexture1,(GLTexture*)m_pRenderTexture2 };
 		m_pRenderTarget = new GLRenderTarget(ve);
@@ -130,7 +130,7 @@ public:
 		AddEntity(EntityCamera1);
 
 		Entity* EntityCamera2 = new Entity("Camera2");
-		Camera* camera2 = new Camera(ProjectionType::PERSPECTIVE, 60.0f, 0.1f, 1000.0f);
+		Camera* camera2 = new Camera(ProjectionType::PERSPECTIVE, 80.0f, 0.1f, 1000.0f);
 		camera2->SetClearColor(ColorRGB(0.15, 0.19, 0.4));
 		EntityCamera2->AddComponent(std::unique_ptr<Camera>(camera2));
 		EntityCamera2->GetTransform()->SetPosition(Vec3(2.8f, 0.0f, -24.98f));
@@ -166,28 +166,28 @@ public:
 	//InputCallbacks
 	void OnKeyPressed(const int key, const KeyState state)
 	{
-		//SceneManager::Load(new ExampleScene());
+		if (state == KeyState::PRESSED) SceneManager::Load(new ExampleScene());
 	}
+
 	void OnMouseMove(const int x, const int y)
 	{
 	}
+
 	void OnMouseButtonUp(MouseButton const button)
 	{
+		WindowsApp::SetFullscreenMode(false);
 	}
+
 	void OnMouseButtonDown(MouseButton const button)
 	{
+		WindowsApp::SetFullscreenMode(true);
 	}
 };
 
 int main()
 {
-	//int tt = _CrtSetBreakAlloc(132);
 	WindowsApp::Create(1280, 720, "RA WINDOW");
-	//WindowsApp::SetFullscreenMode(true);
 	SceneManager::Load(new ExampleScene());
-	
 	const int appState = WindowsApp::Run();
-    
-	
 	return appState;
 }

@@ -80,6 +80,9 @@ namespace RA_FRAMEWORK
 
 	void GLRenderer::ResizeWindow(unsigned width, unsigned height)
 	{
+		
+		if (height < 10) height = 100;
+		if (width < 10) width = 100;
 		s_ScreenWidth = width;
 		s_ScreenHeight = height;
 		glViewport(0, 0, width, height);

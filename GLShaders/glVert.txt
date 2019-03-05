@@ -38,8 +38,10 @@ void main()
    oUVs = uvs;
    oCamera_WorldSpace = uCameraPosition;
    oTime = uTime;
+	
+   gl_Position =  uMVP*vec4(vertex_position, 1.0);
 
-   gl_Position =  uMVP*vec4(vertex_position*(0.5+0.4*sin(oTime)), 1.0);
+   //gl_Position =  uMVP*vec4(vertex_position*(0.5+0.4*sin(oTime)), 1.0);
 
   
 }

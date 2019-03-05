@@ -21,6 +21,7 @@ namespace RA_FRAMEWORK
 			ListOfEntities* list = m_upCurrentScene->GetEntityManager()->GetListOfEntities();
 			BehaviourManager::TerminateAllBehaviours(list);
 			m_upCurrentScene.get()->OnExit();
+			m_upCurrentScene->GetEntityManager()->RemoveAllEntities();
 			GLRenderer::ClearRenderPassList();
 		}
 		m_upCurrentScene = std::unique_ptr<Scene>(scene);

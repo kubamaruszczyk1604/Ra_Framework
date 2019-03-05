@@ -159,7 +159,8 @@ void WindowsApp::OnResize(HWND const hWnd) {
 	s_ClientWidth = r.right - r.left;
 	s_ClientHeight = r.bottom - r.top;
 	// store windowed coords loally (if not fullscreen)
-	if (!IsFullscreen) ::GetWindowRect(s_Hwnd, &s_WindowedCoords);
+	//if (!IsFullscreen) 
+		::GetWindowRect(s_Hwnd, &s_WindowedCoords);
 	// Window size is different? true = SIZE (not a MOVE)
 	GLRenderer::ResizeWindow((r.right - r.left), (r.bottom - r.top));
 }

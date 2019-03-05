@@ -33,8 +33,8 @@ namespace RA_FRAMEWORK
 		void			SetFilterMode(TextureFilterMode minMode, TextureFilterMode magMode);
 		unsigned		GetMipmapLevel();
 	public:
-		int			Width()		{ return c_Width; }
-		int			Height()	{ return c_Height; }
-		uint		GetID()		{ return m_ID; }
+		int				Width()		{ return c_Width; }
+		int				Height()	{ return c_Height; }
+		uint			GetID()		{ return m_ID; }
 	};
 }

@@ -2,10 +2,10 @@
 #include"RATypes.h"
 namespace RA_FRAMEWORK
 {
-	/*namespace RA_BUILT_IN_SHADERS
+	class RA_BUILT_IN_SHADERS
 	{
 
-		
+	public:
 		const String GL_Vert_MVPVeryBasic =
 			"#version 330\n"
 			"layout(location = 0) in vec3 vertex_position;\n"
@@ -100,7 +100,7 @@ namespace RA_FRAMEWORK
 
 			"	 gl_Position = uMVP * vec4(vertex_position, 1.0);\n"
 			" }";
-	}*/
+	};
 	
 
 }

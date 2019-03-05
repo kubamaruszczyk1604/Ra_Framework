@@ -230,8 +230,4 @@
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="BuildInShaders\RA_glFrag.txt" />
-    <Text Include="BuildInShaders\RA_glVert.txt" />
-  </ItemGroup>
 </Project>
