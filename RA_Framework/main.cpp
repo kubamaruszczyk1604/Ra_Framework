@@ -6,6 +6,7 @@
 #include "GLRenderer.h"
 #include "ImageLoader.h"
 #include "GeometryGenerator.h"
+using namespace RA_FRAMEWORK;
 
 struct AtExit
 {
@@ -14,8 +15,6 @@ struct AtExit
 		_CrtDumpMemoryLeaks();
 	}
 } doAtExit;
-
-using namespace RA_FRAMEWORK;
 
 class TestBehaviour : public BehaviourComponent
 {
@@ -152,7 +151,7 @@ public:
 
 	void Update(float deltaTime, float totalTime = 0)
 	{
-		e1->GetTransform()->SetRotationY(totalTime);
+		//e1->GetTransform()->SetRotationY(totalTime);
 		//m_pTexture->Bind("tex", m_pShaderProg->GetID(), 0);
 	}
 

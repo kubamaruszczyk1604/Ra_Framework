@@ -62,6 +62,7 @@ namespace RA_FRAMEWORK
 		RenderTarget*	FindRenderTarget(int id);
 		int				RenderTargetCount();	
 		bool			TryBindRenderTarget(int index);
+		//void OnRender(RenderTarget* source, RenderTarget* destination);
 	};
 }
 
