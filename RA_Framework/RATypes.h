@@ -1,16 +1,35 @@
 #ifndef _RA_TYPES_H
 #define _RA_TYPES_H
-#include <exception>
-#include <string>
-#include <iostream>
-#include <vector>
 
+//Windows Specific
+#define WIN32_LEAN_AND_MEAN
+#define _CRTDBG_MAP_ALLOC
+#include <windows.h>
+#include <crtdbg.h>
+//C headers
+#include <stdlib.h>
+#include <conio.h>
+//C++ headers
+#include <exception>
+#include <unordered_map>
+#include <algorithm>
+#include <memory>
+#include <iostream>
+#include <string>
+#include <vector>
+//GLM Linear Algebra Library includes
 #include "GLM\GLM.hpp"
 #include "GLM\GTC\matrix_transform.hpp"
 #include "GLM\GTC\type_ptr.hpp"
-#include <GLM\GTC\matrix_transform.hpp>
+//OpenGL headers
+#include "GL\glew.h"
+//#include "GL\freeglut.h"
 
-
+//OpenGL static libs
+#pragma comment(lib, "opengl32.lib")
+//#pragma comment(lib, "glu32.lib")
+//#pragma comment(lib, "freeglut.lib")
+#pragma comment(lib, "glew32.lib")
 namespace RA_FRAMEWORK
 {
 	using RAbyte				= char;

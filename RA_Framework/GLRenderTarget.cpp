@@ -12,9 +12,9 @@ namespace RA_FRAMEWORK
 		glViewport(0, 0, w, h);
 	}
 
-	GLRenderTarget::GLRenderTarget(const std::vector<GLTexture*>& renderTextures):
+	GLRenderTarget::GLRenderTarget(const std::vector<GLTexture*>& renderTextures, bool depthBuffer):
 		RenderTarget(0),
-		m_DepthFlag(1)
+		m_DepthFlag(depthBuffer)
 	{
 		if (renderTextures.size()>0)
 		{
@@ -42,9 +42,8 @@ namespace RA_FRAMEWORK
 		}
 	}
 
-	GLRenderTarget::GLRenderTarget(GLTexture* renderTexture):
-		GLRenderTarget(std::vector<GLTexture*>(1,renderTexture ))
-	{}
+	GLRenderTarget::GLRenderTarget(GLTexture* renderTexture, bool depthBuffer):
+		GLRenderTarget(std::vector<GLTexture*>(1,renderTexture ), depthBuffer) {}
 
 	void GLRenderTarget::Bind()
 	{

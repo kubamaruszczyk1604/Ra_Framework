@@ -18,8 +18,8 @@ namespace RA_FRAMEWORK
 	public:
 		static void SetScreen(int w, int h);
 	public:
-		GLRenderTarget(const std::vector<GLTexture*>& renderTextures);
-		GLRenderTarget(GLTexture* renderTexture);
+		GLRenderTarget(const std::vector<GLTexture*>& renderTextures, bool depthBuffer = false);
+		GLRenderTarget(GLTexture* renderTexture, bool depthBuffer = false);
 		GLRenderTarget(const GLRenderTarget&)				 = delete;
 		GLRenderTarget& operator=(const GLRenderTarget&)	 = delete;
 		virtual ~GLRenderTarget();

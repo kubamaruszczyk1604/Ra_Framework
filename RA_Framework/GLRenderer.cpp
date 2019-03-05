@@ -69,7 +69,7 @@ namespace RA_FRAMEWORK
 		EnableDepthTest();
 		//SetCullMode(CullMode::NONE);
 		//SetFillMode(FillMode::WIREFRAME);
-		//EnableAlphaBlending();
+		EnableAlphaBlending();
 	//	glEnable(GL_MULTISAMPLE);
 	//	glHint(GL_MULTISAMPLE_FILTER_HINT_NV, GL_NICEST);
 		glViewport(0, 0, width, height);
@@ -121,7 +121,7 @@ namespace RA_FRAMEWORK
 	void GLRenderer::RenderPass(Camera* camera, ListOfEntities* entities)
 	{
 #ifdef ENABLE__CAMERAS_WITH_NO_RENDER_TARGET_RENDERS_DIRECTLY_TO_SCREEN
-		if (camera->RenderTargetCount() == 0)
+		if (camera->GetRenderTarget() == nullptr)
 		{ 
 			
 			GLRenderTarget::SetScreen(s_ScreenWidth, s_ScreenHeight); 
@@ -140,22 +140,20 @@ namespace RA_FRAMEWORK
 		}	
 #endif // ENABLE__CAMERAS_WITH_NO_RENDER_TARGET_RENDERS_DIRECTLY_TO_SCREEN
 
-		for (int i = 0; i < camera->RenderTargetCount(); ++i)
+
+		auto rt = camera->GetRenderTarget();
+		if (rt->IsScreen()) { GLRenderTarget::SetScreen(s_ScreenWidth, s_ScreenHeight); }
+		else { rt->Bind(); }
+		if (camera->GetClearMode() == ClearMode::COLOR)
 		{
-		
-			auto rt = camera->GetRenderTarget(i);
-			if (rt->IsScreen()) { GLRenderTarget::SetScreen(s_ScreenWidth, s_ScreenHeight); }
-			else { rt->Bind(); }
-			if (camera->GetClearMode() == ClearMode::COLOR)
-			{
-				ClearScreen(camera->GetClearColor(), camera->GetClearDepthFlag());
-			}
-			for (int i = 0; i < entities->size(); ++i)
-			{
-				Entity* e = (*entities)[i].get();
-				GLRenderer::RenderEntity(e, camera);
-			}
+			ClearScreen(camera->GetClearColor(), camera->GetClearDepthFlag());
 		}
+		for (int i = 0; i < entities->size(); ++i)
+		{
+			Entity* e = (*entities)[i].get();
+			GLRenderer::RenderEntity(e, camera);
+		}
+		
 		//Add render targets done -> bind screen
 		GLRenderTarget::SetScreen(s_ScreenWidth, s_ScreenHeight);
 	}

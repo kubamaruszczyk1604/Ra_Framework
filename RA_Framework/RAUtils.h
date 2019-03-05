@@ -1,38 +1,8 @@
 #pragma once
-#define WIN32_LEAN_AND_MEAN
-
-#define _CRTDBG_MAP_ALLOC
-#include <stdlib.h>
-#include <crtdbg.h>
-
-#include "GLM\GLM.hpp"
-#include "GLM\GTC\matrix_transform.hpp"
-#include "GLM\GTC\type_ptr.hpp"
-//#include <GLM\GTC\matrix_transform.hpp>
-
-#include <unordered_map>
-#include <algorithm>
-#include <memory>
-#include <iostream>
-#include <string>
-#include <vector>
-#include <conio.h>
 #include "RATypes.h"
 #include "Stopwatch.h"
 #include "KLMList.h"
 #include "RABuiltInShaders.h"
-//#include  <glew.h>  
-//OPENGL HEADERS
-#include "GL\glew.h"
-//#include "GL\freeglut.h"
-#include <windows.h>
-
-
-#pragma comment(lib, "opengl32.lib")
-//#pragma comment(lib, "glu32.lib")
-//#pragma comment(lib, "freeglut.lib")
-#pragma comment(lib, "glew32.lib")
-
 namespace RA_FRAMEWORK
 {
 	template<class T_KEY, class T_VAL>

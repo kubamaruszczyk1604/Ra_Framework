@@ -123,7 +123,7 @@ public:
 		std::vector<GLTexture*> ve{ (GLTexture*)m_pRenderTexture1,(GLTexture*)m_pRenderTexture2 };
 		m_pRenderTarget = new GLRenderTarget(ve);
 		std::cout << "Render Target status: " << m_pRenderTarget->IsOK() << std::endl;
-		camera1->AddRenderTarget(m_pRenderTarget);
+		camera1->SetRenderTarget(m_pRenderTarget);
 		EntityCamera1->AddComponent(std::unique_ptr<Camera>(camera1));
 		EntityCamera1->GetTransform()->SetPosition(Vec3(-3.8f, 0.0f, -14.98f));
 		AddEntity(EntityCamera1);

@@ -28,7 +28,7 @@ namespace RA_FRAMEWORK
 		ClearMode					m_ClearMode;
 		ColorRGB					m_ClearColor;
 		bool						m_ClearDepthFlag;
-		KLMList<RenderTarget*>		m_RenderTargetList; 
+		RenderTarget*				m_RenderTarget; 
 	public:
 		Camera(const ProjectionType& projection, const float& fovDeg, const float& fnear, const float& ffar);
 		Camera(const Camera&)				= delete;
@@ -57,12 +57,9 @@ namespace RA_FRAMEWORK
 		const Mat4&		SetTransformMatrix(const Vec3& translation, const Vec3& rotation);
 		void			SetTransformMatrix(const glm::mat4& mat);
 	public:
-		void			AddRenderTarget(RenderTarget* target);
-		RenderTarget*	GetRenderTarget(int index);
-		RenderTarget*	FindRenderTarget(int id);
-		int				RenderTargetCount();	
-		bool			TryBindRenderTarget(int index);
-		//void OnRender(RenderTarget* source, RenderTarget* destination);
+		void			SetRenderTarget(RenderTarget* target);
+		RenderTarget*	GetRenderTarget();
+		//void			OnRender(RenderTarget* source, RenderTarget* destination);
 	};
 }
 
