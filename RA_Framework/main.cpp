@@ -88,12 +88,12 @@ public:
 		m_pQuadMesh = //GeometryGenerator::GenerateSphere(1.0, 15, 15);
 			GeometryGenerator::GenerateQuad(2.0, 2.0, true);
 		m_pVertexShader = new GLShader(ShaderType::VERTEX);
-		m_pVertexShader->LoadFromFile("C:/Zapas/glVert.txt");
+		m_pVertexShader->LoadFromFile("GLShaders/glVert.txt");
 		std::string status;
 		std::cout << "Compile Vertex Shader: " << m_pVertexShader->Compile(status);
 		std::cout << "  Status: "<< status << std::endl;
 		m_pFragmentShader = new GLShader(ShaderType::FRAGMENT);
-		m_pFragmentShader->LoadFromFile("C:/Zapas/glFrag.txt");
+		m_pFragmentShader->LoadFromFile("GLShaders/glFrag.txt");
 		std::cout << "Compile Fragment Shader: " << m_pFragmentShader->Compile(status);
 		std::cout << "  Status: " << status << std::endl;
 		m_pShaderProg = new GLShaderProgram(m_pVertexShader, m_pFragmentShader);

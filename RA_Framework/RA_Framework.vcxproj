@@ -97,7 +97,9 @@
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(SolutionDir)FreeImg\x32\FreeImage.dll" "$(TargetDir)"</Command>
+      <Command>copy "$(SolutionDir)FreeImg\x32\FreeImage.dll" "$(TargetDir)"
+md "$(TargetDir)GLShaders"
+copy "$(ProjectDir)GLShaders\*.*" "$(TargetDir)GLShaders"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -111,7 +113,9 @@
       <AdditionalLibraryDirectories>$(SolutionDir)FreeImg\w64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(SolutionDir)FreeImg\w64\FreeImage.dll" "$(TargetDir)"</Command>
+      <Command>copy "$(SolutionDir)FreeImg\w64\FreeImage.dll" "$(TargetDir)"
+md "$(TargetDir)GLShaders"
+copy "$(ProjectDir)GLShaders\*.*" "$(TargetDir)GLShaders"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -128,7 +132,9 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(SolutionDir)FreeImg\x32\FreeImage.dll" "$(TargetDir)"</Command>
+      <Command>copy "$(SolutionDir)FreeImg\x32\FreeImage.dll" "$(TargetDir)"
+md "$(TargetDir)GLShaders"
+copy "$(ProjectDir)GLShaders\*.*" "$(TargetDir)GLShaders"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -146,7 +152,9 @@
       <AdditionalLibraryDirectories>$(SolutionDir)FreeImg\w64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(SolutionDir)FreeImg\w64\FreeImage.dll" "$(TargetDir)"</Command>
+      <Command>copy "$(SolutionDir)FreeImg\w64\FreeImage.dll" "$(TargetDir)"
+md "$(TargetDir)GLShaders"
+copy "$(ProjectDir)GLShaders\*.*" "$(TargetDir)GLShaders"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
