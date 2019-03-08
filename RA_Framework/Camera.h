@@ -28,7 +28,7 @@ namespace RA_FRAMEWORK
 		ClearMode					m_ClearMode;
 		ColorRGB					m_ClearColor;
 		bool						m_ClearDepthFlag;
-		RenderTarget*				m_RenderTarget; 
+		RenderTarget*				p_RenderTarget;  
 	public:
 		Camera(const ProjectionType& projection, const float& fovDeg, const float& fnear, const float& ffar);
 		Camera(const Camera&)				= delete;

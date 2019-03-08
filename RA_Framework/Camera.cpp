@@ -52,13 +52,11 @@ namespace RA_FRAMEWORK
 
 	void Camera::SetRenderTarget(RenderTarget* target)
 	{
-		m_RenderTarget = target;
+		p_RenderTarget = target;
 	}
 
 	RenderTarget* Camera::GetRenderTarget()
 	{
-		return m_RenderTarget;
+		return p_RenderTarget;
 	}
-
-
 }

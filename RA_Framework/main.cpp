@@ -11,8 +11,8 @@ using namespace RA_FRAMEWORK;
 struct AtExit
 {
 	~AtExit()
-	{
-		_CrtDumpMemoryLeaks();
+	{ 
+		_CrtDumpMemoryLeaks(); 
 	}
 } doAtExit;
 
@@ -84,8 +84,8 @@ public:
 		m_pRenderTexture2 = new GLTexture(1280, 720, desc);
 
 		// MESH
-		m_pQuadMesh = //GeometryGenerator::GenerateSphere(1.0, 15, 15);
-			GeometryGenerator::GenerateQuad(2.0, 2.0, true);
+		//m_pQuadMesh = GeometryGenerator::GenerateSphere(1.0, 15, 15);
+		m_pQuadMesh = GeometryGenerator::GenerateQuad(2.0, 2.0, true);
 		m_pVertexShader = new GLShader(ShaderType::VERTEX);
 		m_pVertexShader->LoadFromFile("GLShaders/glVert.txt");
 		std::string status;
@@ -139,12 +139,12 @@ public:
 		GLRenderer::AddRenderPass(camera1);
 		GLRenderer::AddRenderPass(camera2);
 		//GLRenderer::SetFillMode(FillMode::WIREFRAME);
-
 		
 		/*RARenderPass* pass1 = new RARenderPass(m_pRenderTarget, 0);
 		pass1->SetClearColor(ColorRGB(0.3, 0.3, 0.3));
 		GLRenderer::AddRenderPass(std::unique_ptr<RARenderPass>(pass1));
 
+		+------------------------------,39666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666000000000000000000000000000000000
 		RARenderPass* pass2 = new RARenderPass(nullptr, 1);
 		pass2->SetClearColor(ColorRGB(0.15, 0.19, 0.4));
 		GLRenderer::AddRenderPass(std::unique_ptr<RARenderPass>(pass2));*/
