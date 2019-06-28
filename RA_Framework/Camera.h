@@ -4,6 +4,8 @@
 #include "RenderTarget.h"
 namespace RA_FRAMEWORK
 {
+	class Scene;
+	using OnRenderCallback = void(*)(RenderTarget* target, Texture* destination);
 	enum class ProjectionType
 	{
 		ORTHO = 0,
@@ -29,6 +31,8 @@ namespace RA_FRAMEWORK
 		ColorRGB					m_ClearColor;
 		bool						m_ClearDepthFlag;
 		RenderTarget*				p_RenderTarget;  
+		Texture*					p_Destination;
+		OnRenderCallback			m_RenderCallback;
 	public:
 		Camera(const ProjectionType& projection, const float& fovDeg, const float& fnear, const float& ffar);
 		Camera(const Camera&)				= delete;
@@ -52,13 +56,16 @@ namespace RA_FRAMEWORK
 		ClearMode		GetClearMode()							{ return m_ClearMode; }
 		bool			GetClearDepthFlag()						{ return m_ClearDepthFlag; }
 		const ColorRGB& GetClearColor()							{ return m_ClearColor; }
+		void SetRenderCallback(const OnRenderCallback caallback) { m_RenderCallback = caallback; }
 	public:
 		const Mat4&		GetProjectionMatrix(const int& scrWidth, const int& scrHeight);
 		const Mat4&		SetTransformMatrix(const Vec3& translation, const Vec3& rotation);
 		void			SetTransformMatrix(const glm::mat4& mat);
 	public:
 		void			SetRenderTarget(RenderTarget* target);
+		void			SetTextureDestination(Texture* destination);
 		RenderTarget*	GetRenderTarget();
+		void            OnRender();
 	};
 }
 

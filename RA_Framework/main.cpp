@@ -34,7 +34,10 @@ public:
 		std::cout << "Behaviour konczy" << std::endl;
 	}
 };
-
+void WhenRender(RenderTarget* target, Texture* destination)
+{
+	//std::cout << "On Camera Render" << std::endl;
+}
 class ExampleScene :public Scene
 {
 public:
@@ -69,23 +72,30 @@ public:
 	Texture*			m_pRenderTexture2;
 	GLRenderTarget*		m_pRenderTarget;
 
+	
+
 	void OnStart()
 	{
 		PRINTL("OnStart()");
 		m_pImageLoader = new ImageLoader();
-
-		Image image;
+		// Generate empty image
+		Image image; 
+		// Load from file
 		std::cout << "Loading image1: " << m_pImageLoader->Load("Textures/test_texture1.png", image) << std::endl;
+		// Push to GPU
 		m_pTexture1 = new GLTexture(image);
+		// Delete from RAM - we won't need it since the GPU has its own copy now
 		m_pImageLoader->Free(image);
 
+		// Create render textures for cameras
 		TextureFormatDescriptor desc;
 		m_pRenderTexture1 = new GLTexture(1280, 720, desc);
 		m_pRenderTexture2 = new GLTexture(1280, 720, desc);
 
-		// MESH
+		// MESH generation
 		//m_pQuadMesh = GeometryGenerator::GenerateSphere(1.0, 15, 15);
 		m_pQuadMesh = GeometryGenerator::GenerateQuad(2.0, 2.0, true);
+		// Create and compile shaders
 		m_pVertexShader = new GLShader(ShaderType::VERTEX);
 		m_pVertexShader->LoadFromFile("GLShaders/glVert.txt");
 		std::string status;
@@ -98,6 +108,7 @@ public:
 		m_pShaderProg = new GLShaderProgram(m_pVertexShader, m_pFragmentShader);
 		std::cout << "Shader Program linking status: " << m_pShaderProg->Created() << std::endl;
 
+	
 		m_pMaterial1 = new Material(m_pShaderProg);
 		m_pMaterial1->AddShaderVariable("tex1", m_pTexture1);
 		
@@ -120,6 +131,7 @@ public:
 		Entity* EntityCamera1 = new Entity("Camera1");
 		Camera* camera1 = new Camera(ProjectionType::PERSPECTIVE, 80.0f, 0.1f, 1000.0f);
 		camera1->SetClearColor(ColorRGB(0.3, 0.3, 0.3));
+		camera1->SetRenderCallback(WhenRender);
 		std::vector<GLTexture*> ve{ (GLTexture*)m_pRenderTexture1,(GLTexture*)m_pRenderTexture2 };
 		m_pRenderTarget = new GLRenderTarget(ve,DeptAttachmentType::DEPTH_TEXTURE);
 		std::cout << "Render Target status: " << m_pRenderTarget->IsOK() << std::endl;
@@ -143,8 +155,6 @@ public:
 		/*RARenderPass* pass1 = new RARenderPass(m_pRenderTarget, 0);
 		pass1->SetClearColor(ColorRGB(0.3, 0.3, 0.3));
 		GLRenderer::AddRenderPass(std::unique_ptr<RARenderPass>(pass1));
-
-		+------------------------------,39666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666000000000000000000000000000000000
 		RARenderPass* pass2 = new RARenderPass(nullptr, 1);
 		pass2->SetClearColor(ColorRGB(0.15, 0.19, 0.4));
 		GLRenderer::AddRenderPass(std::unique_ptr<RARenderPass>(pass2));*/

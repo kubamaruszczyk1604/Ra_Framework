@@ -135,7 +135,7 @@ namespace RA_FRAMEWORK
 				Entity* e = (*entities)[i].get();
 				GLRenderer::RenderEntity(e,camera);
 			}
-			
+			camera->OnRender();
 			return;
 		}	
 #endif // ENABLE__CAMERAS_WITH_NO_RENDER_TARGET_RENDERS_DIRECTLY_TO_SCREEN
@@ -153,7 +153,7 @@ namespace RA_FRAMEWORK
 			Entity* e = (*entities)[i].get();
 			GLRenderer::RenderEntity(e, camera);
 		}
-		
+		camera->OnRender();
 		//Add render targets done -> bind screen
 		GLRenderTarget::SetScreen(s_ScreenWidth, s_ScreenHeight);
 	}

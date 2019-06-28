@@ -55,8 +55,17 @@ namespace RA_FRAMEWORK
 		p_RenderTarget = target;
 	}
 
+	void Camera::SetTextureDestination(Texture * destination)
+	{
+		p_Destination = destination;
+	}
+
 	RenderTarget* Camera::GetRenderTarget()
 	{
 		return p_RenderTarget;
+	}
+	void Camera::OnRender()
+	{
+		if (m_RenderCallback) m_RenderCallback(p_RenderTarget,p_Destination);
 	}
 }
