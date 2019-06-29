@@ -20,7 +20,7 @@ namespace RA_FRAMEWORK
 
 	Camera::~Camera(){}
 
-	const glm::mat4 & Camera::GetProjectionMatrix(const int & scrWidth, const int & scrHeight)
+	const glm::mat4& Camera::GetProjectionMatrix(const int & scrWidth, const int & scrHeight)
 	{
 		if (m_ProjectionType == ProjectionType::PERSPECTIVE)
 		{
@@ -44,7 +44,7 @@ namespace RA_FRAMEWORK
 		return m_TransformMat;
 	}
 
-	void Camera::SetTransformMatrix(const glm::mat4& mat)
+	void Camera::SetTransformMatrix(const Mat4& mat)
 	{
 		m_TransformMat = mat;
 		m_ViewMat = glm::inverse(m_TransformMat);

@@ -3,7 +3,6 @@ namespace RA_FRAMEWORK
 {
 	
 	//www.opengl-tutorial.org/intermediate-tutorials/tutorial-14-render-to-texture/
-
 	GLTexture::GLTexture(int w, int h, const TextureFormatDescriptor& desc, void* data) :
 		Texture(GfxAPI::GL, 0, 0),
 		c_Width(w),
@@ -21,6 +20,7 @@ namespace RA_FRAMEWORK
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, TEX_ADDRESS_MODE_LUT_GL[static_cast<uint>(desc.WRAP_MODE)]);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, TEX_ADDRESS_MODE_LUT_GL[static_cast<uint>(desc.WRAP_MODE)]);
 		if(desc.GEN_MIPMAPS)glGenerateMipmap(GL_TEXTURE_2D);
+		//s_TextureUnitCounter++;
 	}
 
 	GLTexture::GLTexture(int w, int h, const TextureFormatDescriptor & desc): 
@@ -42,6 +42,7 @@ namespace RA_FRAMEWORK
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, TEX_ADDRESS_MODE_LUT_GL[0]);// wrap
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, TEX_ADDRESS_MODE_LUT_GL[0]);// wrap
 		glGenerateMipmap(GL_TEXTURE_2D);
+		//s_TextureUnitCounter++;
 	}
 
 	GLTexture::GLTexture(TextureDataFormat internalFormat, Image& image):
@@ -59,6 +60,7 @@ namespace RA_FRAMEWORK
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		//s_TextureUnitCounter++;
 	}
 
 	GLTexture::GLTexture(Image& image):
@@ -76,16 +78,22 @@ namespace RA_FRAMEWORK
 		glBindTexture(GL_TEXTURE_2D, m_ID);
 	}
 
-	void GLTexture::Bind(const String& uniformName, uint shaderProgID)
+	bool GLTexture::Bind(const String& uniformName, uint shaderProgID)
 	{
 		// This function:
 		//1 binds shader sampler to texture unit of index "slot"
 		//2 binds textureID to texture unit of index "slot"
 
-		GLuint samplerID = glGetUniformLocation(shaderProgID, uniformName.c_str());
+		int samplerID = glGetUniformLocation(shaderProgID, uniformName.c_str());
+		if (samplerID == -1)
+		{
+			m_ErrorCode = 1; 
+			return false; 
+		}
 		glUniform1i(samplerID, m_Slot); // assign sampler to texture unit index
 		glActiveTexture(GL_TEXTURE0 + m_Slot);// make current texture unit active (ie. GL_TEXTURE_2D  will refer to it)
 		glBindTexture(GL_TEXTURE_2D, m_ID);//bind texture
+		return true;
 	}
 
 	void GLTexture::Unbind()

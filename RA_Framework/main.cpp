@@ -120,6 +120,7 @@ public:
 
 		m_pMaterial2 = new Material(m_pShaderProg);
 		m_pMaterial2->AddShaderVariable("tex1", m_pRenderTexture1);
+		//m_pMaterial2->AddShaderVariable("tex2", m_pTexture1);
 		ModelComponent* m_pModel2 = new ModelComponent("model2", m_pQuadMesh, m_pMaterial2);
 		Entity* e2 = new Entity("Test 2");
 		e2->AddComponent(std::unique_ptr<TestBehaviour>(new TestBehaviour()));
@@ -135,7 +136,7 @@ public:
 		std::vector<GLTexture*> ve{ (GLTexture*)m_pRenderTexture1,(GLTexture*)m_pRenderTexture2 };
 		m_pRenderTarget = new GLRenderTarget(ve,DeptAttachmentType::DEPTH_TEXTURE);
 		std::cout << "Render Target status: " << m_pRenderTarget->IsOK() << std::endl;
-		//m_pMaterial2->AddShaderVariable("tex1", m_pRenderTarget->GetDepthTexture());
+		//m_pMaterial2->AddShaderVariable("depthSampler", m_pRenderTarget->GetDepthTexture());
 		camera1->SetRenderTarget(m_pRenderTarget);
 		EntityCamera1->AddComponent(std::unique_ptr<Camera>(camera1));
 		EntityCamera1->GetTransform()->SetPosition(Vec3(-3.8f, 0.0f, -14.98f));
@@ -196,7 +197,7 @@ public:
 
 int main()
 {
-	WindowsApp::Create(1280, 720, "RA WINDOW");
+	WindowsApp::Create(1280, 720, "RA DEV WINDOW");
 	SceneManager::Load(new ExampleScene());
 	const int appState = WindowsApp::Run();
 	return appState;
