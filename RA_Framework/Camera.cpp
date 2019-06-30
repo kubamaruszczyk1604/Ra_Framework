@@ -60,8 +60,13 @@ namespace RA_FRAMEWORK
 	{
 		return p_RenderTarget;
 	}
-	void Camera::OnRender()
+	bool Camera::OnRender()
 	{
-		if (m_RenderCallback) m_RenderCallback(this, p_RenderTarget, p_RenderTarget->GetPostProcessTexture());
+		if (m_RenderCallback)
+		{
+			m_RenderCallback(this, p_RenderTarget, p_RenderTarget->GetPostProcessTexture());
+			return true;
+		}
+		return false;
 	}
 }

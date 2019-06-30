@@ -2,7 +2,7 @@
 uniform vec3 col;
 
 uniform sampler2D tex1; 
-uniform sampler2D tex2;
+//uniform sampler2D tex2;
 uniform sampler2D depthSampler;
 
 in vec3 oPosition_WorldSpace;
@@ -36,7 +36,8 @@ float LinearizeDepth(vec2 uv)
 
 void main()
 {
-     float ld = LinearizeDepth(oUVs);
+     //float ld = LinearizeDepth(oUVs);
 	 colorOut =   texture(tex1,oUVs);//vec4(ld,ld,ld,1.0);
-	 colorOut1 += texture(tex2,oUVs)*0.5;
+	 colorOut1 =   texture(tex1,oUVs);//vec4(ld,ld,ld,1.0);
+	 //colorOut1 += texture(tex2,oUVs)*0.5;
 }

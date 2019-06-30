@@ -64,7 +64,7 @@ namespace RA_FRAMEWORK
 	public:
 		void			SetRenderTarget(RenderTarget* target);
 		RenderTarget*	GetRenderTarget();
-		void            OnRender();
+		bool            OnRender();
 	};
 }
 

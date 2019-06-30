@@ -21,7 +21,7 @@ namespace RA_FRAMEWORK
 	float GLRenderer::s_TotalTime{ 0 };
 	//KLMList<std::unique_ptr<RARenderPass>> GLRenderer::s_RenderPassList;
 	KLMList<Camera*> GLRenderer::s_CameraList;
-	GLuint GLRenderer::s_FinalStageFrameBuffer;
+	GLuint GLRenderer::s_BlitFrameBuffer;
 	//vector<B> A::vector_of_B;
 
 	bool GLRenderer::KLMSetPixelFormat(HDC hdc)
@@ -75,7 +75,7 @@ namespace RA_FRAMEWORK
 	//	glHint(GL_MULTISAMPLE_FILTER_HINT_NV, GL_NICEST);
 		glViewport(0, 0, width, height);
 
-		glGenFramebuffers(1, & s_FinalStageFrameBuffer);
+		//glGenFramebuffers(1, & s_FinalStageFrameBuffer);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 
@@ -158,9 +158,13 @@ namespace RA_FRAMEWORK
 			Entity* e = (*entities)[i].get();
 			GLRenderer::RenderEntity(e, camera);
 		}
-		camera->OnRender();// todo: detect if copied from src to dst
-		//todo: if not copied by blit() - do blit
-		//Add render targets done -> bind screen
+		// if has camera has a postprocess texture but there was no copy callback...
+		if (camera->GetRenderTarget()->HasPostprocessTexture() && !camera->OnRender())
+		{
+			std::cout << "engine blit..." << std::endl;
+			//source render target (col attachement 0)
+			//destination: postprocess texture
+		}
 		GLRenderTarget::SetScreen(s_ScreenWidth, s_ScreenHeight);
 	}
 	
@@ -224,7 +228,7 @@ namespace RA_FRAMEWORK
 		// release device context
 		s_CameraList.Free();
 		s_CameraList.Clear();
-		glDeleteFramebuffers(1, &s_FinalStageFrameBuffer);
+		glDeleteFramebuffers(1, &s_BlitFrameBuffer);
 		ReleaseDC(s_hWnd, s_hDevCtx);
 		// default to no context
 		wglMakeCurrent(0, 0);
@@ -329,11 +333,11 @@ namespace RA_FRAMEWORK
 	}
 	void GLRenderer::Blit(GLTexture* src, GLTexture* dest, Material* mat)
 	{
-		glBindFramebuffer(GL_FRAMEBUFFER, s_FinalStageFrameBuffer);
+		glBindFramebuffer(GL_FRAMEBUFFER, s_BlitFrameBuffer);
 		//set destination
 		glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, dest->GetID(), 0);
 		//set source
-		mat->GetShaderProgram()->SetTexture("sourceTex", src);
+		mat->GetShaderProgram()->SetTexture("_sourceTex", src);
 		mat->Use();
 		//todo: quad model draw
 		mat->UnbindTextures();

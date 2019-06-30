@@ -14,7 +14,8 @@ namespace RA_FRAMEWORK
 		RenderTarget& operator=(const RenderTarget&) = delete;
 		virtual ~RenderTarget() {}
 	public:
-		int				GetID()const { return m_ID; }
+		int				GetID()const				{ return m_ID; }
+		bool			HasPostprocessTexture()		{ return m_HasPostprocessTexture; }
 	public:
 		virtual void		Bind() = 0;
 		virtual bool		IsScreen() = 0;

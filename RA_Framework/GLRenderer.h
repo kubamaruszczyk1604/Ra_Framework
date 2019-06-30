@@ -24,7 +24,7 @@ namespace RA_FRAMEWORK
 		static float									s_TotalTime;
 		//static KLMList<std::unique_ptr<RARenderPass>>	s_RenderPassList;
 		static KLMList<Camera*>							s_CameraList;
-		static GLuint									s_FinalStageFrameBuffer;
+		static GLuint									s_BlitFrameBuffer;
 	private:
 		static bool KLMSetPixelFormat(HDC hdc);
 	public:
