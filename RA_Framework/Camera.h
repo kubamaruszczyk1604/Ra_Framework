@@ -5,7 +5,8 @@
 namespace RA_FRAMEWORK
 {
 	class Scene;
-	using OnRenderCallback = void(*)(RenderTarget* target, Texture* destination);
+	class Camera;
+	using OnRenderCallback = void(*)(Camera* camera, RenderTarget* target, Texture* destination);
 	enum class ProjectionType
 	{
 		ORTHO = 0,

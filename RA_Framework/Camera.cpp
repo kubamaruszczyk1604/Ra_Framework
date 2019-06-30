@@ -66,6 +66,6 @@ namespace RA_FRAMEWORK
 	}
 	void Camera::OnRender()
 	{
-		if (m_RenderCallback) m_RenderCallback(p_RenderTarget,p_Destination);
+		if (m_RenderCallback) m_RenderCallback(this, p_RenderTarget, p_Destination);
 	}
 }
