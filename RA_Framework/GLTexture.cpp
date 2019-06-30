@@ -8,6 +8,7 @@ namespace RA_FRAMEWORK
 		c_Width(w),
 		c_Height(h)
 	{
+		this->SetTextureDescriptor(desc);
 		glGenTextures(1, &m_ID);
 		glBindTexture(GL_TEXTURE_2D, m_ID);
 		glTexImage2D(GL_TEXTURE_2D, 0,
@@ -26,7 +27,7 @@ namespace RA_FRAMEWORK
 	GLTexture::GLTexture(int w, int h, const TextureFormatDescriptor & desc): 
 		GLTexture(w,h,desc,nullptr){}
 
-	GLTexture::GLTexture(InputPixelDataType inputPixelFormat, TextureDataFormat internalFormat, Image& image):
+	GLTexture::GLTexture(InputPixelDataType inputPixelDataType, TextureDataFormat internalFormat, Image& image):
 		Texture(GfxAPI::GL, 0, 0),
 		c_Width(image.GetWidth()),
 		c_Height(image.GetHeight())
@@ -36,12 +37,22 @@ namespace RA_FRAMEWORK
 		glBindTexture(GL_TEXTURE_2D, m_ID);
 		glTexImage2D(GL_TEXTURE_2D, 0, TEX_INTERNAL_DATA_FORMAT_LUT_GL[static_cast<uint>(internalFormat)],
 			 c_Width, c_Height, 0, form,
-			PIXEL_DATA_TYPE_LUT_GL[(uint)inputPixelFormat], (void*)image.GetPixels());
+			PIXEL_DATA_TYPE_LUT_GL[(uint)inputPixelDataType], (void*)image.GetPixels());
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, TEX_FILTER_LUT_GL[1]);// nearest
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, TEX_FILTER_LUT_GL[1]);// nearest
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, TEX_ADDRESS_MODE_LUT_GL[0]);// wrap
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, TEX_ADDRESS_MODE_LUT_GL[0]);// wrap
 		glGenerateMipmap(GL_TEXTURE_2D);
+		TextureFormatDescriptor desc;
+		desc.MAG_FILTER_MODE = TextureFilterMode::NEAREST;
+		desc.MIN_FILTER_MODE = TextureFilterMode::NEAREST;
+		desc.WRAP_MODE = TextureWrapMode::WRAP;
+		desc.GEN_MIPMAPS = true;
+		desc.TEXTURE_DATA_FORMAT = internalFormat;
+		desc.INPUT_DATA_TYPE = inputPixelDataType;
+		desc.INPUT_PIXEL_FORMAT = image.HAS_TRANSPARENCY ? InputPixelFormat::BGRA : InputPixelFormat::BGR;
+
+		
 		//s_TextureUnitCounter++;
 	}
 
@@ -49,7 +60,7 @@ namespace RA_FRAMEWORK
 		GLTexture(InputPixelDataType::UNISGNED_BYTE, internalFormat, image){}
 
 	GLTexture::GLTexture(int w, int h):
-		Texture(GfxAPI::GL, 0, 0),
+		Texture(GfxAPI::GL, 0, 0, true),
 		c_Width(w),
 		c_Height(h)
 	{	
@@ -60,7 +71,20 @@ namespace RA_FRAMEWORK
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-		//s_TextureUnitCounter++;
+		TextureFormatDescriptor desc;
+		desc.MAG_FILTER_MODE = TextureFilterMode::NEAREST;
+		desc.MIN_FILTER_MODE = TextureFilterMode::NEAREST;
+		desc.WRAP_MODE = TextureWrapMode::CLAMP;
+		desc.GEN_MIPMAPS = false;
+		desc.TEXTURE_DATA_FORMAT = TextureDataFormat::DEPTH_COMPONENT;
+		desc.INPUT_DATA_TYPE = InputPixelDataType::FLOAT;
+		desc.INPUT_PIXEL_FORMAT = InputPixelFormat::DEPTH_COMPONENT;
+		this->SetTextureDescriptor(desc);
+	}
+
+	GLTexture * GLTexture::GenerateDepthTexture(int w, int h)
+	{
+		return new GLTexture(w, h);
 	}
 
 	GLTexture::GLTexture(Image& image):

@@ -19,9 +19,13 @@ namespace RA_FRAMEWORK
 	private:
 		const GfxAPI m_API;
 	protected:
-		Texture(GfxAPI API, unsigned id, unsigned slot);
-		unsigned m_ID;
-		unsigned m_Slot;
+		Texture(GfxAPI API, unsigned id, unsigned slot, bool depth = false);
+		unsigned					m_ID;
+		unsigned					m_Slot;
+		bool						m_IsDepth;
+		TextureFormatDescriptor		m_TextureDescriptor;
+	protected:
+		inline void SetTextureDescriptor(const TextureFormatDescriptor& desc) { m_TextureDescriptor = desc; }
 	public:
 		Texture(const Texture&)					= delete;
 		Texture& operator=(const Texture&)		= delete;
@@ -31,6 +35,9 @@ namespace RA_FRAMEWORK
 		inline unsigned		GetID()const 					{ return m_ID; }
 		inline unsigned		GetSlot()const					{ return m_Slot; }
 		inline void			SetSlot(const unsigned slot)	{ m_Slot = slot; }
+		inline bool			IsDepthTexture()				{ return m_IsDepth; }
+	public:
+		inline TextureFormatDescriptor GetDescriptor() { return m_TextureDescriptor; }
 	public:
 		virtual void		Bind() = 0;
 		virtual void		Unbind() = 0;

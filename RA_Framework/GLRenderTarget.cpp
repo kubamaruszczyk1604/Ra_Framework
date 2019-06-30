@@ -53,7 +53,7 @@ namespace RA_FRAMEWORK
 				desc.MAG_FILTER_MODE = TextureFilterMode::NEAREST;
 				m_pDepthTexture = new GLTexture(m_Width, m_Height, desc);
 				m_pDepthTexture->Bind();*/
-				m_pDepthTexture = new GLTexture(m_Width, m_Height);
+				m_pDepthTexture = GLTexture::GenerateDepthTexture(m_Width, m_Height);
 				glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, m_pDepthTexture->GetID(), 0);
 
 			}

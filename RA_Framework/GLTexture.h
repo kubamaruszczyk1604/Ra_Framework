@@ -12,12 +12,15 @@ namespace RA_FRAMEWORK
 		const int c_Width;
 		const int c_Height;
 		int m_ErrorCode = 0; // 0 - no errors, 1 - binding error (uniform not found in shader)
+	private:
+		GLTexture(int w, int h); //generate depth texture
+	public:
+		static GLTexture* GenerateDepthTexture(int w, int h);
 	public:
 		GLTexture(int w, int h, const TextureFormatDescriptor& desc, void* data);
 		GLTexture(int w, int h, const TextureFormatDescriptor& desc);
 		GLTexture(InputPixelDataType inputPixelFormat, TextureDataFormat internalFormat, Image& image);
 		GLTexture(TextureDataFormat internalFormat, Image& image);
-		GLTexture(int w, int h);
 		GLTexture(Image& image);
 		~GLTexture();
 	public:
