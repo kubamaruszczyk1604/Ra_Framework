@@ -12,8 +12,8 @@ namespace RA_FRAMEWORK
 		glViewport(0, 0, w, h);
 	}
 
-	GLRenderTarget::GLRenderTarget(const std::vector<GLTexture*>& renderTextures, DeptAttachmentType depthAttachmentType):
-		RenderTarget(0),
+	GLRenderTarget::GLRenderTarget(const std::vector<GLTexture*>& renderTextures, DeptAttachmentType depthAttachmentType, bool genPosprocessTexture):
+		RenderTarget(0, genPosprocessTexture),
 		m_DepthAttachmentType{depthAttachmentType},
 		m_pColorAttachments{renderTextures}
 	{
@@ -57,11 +57,14 @@ namespace RA_FRAMEWORK
 				glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, m_pDepthTexture->GetID(), 0);
 
 			}
+
+			if(m_HasPostprocessTexture)
+			m_PostprocessTexture = new GLTexture(m_Width, m_Height, renderTextures[0]->GetDescriptor());
 		}
 	}
 
-	GLRenderTarget::GLRenderTarget(GLTexture* renderTexture, DeptAttachmentType depthAttachmentType):
-		GLRenderTarget(std::vector<GLTexture*>(1,renderTexture ), depthAttachmentType) {}
+	GLRenderTarget::GLRenderTarget(GLTexture* renderTexture, DeptAttachmentType depthAttachmentType, bool genPosprocessTexture):
+		GLRenderTarget(std::vector<GLTexture*>(1,renderTexture ), depthAttachmentType, genPosprocessTexture) {}
 
 	void GLRenderTarget::Bind()
 	{
@@ -81,20 +84,27 @@ namespace RA_FRAMEWORK
 		return (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE);
 	}
 
-	GLTexture* GLRenderTarget::GetColorAttachment(unsigned index)
+	Texture* GLRenderTarget::GetColorAttachment(unsigned index)
 	{
 		if(m_pColorAttachments.size()==0) return nullptr;
 		if (m_pColorAttachments.size() >= index) return nullptr;
 		return m_pColorAttachments[index];
 	}
 
-	GLTexture * GLRenderTarget::GetDepthTexture()
+	Texture * GLRenderTarget::GetPostProcessTexture()
+	{
+		return m_HasPostprocessTexture ? m_PostprocessTexture : nullptr;
+	}
+
+	Texture* GLRenderTarget::GetDepthTexture()
 	{
 		return m_pDepthTexture;
 	}
 
 	GLRenderTarget::~GLRenderTarget()
 	{
+		if (m_HasPostprocessTexture) 
+			delete m_PostprocessTexture;
 		if (m_DepthAttachmentType == DeptAttachmentType::RENDER_BUFFER)
 		{
 			glDeleteRenderbuffers(1, &m_DepthBuffer);

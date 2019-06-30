@@ -55,10 +55,6 @@ namespace RA_FRAMEWORK
 		p_RenderTarget = target;
 	}
 
-	void Camera::SetTextureDestination(Texture * destination)
-	{
-		p_Destination = destination;
-	}
 
 	RenderTarget* Camera::GetRenderTarget()
 	{
@@ -66,6 +62,6 @@ namespace RA_FRAMEWORK
 	}
 	void Camera::OnRender()
 	{
-		if (m_RenderCallback) m_RenderCallback(this, p_RenderTarget, p_Destination);
+		if (m_RenderCallback) m_RenderCallback(this, p_RenderTarget, p_RenderTarget->GetPostProcessTexture());
 	}
 }

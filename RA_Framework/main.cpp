@@ -134,7 +134,7 @@ public:
 		camera1->SetClearColor(ColorRGB(0.3, 0.3, 0.3));
 		camera1->SetRenderCallback(OnCameraRender);
 		std::vector<GLTexture*> ve{ (GLTexture*)m_pRenderTexture1,(GLTexture*)m_pRenderTexture2 };
-		m_pRenderTarget = new GLRenderTarget(ve, DeptAttachmentType::DEPTH_TEXTURE);
+		m_pRenderTarget = new GLRenderTarget(ve, DeptAttachmentType::DEPTH_TEXTURE, true);
 		std::cout << "Render Target status: " << m_pRenderTarget->IsOK() << std::endl;
 		//m_pMaterial2->AddShaderVariable("depthSampler", m_pRenderTarget->GetDepthTexture());
 		camera1->SetRenderTarget(m_pRenderTarget);

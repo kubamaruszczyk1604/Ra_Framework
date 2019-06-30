@@ -16,11 +16,13 @@ namespace RA_FRAMEWORK
 		int							m_Width;
 		int							m_Height;
 		std::vector<GLTexture*>		m_pColorAttachments;
+		GLTexture*					m_PostprocessTexture;
 	public:
 		static void SetScreen(int w, int h);
 	public:
-		GLRenderTarget(const std::vector<GLTexture*>& renderTextures, DeptAttachmentType depthAttachmentType = DeptAttachmentType::NONE);
-		GLRenderTarget(GLTexture* renderTexture, DeptAttachmentType depthAttachmentType = DeptAttachmentType::NONE);
+		GLRenderTarget(const std::vector<GLTexture*>& renderTextures, DeptAttachmentType depthAttachmentType = DeptAttachmentType::NONE, bool genPosprocessTexture = false);
+		GLRenderTarget(GLTexture* renderTexture, DeptAttachmentType depthAttachmentType = DeptAttachmentType::NONE, bool genPosprocessTexture = false);
+	public:
 		GLRenderTarget(const GLRenderTarget&)				 = delete;
 		GLRenderTarget& operator=(const GLRenderTarget&)	 = delete;
 		virtual ~GLRenderTarget();
@@ -28,8 +30,9 @@ namespace RA_FRAMEWORK
 		void				Bind() override;	
 		bool				IsScreen() override;
 		bool				IsOK() override;
-		GLTexture*			GetColorAttachment(unsigned index);
-		GLTexture*			GetDepthTexture();
+		Texture*			GetDepthTexture() override;
+		Texture*			GetColorAttachment(unsigned index) override;
+		Texture*			GetPostProcessTexture() override;
 
 	};
 }

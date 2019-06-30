@@ -21,6 +21,7 @@ namespace RA_FRAMEWORK
 	float GLRenderer::s_TotalTime{ 0 };
 	//KLMList<std::unique_ptr<RARenderPass>> GLRenderer::s_RenderPassList;
 	KLMList<Camera*> GLRenderer::s_CameraList;
+	GLuint GLRenderer::s_FinalStageFrameBuffer;
 	//vector<B> A::vector_of_B;
 
 	bool GLRenderer::KLMSetPixelFormat(HDC hdc)
@@ -73,7 +74,11 @@ namespace RA_FRAMEWORK
 	//	glEnable(GL_MULTISAMPLE);
 	//	glHint(GL_MULTISAMPLE_FILTER_HINT_NV, GL_NICEST);
 		glViewport(0, 0, width, height);
+
+		glGenFramebuffers(1, & s_FinalStageFrameBuffer);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+
 		s_IsRunning = true;
 		return true;
 	}
@@ -218,6 +223,7 @@ namespace RA_FRAMEWORK
 		// release device context
 		s_CameraList.Free();
 		s_CameraList.Clear();
+		glDeleteFramebuffers(1, &s_FinalStageFrameBuffer);
 		ReleaseDC(s_hWnd, s_hDevCtx);
 		// default to no context
 		wglMakeCurrent(0, 0);
@@ -316,5 +322,13 @@ namespace RA_FRAMEWORK
 	{
 		//s_RenderPassList.Clear();
 		s_CameraList.Clear();
+	}
+	void GLRenderer::Blit(GLTexture* src, GLTexture* dest)
+	{
+	}
+	void GLRenderer::Blit(GLTexture* src, GLTexture* dest, Material* mat)
+	{
+		mat->Use();
+		glBindFramebuffer(GL_FRAMEBUFFER,s_FinalStageFrameBuffer);
 	}
 }

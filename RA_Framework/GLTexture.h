@@ -9,9 +9,7 @@ namespace RA_FRAMEWORK
 	class GLTexture: public Texture
 	{
 	private:
-		const int c_Width;
-		const int c_Height;
-		int m_ErrorCode = 0; // 0 - no errors, 1 - binding error (uniform not found in shader)
+		int			m_ErrorCode = 0; // 0 - no errors, 1 - binding error (uniform not found in shader)
 	private:
 		GLTexture(int w, int h); //generate depth texture
 	public:
@@ -25,23 +23,20 @@ namespace RA_FRAMEWORK
 		~GLTexture();
 	public:
 		//Assigns shader's uniform to the same slot as the texture.
-		bool		Bind(const String& uniformName, uint shaderProgID);
+		bool			Bind(const String& uniformName, uint shaderProgID);
 		//Assigns texture to the slot and binds it as current texture.
-		void		Bind(uint slot);
+		void			Bind(uint slot);
 		//Binds texture as current at default slot.
 		void			Bind()override;
 		void			Unbind()override;
 		void			GenerateMipmaps()override;
-		void			SetWrapMode(TextureWrapMode mode);
-		void			SetMinFilterMode(TextureFilterMode filterMode);
-		void			SetMagFilterMode(TextureFilterMode filterMode);
-		void			SetFilterMode(TextureFilterMode minMode, TextureFilterMode magMode);
-		unsigned		GetMipmapLevel();
+		void			SetWrapMode(TextureWrapMode mode)override;
+		void			SetMinFilterMode(TextureFilterMode filterMode)override;
+		void			SetMagFilterMode(TextureFilterMode filterMode)override;
+		void			SetFilterMode(TextureFilterMode minMode, TextureFilterMode magMode)override;
+		uint			GetMipmapLevel()override;
 		
 	public:
-		int				Width()				{ return c_Width; }
-		int				Height()			{ return c_Height; }
-		uint			GetID()				{ return m_ID; }
 		int				GetLastErrorCode()	{ return m_ErrorCode; }
 		void			ClearErrors()		{ m_ErrorCode = 0; }
 	};

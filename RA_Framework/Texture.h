@@ -19,7 +19,9 @@ namespace RA_FRAMEWORK
 	private:
 		const GfxAPI m_API;
 	protected:
-		Texture(GfxAPI API, unsigned id, unsigned slot, bool depth = false);
+		Texture(GfxAPI API, unsigned id, unsigned slot, int w, int h, bool depth = false);
+		const int					c_Width;
+		const int					c_Height;
 		unsigned					m_ID;
 		unsigned					m_Slot;
 		bool						m_IsDepth;
@@ -35,7 +37,7 @@ namespace RA_FRAMEWORK
 		inline unsigned		GetID()const 					{ return m_ID; }
 		inline unsigned		GetSlot()const					{ return m_Slot; }
 		inline void			SetSlot(const unsigned slot)	{ m_Slot = slot; }
-		inline bool			IsDepthTexture()				{ return m_IsDepth; }
+		inline bool			IsDepthTexture()const			{ return m_IsDepth; }
 	public:
 		inline TextureFormatDescriptor GetDescriptor() { return m_TextureDescriptor; }
 	public:
@@ -46,6 +48,10 @@ namespace RA_FRAMEWORK
 		virtual void		SetMinFilterMode(TextureFilterMode filterMode) = 0;
 		virtual void		SetMagFilterMode(TextureFilterMode filterMode) = 0;
 		virtual void		SetFilterMode(TextureFilterMode minMode, TextureFilterMode magMode) = 0;
+		virtual uint		GetMipmapLevel() = 0;
+
+		int					Width() { return c_Width; }
+		int					Height() { return c_Height; }
 	};
 
 }

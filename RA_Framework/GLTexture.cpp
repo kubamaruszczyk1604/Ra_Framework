@@ -4,9 +4,7 @@ namespace RA_FRAMEWORK
 	
 	//www.opengl-tutorial.org/intermediate-tutorials/tutorial-14-render-to-texture/
 	GLTexture::GLTexture(int w, int h, const TextureFormatDescriptor& desc, void* data) :
-		Texture(GfxAPI::GL, 0, 0),
-		c_Width(w),
-		c_Height(h)
+		Texture(GfxAPI::GL, 0, 0, w, h)
 	{
 		this->SetTextureDescriptor(desc);
 		glGenTextures(1, &m_ID);
@@ -28,9 +26,7 @@ namespace RA_FRAMEWORK
 		GLTexture(w,h,desc,nullptr){}
 
 	GLTexture::GLTexture(InputPixelDataType inputPixelDataType, TextureDataFormat internalFormat, Image& image):
-		Texture(GfxAPI::GL, 0, 0),
-		c_Width(image.GetWidth()),
-		c_Height(image.GetHeight())
+		Texture(GfxAPI::GL, 0, 0, image.GetWidth(), image.GetHeight())
 	{
 		GLenum form = image.HAS_TRANSPARENCY ? GL_BGRA : GL_BGR;
 		glGenTextures(1, &m_ID);
@@ -60,9 +56,7 @@ namespace RA_FRAMEWORK
 		GLTexture(InputPixelDataType::UNISGNED_BYTE, internalFormat, image){}
 
 	GLTexture::GLTexture(int w, int h):
-		Texture(GfxAPI::GL, 0, 0, true),
-		c_Width(w),
-		c_Height(h)
+		Texture(GfxAPI::GL, 0, 0, w, h, true)
 	{	
 		glGenTextures(1, &m_ID);
 		glBindTexture(GL_TEXTURE_2D, m_ID);
