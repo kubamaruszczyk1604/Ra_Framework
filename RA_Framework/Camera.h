@@ -31,7 +31,7 @@ namespace RA_FRAMEWORK
 		ColorRGB					m_ClearColor;
 		bool						m_ClearDepthFlag;
 		RenderTarget*				p_RenderTarget;  
-		Texture*					p_Destination;
+		Texture*				p_Destination;
 		OnRenderCallback			m_RenderCallback;
 	public:
 		Camera(const ProjectionType& projection, const float& fovDeg, const float& fnear, const float& ffar);
