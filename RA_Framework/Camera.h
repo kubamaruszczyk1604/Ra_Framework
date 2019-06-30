@@ -60,7 +60,7 @@ namespace RA_FRAMEWORK
 	public:
 		const Mat4&		GetProjectionMatrix(const int& scrWidth, const int& scrHeight);
 		const Mat4&		SetTransformMatrix(const Vec3& translation, const Vec3& rotation);
-		void			SetTransformMatrix(const glm::mat4& mat);
+		void			SetTransformMatrix(const Mat4& mat);
 	public:
 		void			SetRenderTarget(RenderTarget* target);
 		void			SetTextureDestination(Texture* destination);

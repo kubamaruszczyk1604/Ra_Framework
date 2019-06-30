@@ -2,7 +2,7 @@
 namespace RA_FRAMEWORK
 {
 	Material::Material(ShaderProgram* shaderProg):
-		p_Shader(shaderProg){}
+		p_Shader(shaderProg), m_TextureCounter{0} {}
 
 	Material::~Material()
 	{
