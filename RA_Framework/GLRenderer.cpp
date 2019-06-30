@@ -129,7 +129,7 @@ namespace RA_FRAMEWORK
 		if (camera->GetRenderTarget() == nullptr)
 		{ 
 			
-			GLRenderTarget::SetScreen(s_ScreenWidth, s_ScreenHeight); 
+			GLRenderTarget::SetScreen(s_ScreenWidth, s_ScreenHeight);
 			if (camera->GetClearMode() == ClearMode::COLOR)
 			{
 				ClearScreen(camera->GetClearColor(), camera->GetClearDepthFlag());
@@ -145,7 +145,7 @@ namespace RA_FRAMEWORK
 		}	
 #endif // ENABLE__CAMERAS_WITH_NO_RENDER_TARGET_RENDERS_DIRECTLY_TO_SCREEN
 
-
+	
 		auto rt = camera->GetRenderTarget();
 		if (rt->IsScreen()) { GLRenderTarget::SetScreen(s_ScreenWidth, s_ScreenHeight); }
 		else { rt->Bind(); }
@@ -158,7 +158,8 @@ namespace RA_FRAMEWORK
 			Entity* e = (*entities)[i].get();
 			GLRenderer::RenderEntity(e, camera);
 		}
-		camera->OnRender();
+		camera->OnRender();// todo: detect if copied from src to dst
+		//todo: if not copied by blit() - do blit
 		//Add render targets done -> bind screen
 		GLRenderTarget::SetScreen(s_ScreenWidth, s_ScreenHeight);
 	}
@@ -328,7 +329,13 @@ namespace RA_FRAMEWORK
 	}
 	void GLRenderer::Blit(GLTexture* src, GLTexture* dest, Material* mat)
 	{
+		glBindFramebuffer(GL_FRAMEBUFFER, s_FinalStageFrameBuffer);
+		//set destination
+		glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, dest->GetID(), 0);
+		//set source
+		mat->GetShaderProgram()->SetTexture("sourceTex", src);
 		mat->Use();
-		glBindFramebuffer(GL_FRAMEBUFFER,s_FinalStageFrameBuffer);
+		//todo: quad model draw
+		mat->UnbindTextures();
 	}
 }
