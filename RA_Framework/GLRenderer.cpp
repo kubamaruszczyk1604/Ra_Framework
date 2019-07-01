@@ -1,6 +1,7 @@
 #include "GLRenderer.h"
 #include "Entity.h"
 #include "RendererDirectives.h"
+#include "GeometryGenerator.h"
 //#include "GLTexture.h"
 //#include <msclr\marshal_cppstd.h>
 //#include "ShaderVariableContainer.h"
@@ -22,8 +23,10 @@ namespace RA_FRAMEWORK
 	//KLMList<std::unique_ptr<RARenderPass>> GLRenderer::s_RenderPassList;
 	KLMList<Camera*> GLRenderer::s_CameraList;
 	GLuint GLRenderer::s_BlitFrameBuffer;
+	Mesh* GLRenderer::s_QuadMesh;
 	//vector<B> A::vector_of_B;
-
+	GLShader* GLRenderer::s_TextureVertFrag[2] = { nullptr,nullptr };
+	GLShaderProgram* GLRenderer::s_TextureShaderProgram{ nullptr };
 	bool GLRenderer::KLMSetPixelFormat(HDC hdc)
 	{
 		PIXELFORMATDESCRIPTOR pfd;
@@ -52,6 +55,28 @@ namespace RA_FRAMEWORK
 		return SetPixelFormat(hdc, n, &pfd);
 	}
 
+	bool GLRenderer::SetUpShaders()
+	{
+		std::string status;
+
+		s_TextureVertFrag[0]= new GLShader(ShaderType::VERTEX);
+		s_TextureVertFrag[0]->LoadFromFile("GLShaders/glVert.txt");
+		bool vertOK = s_TextureVertFrag[0]->Compile(status);
+		std::cout << "Compile Vertex Shader: " << vertOK;
+		std::cout << "  Status: " << status << std::endl;
+
+		s_TextureVertFrag[1] = new GLShader(ShaderType::FRAGMENT);
+		s_TextureVertFrag[1]->LoadFromFile("GLShaders/glFrag.txt");
+		bool fragOK = s_TextureVertFrag[1]->Compile(status);
+		std::cout << "Compile Fragment Shader: " << fragOK;
+		std::cout << "  Status: " << status << std::endl;
+
+		s_TextureShaderProgram = new GLShaderProgram(s_TextureVertFrag[0], s_TextureVertFrag[1]);
+		bool progOK = s_TextureShaderProgram->Created();
+		std::cout << "Shader Program linking status: " << progOK << std::endl;
+		return  (vertOK && fragOK && progOK);
+	}
+
 	bool GLRenderer::Initialize(const int width, const int height, const HWND handle)
 	{
 		// WINDOWS-SPECIFIC PART
@@ -74,7 +99,7 @@ namespace RA_FRAMEWORK
 	//	glEnable(GL_MULTISAMPLE);
 	//	glHint(GL_MULTISAMPLE_FILTER_HINT_NV, GL_NICEST);
 		glViewport(0, 0, width, height);
-
+		s_QuadMesh = GeometryGenerator::GenerateQuad(2.0, 2.0);
 		//glGenFramebuffers(1, & s_FinalStageFrameBuffer);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -226,6 +251,9 @@ namespace RA_FRAMEWORK
 		//s_RenderPassList.Free();
 		//s_RenderPassList.Clear();
 		// release device context
+		delete s_TextureShaderProgram;
+		delete s_TextureVertFrag[0];
+		delete s_TextureVertFrag[1];
 		s_CameraList.Free();
 		s_CameraList.Clear();
 		glDeleteFramebuffers(1, &s_BlitFrameBuffer);
@@ -340,6 +368,7 @@ namespace RA_FRAMEWORK
 		mat->GetShaderProgram()->SetTexture("_sourceTex", src);
 		mat->Use();
 		//todo: quad model draw
+		s_QuadMesh->GetVBO()->Draw(PrimitiveType::TRIANGLES);
 		mat->UnbindTextures();
 	}
 }

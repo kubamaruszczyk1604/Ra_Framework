@@ -6,6 +6,7 @@
 #include "ModelComponent.h"
 #include "GLRenderTarget.h"
 #include "RenderPass.h"
+#include "GLShaderProgram.h"
 namespace RA_FRAMEWORK
 {
 	class Transform;
@@ -26,7 +27,12 @@ namespace RA_FRAMEWORK
 		static KLMList<Camera*>							s_CameraList;
 		static GLuint									s_BlitFrameBuffer;
 	private:
+		static Mesh*									s_QuadMesh;
+		static GLShader*								s_TextureVertFrag[2];
+		static GLShaderProgram*							s_TextureShaderProgram;
+	private:
 		static bool KLMSetPixelFormat(HDC hdc);
+		static bool SetUpShaders();
 	public:
 		GLRenderer()								= delete;
 		GLRenderer(const GLRenderer&)				= delete;

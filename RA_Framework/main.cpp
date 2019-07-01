@@ -16,6 +16,7 @@ struct AtExit
 	}
 } doAtExit;
 
+Material*			m_pBlitMat;
 class TestBehaviour : public BehaviourComponent
 {
 public:
@@ -37,6 +38,7 @@ public:
 void OnCameraRender(Camera* camera, RenderTarget* target, Texture* destination)
 {
 	//std::cout << "On Camera Render" << std::endl;
+	//GLRenderer::Blit((GLTexture*)target->GetColorAttachment(0), (GLTexture*)destination, m_pBlitMat);
 }
 class ExampleScene :public Scene
 {
@@ -76,6 +78,8 @@ public:
 
 	void OnStart()
 	{
+
+		//m_pBlitMat = new Material()
 		PRINTL("OnStart()");
 		m_pImageLoader = new ImageLoader();
 		// Generate empty image
