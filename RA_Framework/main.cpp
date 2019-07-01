@@ -123,8 +123,8 @@ public:
 		AddEntity(e1);
 
 		m_pMaterial2 = new Material(m_pShaderProg);
-		m_pMaterial2->AddShaderVariable("tex1", m_pRenderTexture1);
-		//m_pMaterial2->AddShaderVariable("tex2", m_pTexture1);
+		//m_pMaterial2->AddShaderVariable("tex1", m_pRenderTexture1);
+		//m_pMaterial2->AddShaderVariable("tex1", m_pTexture1);
 		ModelComponent* m_pModel2 = new ModelComponent("model2", m_pQuadMesh, m_pMaterial2);
 		Entity* e2 = new Entity("Test 2");
 		e2->AddComponent(std::unique_ptr<TestBehaviour>(new TestBehaviour()));
@@ -136,7 +136,7 @@ public:
 		Entity* EntityCamera1 = new Entity("Camera1");
 		Camera* camera1 = new Camera(ProjectionType::PERSPECTIVE, 80.0f, 0.1f, 1000.0f);
 		camera1->SetClearColor(ColorRGB(0.3, 0.3, 0.3));
-		camera1->SetRenderCallback(OnCameraRender);
+		//camera1->SetRenderCallback(OnCameraRender);
 		std::vector<GLTexture*> ve{ (GLTexture*)m_pRenderTexture1,(GLTexture*)m_pRenderTexture2 };
 		m_pRenderTarget = new GLRenderTarget(ve, DeptAttachmentType::DEPTH_TEXTURE, true);
 		std::cout << "Render Target status: " << m_pRenderTarget->IsOK() << std::endl;
@@ -145,6 +145,8 @@ public:
 		EntityCamera1->AddComponent(std::unique_ptr<Camera>(camera1));
 		EntityCamera1->GetTransform()->SetPosition(Vec3(-3.8f, 0.0f, -14.98f));
 		AddEntity(EntityCamera1);
+
+		m_pMaterial2->AddShaderVariable("tex1", m_pRenderTarget->GetPostProcessTexture());
 
 		Entity* EntityCamera2 = new Entity("Camera2");
 		Camera* camera2 = new Camera(ProjectionType::PERSPECTIVE, 80.0f, 0.1f, 1000.0f);

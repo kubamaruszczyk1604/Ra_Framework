@@ -1,16 +1,3 @@
-in vec3 oPosition_WorldSpace;
-in vec3 oPosition_ObjectSpace;
-in vec3 oPosition_EyeSpace;
-in vec3 oNormal_InvWorldSpace;
-in vec3 oNormal_ObjectScpace;
 in vec2 oUVs;
-
-in vec3 oCamera_WorldSpace;
-in float oTime;
 out vec4 colorOut;
-
-void main()
-{
-	 colorOut =   texture(tex1,oUVs);//vec4(ld,ld,ld,1.0);
-
-}
+void main() { colorOut = texture(tex1,oUVs);}

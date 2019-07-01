@@ -27,6 +27,7 @@ namespace RA_FRAMEWORK
 	//vector<B> A::vector_of_B;
 	GLShader* GLRenderer::s_TextureVertFrag[2] = { nullptr,nullptr };
 	GLShaderProgram* GLRenderer::s_TextureShaderProgram{ nullptr };
+	Material* GLRenderer::s_TextureBlitMat{nullptr};
 	bool GLRenderer::KLMSetPixelFormat(HDC hdc)
 	{
 		PIXELFORMATDESCRIPTOR pfd;
@@ -57,24 +58,43 @@ namespace RA_FRAMEWORK
 
 	bool GLRenderer::SetUpShaders()
 	{
-		std::string status;
+		
+		String vertShaderString = "#version 330\n";
+		vertShaderString += "layout(location = 0) in vec3 vertex_position;\n";
+		vertShaderString += "layout(location = 1) in vec3 vertex_normal;\n";
+		vertShaderString += "layout(location = 2) in vec3 tangent;\n";
+		vertShaderString += "layout(location = 3) in vec2 uvs;\n";
+		vertShaderString += "out vec2 oUVs;\n";
+		vertShaderString += "void main() { oUVs = uvs; gl_Position = vec4(vertex_position, 1.0);}";
 
+
+		String fragShaderString = "#version 330\n in vec2 oUVs;\n uniform sampler2D _sourceTex;\n";
+		fragShaderString += "out vec4 colorOut;\n";
+		fragShaderString += "void main() { colorOut = texture(_sourceTex,oUVs)*vec4(1.0,0.0,0.0,1.0);}\n";
+
+
+		std::string status;
+		std::cout << "\nRENDERER DEBUG - BUILT-IN SHADER STATUS" << std::endl;
 		s_TextureVertFrag[0]= new GLShader(ShaderType::VERTEX);
-		s_TextureVertFrag[0]->LoadFromFile("GLShaders/glVert.txt");
+		s_TextureVertFrag[0]->LoadFromString(vertShaderString);
 		bool vertOK = s_TextureVertFrag[0]->Compile(status);
 		std::cout << "Compile Vertex Shader: " << vertOK;
 		std::cout << "  Status: " << status << std::endl;
+		if (!vertOK) return false;
 
 		s_TextureVertFrag[1] = new GLShader(ShaderType::FRAGMENT);
-		s_TextureVertFrag[1]->LoadFromFile("GLShaders/glFrag.txt");
+		s_TextureVertFrag[1]->LoadFromString(fragShaderString);
 		bool fragOK = s_TextureVertFrag[1]->Compile(status);
 		std::cout << "Compile Fragment Shader: " << fragOK;
 		std::cout << "  Status: " << status << std::endl;
+		if (!fragOK) return false;
 
 		s_TextureShaderProgram = new GLShaderProgram(s_TextureVertFrag[0], s_TextureVertFrag[1]);
 		bool progOK = s_TextureShaderProgram->Created();
 		std::cout << "Shader Program linking status: " << progOK << std::endl;
-		return  (vertOK && fragOK && progOK);
+		if (!progOK) return false;
+		s_TextureBlitMat = new Material(s_TextureShaderProgram);
+		return  true;
 	}
 
 	bool GLRenderer::Initialize(const int width, const int height, const HWND handle)
@@ -100,6 +120,7 @@ namespace RA_FRAMEWORK
 	//	glHint(GL_MULTISAMPLE_FILTER_HINT_NV, GL_NICEST);
 		glViewport(0, 0, width, height);
 		s_QuadMesh = GeometryGenerator::GenerateQuad(2.0, 2.0);
+		SetUpShaders();
 		//glGenFramebuffers(1, & s_FinalStageFrameBuffer);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -186,7 +207,9 @@ namespace RA_FRAMEWORK
 		// if has camera has a postprocess texture but there was no copy callback...
 		if (camera->GetRenderTarget()->HasPostprocessTexture() && !camera->OnRender())
 		{
-			std::cout << "engine blit..." << std::endl;
+			//std::cout << "engine blit..." << std::endl;
+			Blit((GLTexture*)camera->GetRenderTarget()->GetColorAttachment(0),
+				(GLTexture*)camera->GetRenderTarget()->GetPostProcessTexture());
 			//source render target (col attachement 0)
 			//destination: postprocess texture
 		}
@@ -251,6 +274,7 @@ namespace RA_FRAMEWORK
 		//s_RenderPassList.Free();
 		//s_RenderPassList.Clear();
 		// release device context
+		delete s_TextureBlitMat;
 		delete s_TextureShaderProgram;
 		delete s_TextureVertFrag[0];
 		delete s_TextureVertFrag[1];
@@ -358,17 +382,20 @@ namespace RA_FRAMEWORK
 	}
 	void GLRenderer::Blit(GLTexture* src, GLTexture* dest)
 	{
-	}
-	void GLRenderer::Blit(GLTexture* src, GLTexture* dest, Material* mat)
-	{
 		glBindFramebuffer(GL_FRAMEBUFFER, s_BlitFrameBuffer);
 		//set destination
 		glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, dest->GetID(), 0);
 		//set source
-		mat->GetShaderProgram()->SetTexture("_sourceTex", src);
-		mat->Use();
+		s_TextureBlitMat->Use();
+		s_TextureBlitMat->GetShaderProgram()->SetTexture("_sourceTex", src);
+		
 		//todo: quad model draw
 		s_QuadMesh->GetVBO()->Draw(PrimitiveType::TRIANGLES);
-		mat->UnbindTextures();
+
+		s_TextureBlitMat->UnbindTextures();
+	}
+	void GLRenderer::Blit(GLTexture* src, GLTexture* dest, Material* mat)
+	{
+		
 	}
 }

@@ -30,6 +30,7 @@ namespace RA_FRAMEWORK
 		static Mesh*									s_QuadMesh;
 		static GLShader*								s_TextureVertFrag[2];
 		static GLShaderProgram*							s_TextureShaderProgram;
+		static Material*								s_TextureBlitMat;
 	private:
 		static bool KLMSetPixelFormat(HDC hdc);
 		static bool SetUpShaders();

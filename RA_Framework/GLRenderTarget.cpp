@@ -86,8 +86,10 @@ namespace RA_FRAMEWORK
 
 	Texture* GLRenderTarget::GetColorAttachment(unsigned index)
 	{
-		if(m_pColorAttachments.size()==0) return nullptr;
-		if (m_pColorAttachments.size() >= index) return nullptr;
+		if(m_pColorAttachments.size()==0) 
+			return nullptr;
+		if (m_pColorAttachments.size() <= index)
+			return nullptr;
 		return m_pColorAttachments[index];
 	}
 
