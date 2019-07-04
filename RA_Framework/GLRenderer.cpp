@@ -113,7 +113,7 @@ namespace RA_FRAMEWORK
 		s_ScreenHeight = height;
 		// set defaults
 		EnableDepthTest();
-		//SetCullMode(CullMode::NONE);
+		SetCullMode(CullMode::NONE);
 		//SetFillMode(FillMode::WIREFRAME);
 		EnableAlphaBlending();
 	//	glEnable(GL_MULTISAMPLE);
@@ -121,7 +121,7 @@ namespace RA_FRAMEWORK
 		glViewport(0, 0, width, height);
 		s_QuadMesh = GeometryGenerator::GenerateQuad(2.0, 2.0);
 		SetUpShaders();
-		//glGenFramebuffers(1, & s_FinalStageFrameBuffer);
+		glGenFramebuffers(1, &s_BlitFrameBuffer) ;
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 
@@ -204,15 +204,18 @@ namespace RA_FRAMEWORK
 			Entity* e = (*entities)[i].get();
 			GLRenderer::RenderEntity(e, camera);
 		}
+
+#ifdef ENABLE__AUTOBLIT_TO_POSTPROCESS_TEXTURE
 		// if has camera has a postprocess texture but there was no copy callback...
 		if (camera->GetRenderTarget()->HasPostprocessTexture() && !camera->OnRender())
-		{
-			//std::cout << "engine blit..." << std::endl;
-			Blit((GLTexture*)camera->GetRenderTarget()->GetColorAttachment(0),
-				(GLTexture*)camera->GetRenderTarget()->GetPostProcessTexture());
-			//source render target (col attachement 0)
-			//destination: postprocess texture
+		{	
+			// do automatic blit
+			Blit((GLTexture*)camera->GetRenderTarget()->GetColorAttachment(0),//src: render target (attachement 0)
+				(GLTexture*)camera->GetRenderTarget()->GetPostProcessTexture());//dest: postprocess texture	
 		}
+#else
+		camera->OnRender()
+#endif
 		GLRenderTarget::SetScreen(s_ScreenWidth, s_ScreenHeight);
 	}
 	
@@ -382,20 +385,30 @@ namespace RA_FRAMEWORK
 	}
 	void GLRenderer::Blit(GLTexture* src, GLTexture* dest)
 	{
+		//bind buffer
 		glBindFramebuffer(GL_FRAMEBUFFER, s_BlitFrameBuffer);
 		//set destination
 		glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, dest->GetID(), 0);
 		//set source
 		s_TextureBlitMat->Use();
 		s_TextureBlitMat->GetShaderProgram()->SetTexture("_sourceTex", src);
-		
-		//todo: quad model draw
+		//quad model draw
 		s_QuadMesh->GetVBO()->Draw(PrimitiveType::TRIANGLES);
-
+		//clean up
 		s_TextureBlitMat->UnbindTextures();
 	}
 	void GLRenderer::Blit(GLTexture* src, GLTexture* dest, Material* mat)
 	{
-		
+		//bind buffer
+		glBindFramebuffer(GL_FRAMEBUFFER, s_BlitFrameBuffer);
+		//set destination
+		glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, dest->GetID(), 0);
+		//set source
+		mat->Use();
+		mat->GetShaderProgram()->SetTexture("_sourceTex", src);
+		//quad model draw
+		s_QuadMesh->GetVBO()->Draw(PrimitiveType::TRIANGLES);
+		//clean up
+		mat->UnbindTextures();
 	}
 }

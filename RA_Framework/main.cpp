@@ -37,7 +37,7 @@ public:
 };
 void OnCameraRender(Camera* camera, RenderTarget* target, Texture* destination)
 {
-	//std::cout << "On Camera Render" << std::endl;
+	std::cout << "On Camera Render" << std::endl;
 	//GLRenderer::Blit((GLTexture*)target->GetColorAttachment(0), (GLTexture*)destination, m_pBlitMat);
 }
 class ExampleScene :public Scene
