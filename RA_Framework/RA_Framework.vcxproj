@@ -173,6 +173,7 @@ copy "$(ProjectDir)Textures\*.*" "$(TargetDir)Textures"</Command>
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="GeometryGenerator.cpp" />
+    <ClCompile Include="GLBuiltInShaders.cpp" />
     <ClCompile Include="GLRenderer.cpp" />
     <ClCompile Include="GLShader.cpp" />
     <ClCompile Include="GLShaderProgram.cpp" />
@@ -206,6 +207,7 @@ copy "$(ProjectDir)Textures\*.*" "$(TargetDir)Textures"</Command>
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityManager.h" />
     <ClInclude Include="GeometryGenerator.h" />
+    <ClInclude Include="GLBuiltInShaders.h" />
     <ClInclude Include="GLRenderer.h" />
     <ClInclude Include="GLShader.h" />
     <ClInclude Include="GLShaderProgram.h" />

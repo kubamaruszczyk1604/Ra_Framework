@@ -25,7 +25,6 @@ namespace RA_FRAMEWORK
 	GLuint GLRenderer::s_BlitFrameBuffer;
 	Mesh* GLRenderer::s_QuadMesh;
 	//vector<B> A::vector_of_B;
-	GLShader* GLRenderer::s_TextureVertFrag[2] = { nullptr,nullptr };
 	GLShaderProgram* GLRenderer::s_TextureShaderProgram{ nullptr };
 	Material* GLRenderer::s_TextureBlitMat{nullptr};
 	bool GLRenderer::KLMSetPixelFormat(HDC hdc)
@@ -58,38 +57,10 @@ namespace RA_FRAMEWORK
 
 	bool GLRenderer::SetUpShaders()
 	{
+		GLBuiltInShaders::Initiate();
 		
-		String vertShaderString = "#version 330\n";
-		vertShaderString += "layout(location = 0) in vec3 vertex_position;\n";
-	//	vertShaderString += "layout(location = 1) in vec3 vertex_normal;\n";
-	//	vertShaderString += "layout(location = 2) in vec3 tangent;\n";
-		vertShaderString += "layout(location = 3) in vec2 uvs;\n";
-		vertShaderString += "out vec2 oUVs;\n";
-		vertShaderString += "void main() { oUVs = uvs; gl_Position = vec4(vertex_position, 1.0);}";
 
-
-		String fragShaderString = "#version 330\n in vec2 oUVs;\n uniform sampler2D _sourceTex;\n";
-		fragShaderString += "out vec4 colorOut;\n";
-		fragShaderString += "void main() { colorOut = texture(_sourceTex,oUVs)*vec4(1.0,1.0,1.0,1.0);}\n";
-
-
-		std::string status;
-		std::cout << "\nRENDERER DEBUG - BUILT-IN SHADER STATUS" << std::endl;
-		s_TextureVertFrag[0]= new GLShader(ShaderType::VERTEX);
-		s_TextureVertFrag[0]->LoadFromString(vertShaderString);
-		bool vertOK = s_TextureVertFrag[0]->Compile(status);
-		std::cout << "Compile Vertex Shader: " << vertOK;
-		std::cout << "  Status: " << status << std::endl;
-		if (!vertOK) return false;
-
-		s_TextureVertFrag[1] = new GLShader(ShaderType::FRAGMENT);
-		s_TextureVertFrag[1]->LoadFromString(fragShaderString);
-		bool fragOK = s_TextureVertFrag[1]->Compile(status);
-		std::cout << "Compile Fragment Shader: " << fragOK;
-		std::cout << "  Status: " << status << std::endl;
-		if (!fragOK) return false;
-
-		s_TextureShaderProgram = new GLShaderProgram(s_TextureVertFrag[0], s_TextureVertFrag[1]);
+		s_TextureShaderProgram = new GLShaderProgram(GLBuiltInShaders::VERTEX_PASSTROUGH,GLBuiltInShaders::FRAGMENT_TEXTURE_ALPHA );
 		bool progOK = s_TextureShaderProgram->Created();
 		std::cout << "Shader Program linking status: " << progOK << std::endl;
 		if (!progOK) return false;
@@ -279,8 +250,7 @@ namespace RA_FRAMEWORK
 		// release device context
 		delete s_TextureBlitMat;
 		delete s_TextureShaderProgram;
-		delete s_TextureVertFrag[0];
-		delete s_TextureVertFrag[1];
+		GLBuiltInShaders::FreeShaders();
 		s_CameraList.Free();
 		s_CameraList.Clear();
 		glDeleteFramebuffers(1, &s_BlitFrameBuffer);
@@ -385,7 +355,19 @@ namespace RA_FRAMEWORK
 	}
 	void GLRenderer::Blit(GLTexture* src, GLTexture* dest)
 	{
-		GLRenderer::Blit(src, dest, s_TextureBlitMat);
+		//bind temp buffer
+		glBindFramebuffer(GL_FRAMEBUFFER, s_BlitFrameBuffer);
+		//set destination
+		glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, dest->GetID(), 0);
+		//set source
+		s_TextureBlitMat->Use();
+		s_TextureBlitMat->GetShaderProgram()->SetTexture("_sourceTex", src);
+		s_TextureBlitMat->GetShaderProgram()->SetFloat("_alpha", 1.0f);
+		// draw quad
+		s_QuadMesh->GetVBO()->Draw(PrimitiveType::TRIANGLES);
+		//clean up
+		s_TextureBlitMat->UnbindTextures();
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
 
 	void GLRenderer::Blit(GLTexture* src, GLTexture* dest, Material* mat)
@@ -401,17 +383,32 @@ namespace RA_FRAMEWORK
 		s_QuadMesh->GetVBO()->Draw(PrimitiveType::TRIANGLES);
 		//clean up
 		mat->UnbindTextures();
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
 
-	void GLRenderer::BlitToScreen(GLTexture * src)
+	void GLRenderer::BlitToScreen(GLTexture* src)
 	{
-		GLRenderer::BlitToScreen(src,0,0, s_ScreenWidth, s_ScreenHeight);
+		GLRenderer::BlitToScreen(src, 0, 0, s_ScreenWidth, s_ScreenHeight,1.0);
 	}
 
 	void GLRenderer::BlitToScreen(GLTexture* src, int x, int y, uint w, uint h)
 	{
-		// s_TextureBlitMat
-		GLRenderer::BlitToScreen(src, x, y, w, h, s_TextureBlitMat);
+		GLRenderer::BlitToScreen(src, x, y, w, h, 1.0f);
+	}
+
+	void GLRenderer::BlitToScreen(GLTexture * src, int x, int y, uint w, uint h, float alpha)
+	{
+		//GLRenderer::BlitToScreen(src, x, y, w, h, s_TextureBlitMat);
+		GLRenderTarget::SetScreen(x, y, w, h);
+
+		//set source
+		s_TextureBlitMat->Use();
+		s_TextureBlitMat->GetShaderProgram()->SetTexture("_sourceTex", src);
+		s_TextureBlitMat->GetShaderProgram()->SetFloat("_alpha", alpha);
+		//quad model draw
+		s_QuadMesh->GetVBO()->Draw(PrimitiveType::TRIANGLES);
+		//clean up
+		s_TextureBlitMat->UnbindTextures();
 	}
 
 	void GLRenderer::BlitToScreen(GLTexture* src, int x, int y, uint w, uint h, Material* mat)

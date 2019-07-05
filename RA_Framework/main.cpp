@@ -183,8 +183,11 @@ public:
 	void PostUpdate() 
 	{
 		//GLRenderer::ClearScreen(ColorRGB(1.0, 1.0, 1.0));
-		GLRenderer::BlitToScreen((GLTexture*)m_pRenderTarget->GetColorAttachment(0),100, 100, 255, 255);
-		GLRenderer::BlitToScreen((GLTexture*)m_pRenderTarget->GetPostProcessTexture(), 100, 380, 255, 255);
+		
+		//GLRenderer::Blit((GLTexture*)m_pRenderTarget->GetColorAttachment(0), (GLTexture*)m_pRenderTarget->GetColorAttachment(1));
+		GLRenderer::BlitToScreen((GLTexture*)m_pRenderTarget->GetPostProcessTexture(), 100, 380, 255, 255,1.0);
+		GLRenderer::BlitToScreen((GLTexture*)m_pRenderTarget->GetColorAttachment(0),100, 100, 255, 255, 0.5);
+		
 	}
 
 	//InputCallbacks
@@ -210,7 +213,7 @@ public:
 
 int main()
 {
-	WindowsApp::Create(1280, 720, "RA DEV WINDOW");
+	WindowsApp::Create(1280, 720, "RA_DEV_WINDOW");
 	SceneManager::Load(new ExampleScene());
 	const int appState = WindowsApp::Run();
 	return appState;

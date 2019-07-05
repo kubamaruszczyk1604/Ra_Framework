@@ -7,6 +7,7 @@
 #include "GLRenderTarget.h"
 #include "RenderPass.h"
 #include "GLShaderProgram.h"
+#include "GLBuiltInShaders.h"
 namespace RA_FRAMEWORK
 {
 	class Transform;
@@ -28,7 +29,6 @@ namespace RA_FRAMEWORK
 		static GLuint									s_BlitFrameBuffer;
 	private:
 		static Mesh*									s_QuadMesh;
-		static GLShader*								s_TextureVertFrag[2];
 		static GLShaderProgram*							s_TextureShaderProgram;
 		static Material*								s_TextureBlitMat;
 	private:
@@ -63,6 +63,7 @@ namespace RA_FRAMEWORK
 		static void		Blit(GLTexture* src, GLTexture* dest, Material* mat);
 		static void		BlitToScreen(GLTexture* src);
 		static void		BlitToScreen(GLTexture* src, int x, int y, uint w, uint h);
+		static void		BlitToScreen(GLTexture* src, int x, int y, uint w, uint h, float alpha);
 		static void		BlitToScreen(GLTexture* src, int x, int y, uint w, uint h, Material* mat);
 	};
 }
