@@ -50,6 +50,9 @@ namespace RA_FRAMEWORK
 		static void		Update(const float deltaTime, const float totalTime);
 		static void		ShutDown();
 		static void		ClearScreen(const ColorRGB& colour, bool clearDepth = true);
+		static void		ClearScreenWithGradient(const ColorRGB& col1, const ColorRGB& col2, float exp);
+		static void		ClearScreenWithGradient(GLTexture* tex1, GLTexture* tex2, float exp);
+		static void		ClearScreenWithGradient(const ColorRGBA& col1, const ColorRGBA& col2, GLTexture* tex1, GLTexture* tex2, float exp);
 		static void		SwapBuffers();
 		static void		SetCullMode(const CullMode mode);
 		static void		SetFillMode(const FillMode mode);

@@ -269,6 +269,18 @@ namespace RA_FRAMEWORK
 		glClear(GL_COLOR_BUFFER_BIT | (GL_DEPTH_BUFFER_BIT*(int)clearDepth));	
 	}
 
+	void GLRenderer::ClearScreenWithGradient(const ColorRGB & col1, const ColorRGB & col2, float exp)
+	{
+	}
+
+	void GLRenderer::ClearScreenWithGradient(GLTexture * tex1, GLTexture * tex2, float exp)
+	{
+	}
+
+	void GLRenderer::ClearScreenWithGradient(const ColorRGBA & col1, const ColorRGBA & col2, GLTexture * tex1, GLTexture * tex2, float exp)
+	{
+	}
+
 	void GLRenderer::SwapBuffers()
 	{
 		::SwapBuffers(s_hDevCtx);
