@@ -61,5 +61,8 @@ namespace RA_FRAMEWORK
 		static void		AddRenderPass(Camera* camera) { s_CameraList.Add(camera); }
 		static void		Blit(GLTexture* src, GLTexture* dest);
 		static void		Blit(GLTexture* src, GLTexture* dest, Material* mat);
+		static void		BlitToScreen(GLTexture* src);
+		static void		BlitToScreen(GLTexture* src, int x, int y, uint w, uint h);
+		static void		BlitToScreen(GLTexture* src, int x, int y, uint w, uint h, Material* mat);
 	};
 }

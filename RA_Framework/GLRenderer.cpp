@@ -61,8 +61,8 @@ namespace RA_FRAMEWORK
 		
 		String vertShaderString = "#version 330\n";
 		vertShaderString += "layout(location = 0) in vec3 vertex_position;\n";
-		vertShaderString += "layout(location = 1) in vec3 vertex_normal;\n";
-		vertShaderString += "layout(location = 2) in vec3 tangent;\n";
+	//	vertShaderString += "layout(location = 1) in vec3 vertex_normal;\n";
+	//	vertShaderString += "layout(location = 2) in vec3 tangent;\n";
 		vertShaderString += "layout(location = 3) in vec2 uvs;\n";
 		vertShaderString += "out vec2 oUVs;\n";
 		vertShaderString += "void main() { oUVs = uvs; gl_Position = vec4(vertex_position, 1.0);}";
@@ -70,7 +70,7 @@ namespace RA_FRAMEWORK
 
 		String fragShaderString = "#version 330\n in vec2 oUVs;\n uniform sampler2D _sourceTex;\n";
 		fragShaderString += "out vec4 colorOut;\n";
-		fragShaderString += "void main() { colorOut = texture(_sourceTex,oUVs)*vec4(1.0,0.0,0.0,1.0);}\n";
+		fragShaderString += "void main() { colorOut = texture(_sourceTex,oUVs)*vec4(1.0,1.0,1.0,1.0);}\n";
 
 
 		std::string status;
@@ -94,7 +94,7 @@ namespace RA_FRAMEWORK
 		std::cout << "Shader Program linking status: " << progOK << std::endl;
 		if (!progOK) return false;
 		s_TextureBlitMat = new Material(s_TextureShaderProgram);
-		return  true;
+		return true;
 	}
 
 	bool GLRenderer::Initialize(const int width, const int height, const HWND handle)
@@ -151,7 +151,7 @@ namespace RA_FRAMEWORK
 			RenderPass(s_CameraList[i], entities);
 		}
 
-		GLRenderer::SwapBuffers();
+		//GLRenderer::SwapBuffers();
 	}
 
 	void GLRenderer::RenderPass(RARenderPass* pass, ListOfEntities* entities)
@@ -175,7 +175,7 @@ namespace RA_FRAMEWORK
 		if (camera->GetRenderTarget() == nullptr)
 		{ 
 			
-			GLRenderTarget::SetScreen(s_ScreenWidth, s_ScreenHeight);
+			GLRenderTarget::SetScreen(0,0,s_ScreenWidth, s_ScreenHeight);
 			if (camera->GetClearMode() == ClearMode::COLOR)
 			{
 				ClearScreen(camera->GetClearColor(), camera->GetClearDepthFlag());
@@ -193,7 +193,7 @@ namespace RA_FRAMEWORK
 
 	
 		auto rt = camera->GetRenderTarget();
-		if (rt->IsScreen()) { GLRenderTarget::SetScreen(s_ScreenWidth, s_ScreenHeight); }
+		if (rt->IsScreen()) { GLRenderTarget::SetScreen(0,0, s_ScreenWidth, s_ScreenHeight); }
 		else { rt->Bind(); }
 		if (camera->GetClearMode() == ClearMode::COLOR)
 		{
@@ -214,9 +214,9 @@ namespace RA_FRAMEWORK
 				(GLTexture*)camera->GetRenderTarget()->GetPostProcessTexture());//dest: postprocess texture	
 		}
 #else
-		camera->OnRender()
+		camera->OnRender();
 #endif
-		GLRenderTarget::SetScreen(s_ScreenWidth, s_ScreenHeight);
+		GLRenderTarget::SetScreen(0, 0, s_ScreenWidth, s_ScreenHeight);
 	}
 	
 	void GLRenderer::RenderEntity(Entity* entity, Camera* camera)
@@ -385,24 +385,39 @@ namespace RA_FRAMEWORK
 	}
 	void GLRenderer::Blit(GLTexture* src, GLTexture* dest)
 	{
-		//bind buffer
+		GLRenderer::Blit(src, dest, s_TextureBlitMat);
+	}
+
+	void GLRenderer::Blit(GLTexture* src, GLTexture* dest, Material* mat)
+	{
+		//bind temp buffer
 		glBindFramebuffer(GL_FRAMEBUFFER, s_BlitFrameBuffer);
 		//set destination
 		glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, dest->GetID(), 0);
 		//set source
-		s_TextureBlitMat->Use();
-		s_TextureBlitMat->GetShaderProgram()->SetTexture("_sourceTex", src);
-		//quad model draw
+		mat->Use();
+		mat->GetShaderProgram()->SetTexture("_sourceTex", src);
+		// draw quad
 		s_QuadMesh->GetVBO()->Draw(PrimitiveType::TRIANGLES);
 		//clean up
-		s_TextureBlitMat->UnbindTextures();
+		mat->UnbindTextures();
 	}
-	void GLRenderer::Blit(GLTexture* src, GLTexture* dest, Material* mat)
+
+	void GLRenderer::BlitToScreen(GLTexture * src)
 	{
-		//bind buffer
-		glBindFramebuffer(GL_FRAMEBUFFER, s_BlitFrameBuffer);
-		//set destination
-		glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, dest->GetID(), 0);
+		GLRenderer::BlitToScreen(src,0,0, s_ScreenWidth, s_ScreenHeight);
+	}
+
+	void GLRenderer::BlitToScreen(GLTexture* src, int x, int y, uint w, uint h)
+	{
+		// s_TextureBlitMat
+		GLRenderer::BlitToScreen(src, x, y, w, h, s_TextureBlitMat);
+	}
+
+	void GLRenderer::BlitToScreen(GLTexture* src, int x, int y, uint w, uint h, Material* mat)
+	{
+		GLRenderTarget::SetScreen(x, y, w, h);
+
 		//set source
 		mat->Use();
 		mat->GetShaderProgram()->SetTexture("_sourceTex", src);

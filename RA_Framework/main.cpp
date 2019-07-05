@@ -16,7 +16,6 @@ struct AtExit
 	}
 } doAtExit;
 
-Material*			m_pBlitMat;
 class TestBehaviour : public BehaviourComponent
 {
 public:
@@ -123,7 +122,7 @@ public:
 		AddEntity(e1);
 
 		m_pMaterial2 = new Material(m_pShaderProg);
-		//m_pMaterial2->AddShaderVariable("tex1", m_pRenderTexture1);
+		m_pMaterial2->AddShaderVariable("tex1", m_pRenderTexture1);
 		//m_pMaterial2->AddShaderVariable("tex1", m_pTexture1);
 		ModelComponent* m_pModel2 = new ModelComponent("model2", m_pQuadMesh, m_pMaterial2);
 		Entity* e2 = new Entity("Test 2");
@@ -146,7 +145,7 @@ public:
 		EntityCamera1->GetTransform()->SetPosition(Vec3(-3.8f, 0.0f, -14.98f));
 		AddEntity(EntityCamera1);
 
-		m_pMaterial2->AddShaderVariable("tex1", m_pRenderTarget->GetPostProcessTexture());
+		//m_pMaterial2->AddShaderVariable("tex1", m_pRenderTarget->GetPostProcessTexture());
 
 		Entity* EntityCamera2 = new Entity("Camera2");
 		Camera* camera2 = new Camera(ProjectionType::PERSPECTIVE, 80.0f, 0.1f, 1000.0f);
@@ -156,7 +155,8 @@ public:
 		AddEntity(EntityCamera2);
 
 		GLRenderer::AddRenderPass(camera1);
-		GLRenderer::AddRenderPass(camera2);
+		GLRenderer::AddRenderPass(camera2);//renders to screen because camera2 has no render target
+
 		//GLRenderer::SetFillMode(FillMode::WIREFRAME);
 		
 		/*RARenderPass* pass1 = new RARenderPass(m_pRenderTarget, 0);
@@ -170,7 +170,9 @@ public:
 	void Update(float deltaTime, float totalTime = 0)
 	{
 		e1->GetTransform()->SetRotationY(totalTime);
-		//m_pTexture->Bind("tex", m_pShaderProg->GetID(), 0);
+	
+		//GLRenderer::SwapBuffers();
+			//m_pTexture->Bind("tex", m_pShaderProg->GetID(), 0);
 	}
 
 	void OnExit()
@@ -178,7 +180,12 @@ public:
 		PRINTL("OnExit()");
 	}
 
-	void PostUpdate() {}
+	void PostUpdate() 
+	{
+		//GLRenderer::ClearScreen(ColorRGB(1.0, 1.0, 1.0));
+		GLRenderer::BlitToScreen((GLTexture*)m_pRenderTarget->GetColorAttachment(0),100, 100, 255, 255);
+		GLRenderer::BlitToScreen((GLTexture*)m_pRenderTarget->GetPostProcessTexture(), 100, 380, 255, 255);
+	}
 
 	//InputCallbacks
 	void OnKeyPressed(const int key, const KeyState state)

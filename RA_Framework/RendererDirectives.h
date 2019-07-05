@@ -17,8 +17,10 @@
 
 #define ENABLE__CAMERAS_WITH_NO_RENDER_TARGET_RENDERS_DIRECTLY_TO_SCREEN
 
+
+
 /*
-   This option only will affect cameras with render targets attached.
+   This option will only affect cameras with render targets attached.
    Enabling it will cause renderer to copy the content of render target's first colour attachment into
    its postprocess texture (if the render target has one)
 */

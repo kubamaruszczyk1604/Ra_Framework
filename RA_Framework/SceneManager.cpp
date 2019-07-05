@@ -40,8 +40,9 @@ namespace RA_FRAMEWORK
 			//GLRenderer::ClearScreen(ColorRGB(0,0,1));	
 			GLRenderer::RenderAllPasses(list);
 			GLRenderer::Update(deltaTime, totalTime);
-			//GLRenderer::SwapBuffers();
 			m_upCurrentScene->PostUpdate();
+			GLRenderer::SwapBuffers();
+			
 		}
 	}
 

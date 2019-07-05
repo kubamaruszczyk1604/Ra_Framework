@@ -6,11 +6,13 @@ namespace RA_FRAMEWORK
 	  GL_COLOR_ATTACHMENT3 ,GL_COLOR_ATTACHMENT4, GL_COLOR_ATTACHMENT5,
 	  GL_COLOR_ATTACHMENT6 ,GL_COLOR_ATTACHMENT7 };
 
-	void GLRenderTarget::SetScreen(int w, int h)
+	void GLRenderTarget::SetScreen(int x, int y, int w, int h)
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		glViewport(0, 0, w, h);
+		glViewport(x, y, w, h);
 	}
+
+
 
 	GLRenderTarget::GLRenderTarget(const std::vector<GLTexture*>& renderTextures, DeptAttachmentType depthAttachmentType, bool genPosprocessTexture):
 		RenderTarget(0, genPosprocessTexture),

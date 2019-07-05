@@ -18,7 +18,7 @@ namespace RA_FRAMEWORK
 		std::vector<GLTexture*>		m_pColorAttachments;
 		GLTexture*					m_PostprocessTexture;
 	public:
-		static void SetScreen(int w, int h);
+		static void SetScreen(int x, int y, int w, int h);
 	public:
 		GLRenderTarget(const std::vector<GLTexture*>& renderTextures, DeptAttachmentType depthAttachmentType = DeptAttachmentType::NONE, bool genPosprocessTexture = false);
 		GLRenderTarget(GLTexture* renderTexture, DeptAttachmentType depthAttachmentType = DeptAttachmentType::NONE, bool genPosprocessTexture = false);
