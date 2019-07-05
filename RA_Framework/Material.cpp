@@ -128,7 +128,6 @@ namespace RA_FRAMEWORK
 		{
 			auto temp = m_Texture2DList[i];
 			temp->GetData()->Unbind();
-
 		}
 	}
 	//ShaderVariable* Material::FindVariable(ShaderVariableType type, const String& name)

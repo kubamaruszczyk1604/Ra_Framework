@@ -85,7 +85,6 @@ namespace RA_FRAMEWORK
 		// set defaults
 		EnableDepthTest();
 		SetCullMode(CullMode::NONE);
-		//SetFillMode(FillMode::WIREFRAME);
 		EnableAlphaBlending();
 	//	glEnable(GL_MULTISAMPLE);
 	//	glHint(GL_MULTISAMPLE_FILTER_HINT_NV, GL_NICEST);
@@ -248,6 +247,7 @@ namespace RA_FRAMEWORK
 		//s_RenderPassList.Free();
 		//s_RenderPassList.Clear();
 		// release device context
+		delete s_QuadMesh;
 		delete s_TextureBlitMat;
 		delete s_TextureShaderProgram;
 		GLBuiltInShaders::FreeShaders();

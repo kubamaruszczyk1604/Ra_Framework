@@ -6,6 +6,8 @@ namespace RA_FRAMEWORK
 	GLShader* GLBuiltInShaders::FRAGMENT_TEXTURE;
 	GLShader* GLBuiltInShaders::FRAGMENT_TEXTURE_ALPHA;
 	GLShader* GLBuiltInShaders::FRAGMENT_TEXTURE_TINT_AND_ALPHA;
+	GLShader* GLBuiltInShaders::FRAGMENT_DIRECTED_GRADIENT_COLOR;
+	GLShader* GLBuiltInShaders::FRAGMENT_DIRECTED_GRADIENT_TEXTURE_AND_COLOR;
 
 	void RA_FRAMEWORK::GLBuiltInShaders::Initiate()
 	{
@@ -81,8 +83,8 @@ namespace RA_FRAMEWORK
 
 		FRAGMENT_TEXTURE_TINT_AND_ALPHA = new GLShader(ShaderType::FRAGMENT);
 		FRAGMENT_TEXTURE_TINT_AND_ALPHA->LoadFromString(shaderString);
-		bool fragOK = FRAGMENT_TEXTURE_TINT_AND_ALPHA->Compile(status);
-		std::cout << "Compile FRAGMENT_TEXTURE_TINT_AND_ALPHA Shader: " << fragOK;
+		compileOK = FRAGMENT_TEXTURE_TINT_AND_ALPHA->Compile(status);
+		std::cout << "Compile FRAGMENT_TEXTURE_TINT_AND_ALPHA Shader: " << compileOK;
 		std::cout << "  Status: " << status << std::endl;
 		if (!compileOK)
 		{
@@ -91,14 +93,91 @@ namespace RA_FRAMEWORK
 			compileOK = true;
 			status = "";
 		}
+
+
+		//FRAGMENT_DIRECTED_GRADIENT_TEXTURE_AND_COLOR
+		shaderString = "#version 330\n in vec2 oUVs;\n uniform sampler2D _sourceTex1;\n";
+		shaderString += "uniform sampler2D _sourceTex2;\n";
+		shaderString += "uniform vec4 _col1;\n";
+		shaderString += "uniform vec4 _col2;\n";
+		shaderString += "uniform vec2 _dir;\n";
+		shaderString += "uniform float _exp;\n";
+		shaderString += "out vec4 colorOut;\n";
+		shaderString += "void main() { vec4 col1 = texture(_sourceTex1,oUVs)*_col1;\n";
+		shaderString += "vec4 col2 = texture(_sourceTex2,oUVs)*_col2;\n";
+		shaderString += "float pos = float(sign(_dir.y) == 1.0);\n";
+		shaderString += "float neg = 1.0 - pos;\n";
+		shaderString += "vec2 uv = oUVs;";
+		shaderString += "uv.y = (1.0-uv.y)*neg + uv.y*pos;\n";
+		shaderString += "pos = float(sign(_dir.x) == 1.0);\n";
+		shaderString += "neg = 1.0 - pos;\n";
+		shaderString += "uv.x = (1.0-uv.x)*neg + uv.x*pos;\n";
+		shaderString += "colorOut= mix(col1,col2, pow(length(uv*_dir),_exp));";
+		shaderString += "";
+		shaderString += "}\n";
+
+		FRAGMENT_DIRECTED_GRADIENT_TEXTURE_AND_COLOR = new GLShader(ShaderType::FRAGMENT);
+		FRAGMENT_DIRECTED_GRADIENT_TEXTURE_AND_COLOR->LoadFromString(shaderString);
+		compileOK = FRAGMENT_DIRECTED_GRADIENT_TEXTURE_AND_COLOR->Compile(status);
+		std::cout << "Compile FRAGMENT_DIRECTED_GRADIENT_TEXTURE_AND_COLOR Shader: " << compileOK;
+		std::cout << "  Status: " << status << std::endl;
+		if (!compileOK)
+		{
+			delete FRAGMENT_DIRECTED_GRADIENT_TEXTURE_AND_COLOR;
+			FRAGMENT_DIRECTED_GRADIENT_TEXTURE_AND_COLOR = nullptr;
+			compileOK = true;
+			status = "";
+		}
+
+
+		//FRAGMENT_DIRECTED_GRADIENT_COLOR
+		shaderString = "#version 330\n in vec2 oUVs;\n\n";
+		shaderString += "uniform vec4 _col1;\n";
+		shaderString += "uniform vec4 _col2;\n";
+		shaderString += "uniform vec2 _dir;\n";
+		shaderString += "uniform float _exp;\n";
+		shaderString += "out vec4 colorOut;\n";
+		shaderString += "void main() {\n";
+		shaderString += "float pos = float(sign(_dir.y) == 1.0);\n";
+		shaderString += "float neg = 1.0 - pos;\n";
+		shaderString += "vec2 uv = oUVs;";
+		shaderString += "uv.y = (1.0-uv.y)*neg + uv.y*pos;\n";
+		shaderString += "pos = float(sign(_dir.x) == 1.0);\n";
+		shaderString += "neg = 1.0 - pos;\n";
+		shaderString += "uv.x = (1.0-uv.x)*neg + uv.x*pos;\n";
+		shaderString += "colorOut= mix(_col1,_col2, pow(length(uv*_dir),_exp));";
+		shaderString += "";
+		shaderString += "}\n";
+
+
+		FRAGMENT_DIRECTED_GRADIENT_COLOR = new GLShader(ShaderType::FRAGMENT);
+		FRAGMENT_DIRECTED_GRADIENT_COLOR->LoadFromString(shaderString);
+		compileOK = FRAGMENT_DIRECTED_GRADIENT_COLOR->Compile(status);
+		std::cout << "Compile FRAGMENT_DIRECTED_GRADIENT_COLOR Shader: " << compileOK;
+		std::cout << "  Status: " << status << std::endl;
+		if (!compileOK)
+		{
+			delete FRAGMENT_DIRECTED_GRADIENT_COLOR;
+			FRAGMENT_DIRECTED_GRADIENT_COLOR = nullptr;
+			compileOK = true;
+			status = "";
+		}
 	}
 
 	void GLBuiltInShaders::FreeShaders()
 	{
 		delete VERTEX_PASSTROUGH;
+		VERTEX_PASSTROUGH = nullptr;
 		delete FRAGMENT_TEXTURE;
+		FRAGMENT_TEXTURE = nullptr;
 		delete FRAGMENT_TEXTURE_ALPHA;
+		FRAGMENT_TEXTURE_ALPHA = nullptr;
 		delete FRAGMENT_TEXTURE_TINT_AND_ALPHA;
+		FRAGMENT_TEXTURE_TINT_AND_ALPHA = nullptr;
+		delete FRAGMENT_DIRECTED_GRADIENT_TEXTURE_AND_COLOR;
+		FRAGMENT_DIRECTED_GRADIENT_TEXTURE_AND_COLOR = nullptr;
+		delete FRAGMENT_DIRECTED_GRADIENT_COLOR;
+		FRAGMENT_DIRECTED_GRADIENT_COLOR = nullptr;
 	}
 
 	GLBuiltInShaders::~GLBuiltInShaders()

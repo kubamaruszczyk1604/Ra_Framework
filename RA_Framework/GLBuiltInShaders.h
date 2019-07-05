@@ -12,6 +12,8 @@ namespace  RA_FRAMEWORK
 		static GLShader* FRAGMENT_TEXTURE;
 		static GLShader* FRAGMENT_TEXTURE_ALPHA;
 		static GLShader* FRAGMENT_TEXTURE_TINT_AND_ALPHA;
+		static GLShader* FRAGMENT_DIRECTED_GRADIENT_COLOR;
+		static GLShader* FRAGMENT_DIRECTED_GRADIENT_TEXTURE_AND_COLOR;
 		static void Initiate();
 		static void FreeShaders();
 		~GLBuiltInShaders();
