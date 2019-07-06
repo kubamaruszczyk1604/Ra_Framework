@@ -3,11 +3,11 @@ namespace RA_FRAMEWORK
 {
 	GeometryGenerator::~GeometryGenerator(){}
 
-	Mesh* GeometryGenerator::GenerateQuad(float width, float height, bool negativeNormals)
+	Mesh* GeometryGenerator::GenerateQuad(float width, float height, bool negativeNormals, float z)
 	{
 		Mesh* mesh = new Mesh();
 		width *= 0.5; height *= 0.5f;
-		float fbDist = 0.00f;
+		float fbDist = z;
 		float normZ = 1.0f - (2.0f*static_cast<float>(negativeNormals));
 		//front culling
 		mesh->AddVertex(Vertex(-width, -height, fbDist, 0, 0, normZ, 0, 0));

@@ -11,6 +11,7 @@ namespace RA_FRAMEWORK
 	//using namespace msclr::interop;
 	//using namespace ShaderCreationTool;
 	bool GLRenderer::s_IsRunning{ false };
+	bool GLRenderer::s_DepthTextEnabled{ true };
 	HWND GLRenderer::s_hWnd{ 0 };
 	HGLRC GLRenderer::s_hGLRC{ nullptr };
 	HDC GLRenderer::s_hDevCtx{ nullptr };
@@ -23,10 +24,13 @@ namespace RA_FRAMEWORK
 	//KLMList<std::unique_ptr<RARenderPass>> GLRenderer::s_RenderPassList;
 	KLMList<Camera*> GLRenderer::s_CameraList;
 	GLuint GLRenderer::s_BlitFrameBuffer;
+	GLTexture* GLRenderer::s_TempTexture;
 	Mesh* GLRenderer::s_QuadMesh;
 	//vector<B> A::vector_of_B;
 	GLShaderProgram* GLRenderer::s_TextureShaderProgram{ nullptr };
-	Material* GLRenderer::s_TextureBlitMat{nullptr};
+	GLShaderProgram* GLRenderer::s_ColGradientShaderProgram{ nullptr };
+	Material* GLRenderer::s_TextureBlitMat{ nullptr };
+	Material* GLRenderer::s_ColGradientMat{ nullptr };
 	bool GLRenderer::KLMSetPixelFormat(HDC hdc)
 	{
 		PIXELFORMATDESCRIPTOR pfd;
@@ -65,6 +69,13 @@ namespace RA_FRAMEWORK
 		std::cout << "Shader Program linking status: " << progOK << std::endl;
 		if (!progOK) return false;
 		s_TextureBlitMat = new Material(s_TextureShaderProgram);
+
+
+		s_ColGradientShaderProgram = new GLShaderProgram(GLBuiltInShaders::VERTEX_PASSTROUGH, GLBuiltInShaders::FRAGMENT_DIRECTED_GRADIENT_COLOR);
+		progOK = s_ColGradientShaderProgram->Created();
+		std::cout << "Shader Program linking status: " << progOK << std::endl;
+		if (!progOK) return false;
+		s_ColGradientMat = new Material(s_ColGradientShaderProgram);
 		return true;
 	}
 
@@ -93,6 +104,9 @@ namespace RA_FRAMEWORK
 		SetUpShaders();
 		glGenFramebuffers(1, &s_BlitFrameBuffer) ;
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		TextureFormatDescriptor desc;
+		s_TempTexture = new GLTexture(s_ScreenWidth, s_ScreenHeight,desc);
 
 
 		s_IsRunning = true;
@@ -150,6 +164,11 @@ namespace RA_FRAMEWORK
 			{
 				ClearScreen(camera->GetClearColor(), camera->GetClearDepthFlag());
 			}
+			else if (camera->GetClearMode() == ClearMode::COLOR_GRADIENT)
+			{
+				ClearScreenWithGradient(camera->GetClearColor(), camera->GetClearColor2(), camera->GetClearDepthFlag(),
+					camera->GetColorGradientDirection(),camera->GetColorGradientExponent());
+			}
 
 			for (int i = 0; i < entities->size(); ++i)
 			{
@@ -169,6 +188,12 @@ namespace RA_FRAMEWORK
 		{
 			ClearScreen(camera->GetClearColor(), camera->GetClearDepthFlag());
 		}
+		else if (camera->GetClearMode() == ClearMode::COLOR_GRADIENT)
+		{
+			ClearScreenWithGradient(camera->GetClearColor(), camera->GetClearColor2(), camera->GetClearDepthFlag(),
+				camera->GetColorGradientDirection(), camera->GetColorGradientExponent());
+		}
+
 		for (int i = 0; i < entities->size(); ++i)
 		{
 			Entity* e = (*entities)[i].get();
@@ -249,6 +274,7 @@ namespace RA_FRAMEWORK
 		// release device context
 		delete s_QuadMesh;
 		delete s_TextureBlitMat;
+		delete s_TempTexture;
 		delete s_TextureShaderProgram;
 		GLBuiltInShaders::FreeShaders();
 		s_CameraList.Free();
@@ -269,10 +295,22 @@ namespace RA_FRAMEWORK
 		glClear(GL_COLOR_BUFFER_BIT | (GL_DEPTH_BUFFER_BIT*(int)clearDepth));	
 	}
 
-	void GLRenderer::ClearScreenWithGradient(const ColorRGB & col1, const ColorRGB & col2, float exp)
+	void GLRenderer::ClearScreenWithGradient(const ColorRGB& col1, const ColorRGB& col2, bool clearDepth, const Vec2& dir, float exp)
 	{
+		GLRenderer::ClearScreen(col2, clearDepth);
+		s_ColGradientMat->Use();
+		s_ColGradientMat->GetShaderProgram()->SetVec4Float("_col1", Vec4(col1.x, col1.y ,col1.z, 1.0));
+		s_ColGradientMat->GetShaderProgram()->SetVec4Float("_col2", Vec4(col2.x, col2.y, col2.z, 1.0));
+		s_ColGradientMat->GetShaderProgram()->SetVec2Float("_dir", dir);
+		s_ColGradientMat->GetShaderProgram()->SetFloat("_exp", exp);
+		
+		// draw quad
+		bool depthTestState = s_DepthTextEnabled;
+		GLRenderer::EnableDepthTest(false);
+		s_QuadMesh->GetVBO()->Draw(PrimitiveType::TRIANGLES);
+		GLRenderer::EnableDepthTest(depthTestState);
 	}
-
+	
 	void GLRenderer::ClearScreenWithGradient(GLTexture * tex1, GLTexture * tex2, float exp)
 	{
 	}
@@ -347,11 +385,12 @@ namespace RA_FRAMEWORK
 
 	void GLRenderer::EnableDepthTest(bool enabled, DepthQualifier qualifier)
 	{
+		s_DepthTextEnabled = enabled;
 		if (enabled)
 		{
 			glEnable(GL_DEPTH_TEST);
 			glDepthFunc(DEPTH_QALIF_LUT_GL[static_cast<int>(qualifier)]);
-			std::cout << static_cast<unsigned>(qualifier);
+			//std::cout << static_cast<unsigned>(qualifier);
 			return;
 		}
 		glDisable(GL_DEPTH_TEST);
@@ -376,7 +415,10 @@ namespace RA_FRAMEWORK
 		s_TextureBlitMat->GetShaderProgram()->SetTexture("_sourceTex", src);
 		s_TextureBlitMat->GetShaderProgram()->SetFloat("_alpha", 1.0f);
 		// draw quad
+		bool depthTestState = s_DepthTextEnabled;
+		GLRenderer::EnableDepthTest(false);
 		s_QuadMesh->GetVBO()->Draw(PrimitiveType::TRIANGLES);
+		GLRenderer::EnableDepthTest(depthTestState);
 		//clean up
 		s_TextureBlitMat->UnbindTextures();
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -392,7 +434,10 @@ namespace RA_FRAMEWORK
 		mat->Use();
 		mat->GetShaderProgram()->SetTexture("_sourceTex", src);
 		// draw quad
+		bool depthTestState = s_DepthTextEnabled;
+		GLRenderer::EnableDepthTest(false);
 		s_QuadMesh->GetVBO()->Draw(PrimitiveType::TRIANGLES);
+		GLRenderer::EnableDepthTest(depthTestState);
 		//clean up
 		mat->UnbindTextures();
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -418,7 +463,10 @@ namespace RA_FRAMEWORK
 		s_TextureBlitMat->GetShaderProgram()->SetTexture("_sourceTex", src);
 		s_TextureBlitMat->GetShaderProgram()->SetFloat("_alpha", alpha);
 		//quad model draw
+		bool depthTestState = s_DepthTextEnabled;
+		GLRenderer::EnableDepthTest(false);
 		s_QuadMesh->GetVBO()->Draw(PrimitiveType::TRIANGLES);
+		GLRenderer::EnableDepthTest(depthTestState);
 		//clean up
 		s_TextureBlitMat->UnbindTextures();
 	}
@@ -431,7 +479,10 @@ namespace RA_FRAMEWORK
 		mat->Use();
 		mat->GetShaderProgram()->SetTexture("_sourceTex", src);
 		//quad model draw
+		bool depthTestState = s_DepthTextEnabled;
+		GLRenderer::EnableDepthTest(false);
 		s_QuadMesh->GetVBO()->Draw(PrimitiveType::TRIANGLES);
+		GLRenderer::EnableDepthTest(depthTestState);
 		//clean up
 		mat->UnbindTextures();
 	}

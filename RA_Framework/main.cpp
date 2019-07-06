@@ -148,8 +148,9 @@ public:
 		//m_pMaterial2->AddShaderVariable("tex1", m_pRenderTarget->GetPostProcessTexture());
 
 		Entity* EntityCamera2 = new Entity("Camera2");
-		Camera* camera2 = new Camera(ProjectionType::PERSPECTIVE, 80.0f, 0.1f, 1000.0f);
-		camera2->SetClearColor(ColorRGB(0.15, 0.19, 0.4));
+		Camera* camera2 = new Camera(ProjectionType::PERSPECTIVE, 80.0f, 0.91f, 1000.0f);
+		//camera2->SetClearColor(ColorRGB(0.15, 0.19, 0.94));
+		camera2->SetClearMode(ClearMode::COLOR_GRADIENT);
 		EntityCamera2->AddComponent(std::unique_ptr<Camera>(camera2));
 		EntityCamera2->GetTransform()->SetPosition(Vec3(2.8f, 0.0f, -24.98f));
 		AddEntity(EntityCamera2);

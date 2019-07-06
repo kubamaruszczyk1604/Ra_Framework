@@ -30,7 +30,9 @@ namespace RA_FRAMEWORK
 		RENDER_MASK					m_Mask;
 		ClearMode					m_ClearMode;
 		ColorRGB					m_ClearColor;
+		ColorRGB					m_ClearColor2;
 		bool						m_ClearDepthFlag;
+		Vec3						m_GradientInfo;
 		RenderTarget*				p_RenderTarget;  
 		OnRenderCallback			m_RenderCallback;
 	public:
@@ -52,11 +54,22 @@ namespace RA_FRAMEWORK
 		bool			isActive()const							{ return  m_Active; }
 		void			SetClearMode(ClearMode mode)			{ m_ClearMode = mode; }
 		void			SetClearColor(const ColorRGB& color)	{ m_ClearColor = color; }
+		void			SetSClearColor2(const ColorRGB& color)	{ m_ClearColor2 = color; }
 		void			SetClearDepthFlag(bool clearDepth)		{ m_ClearDepthFlag = clearDepth; }
+		void			SetColorGradientParams(const Vec2& direction, float exp)
+																{m_GradientInfo = Vec3(direction.x, direction.y, exp);}
 		ClearMode		GetClearMode()							{ return m_ClearMode; }
 		bool			GetClearDepthFlag()						{ return m_ClearDepthFlag; }
 		const ColorRGB& GetClearColor()							{ return m_ClearColor; }
-		void SetRenderCallback(const OnRenderCallback caallback) { m_RenderCallback = caallback; }
+		const ColorRGB& GetClearColor2()						{ return m_ClearColor2; }
+		Vec2			GetColorGradientDirection()				{ return Vec2(m_GradientInfo.x, m_GradientInfo.y); }
+		float			GetColorGradientExponent()				{ return m_GradientInfo.z; }
+	public:
+		void SetRenderCallback(const OnRenderCallback caallback)	{ m_RenderCallback = caallback; }
+	public:
+		void			AddMaskElements(RENDER_MASK elements)		{ m_Mask |= elements; }
+		void			RemoveMaskElements(RENDER_MASK elements)	{ m_Mask &= (~elements); }
+		bool			HasElement(RENDER_MASK_ELEMENT element)		{ return (bool)(m_Mask&element); }
 	public:
 		const Mat4&		GetProjectionMatrix(const int& scrWidth, const int& scrHeight);
 		const Mat4&		SetTransformMatrix(const Vec3& translation, const Vec3& rotation);

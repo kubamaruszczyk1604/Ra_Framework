@@ -145,7 +145,7 @@ namespace RA_FRAMEWORK
 		shaderString += "pos = float(sign(_dir.x) == 1.0);\n";
 		shaderString += "neg = 1.0 - pos;\n";
 		shaderString += "uv.x = (1.0-uv.x)*neg + uv.x*pos;\n";
-		shaderString += "colorOut= mix(_col1,_col2, pow(length(uv*_dir),_exp));";
+		shaderString += "colorOut= mix(_col1,_col2, pow(length(uv*_dir),_exp)); ";
 		shaderString += "";
 		shaderString += "}\n";
 

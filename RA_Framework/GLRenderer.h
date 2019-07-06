@@ -15,6 +15,7 @@ namespace RA_FRAMEWORK
 	{
 	private:
 		static bool										s_IsRunning;
+		static bool										s_DepthTextEnabled;
 		static HWND										s_hWnd;
 		static HGLRC									s_hGLRC;
 		static HDC										s_hDevCtx;
@@ -27,10 +28,13 @@ namespace RA_FRAMEWORK
 		//static KLMList<std::unique_ptr<RARenderPass>>	s_RenderPassList;
 		static KLMList<Camera*>							s_CameraList;
 		static GLuint									s_BlitFrameBuffer;
+		static GLTexture*								s_TempTexture;
 	private:
 		static Mesh*									s_QuadMesh;
 		static GLShaderProgram*							s_TextureShaderProgram;
+		static GLShaderProgram*							s_ColGradientShaderProgram;
 		static Material*								s_TextureBlitMat;
+		static Material*								s_ColGradientMat;
 	private:
 		static bool KLMSetPixelFormat(HDC hdc);
 		static bool SetUpShaders();
@@ -50,7 +54,7 @@ namespace RA_FRAMEWORK
 		static void		Update(const float deltaTime, const float totalTime);
 		static void		ShutDown();
 		static void		ClearScreen(const ColorRGB& colour, bool clearDepth = true);
-		static void		ClearScreenWithGradient(const ColorRGB& col1, const ColorRGB& col2, float exp);
+		static void		ClearScreenWithGradient(const ColorRGB& col1, const ColorRGB& col2, bool clearDepth = true, const Vec2& dir = Vec2(1.0, 0.0), float exp = 1.0f);
 		static void		ClearScreenWithGradient(GLTexture* tex1, GLTexture* tex2, float exp);
 		static void		ClearScreenWithGradient(const ColorRGBA& col1, const ColorRGBA& col2, GLTexture* tex1, GLTexture* tex2, float exp);
 		static void		SwapBuffers();

@@ -10,7 +10,7 @@ namespace RA_FRAMEWORK
 		GeometryGenerator& operator=(const GeometryGenerator&) = delete;
 		~GeometryGenerator();
 	public:
-		static Mesh* GenerateQuad(float width, float height, bool negativeNormals = false);
+		static Mesh* GenerateQuad(float width, float height, bool negativeNormals = false, float z = 0.0f);
 		static Mesh* GenerateSphere(const float radius, const uint rings, const uint sectors);
 	};
 }

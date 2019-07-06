@@ -15,7 +15,9 @@ namespace RA_FRAMEWORK
 		m_Active(true),
 		m_Mask{RENDER_MASK_ELEMENT::RENDERABLE},
 		m_ClearMode{ClearMode::COLOR},
-		m_ClearColor{ColorRGB(0,0,1)},
+		m_ClearColor{0.2,0.0,1.0},
+		m_ClearColor2(1.0,0.4,0.0),
+		m_GradientInfo(1.0,1.0,3.0),
 		m_ClearDepthFlag{true}{}
 
 	Camera::~Camera(){}
