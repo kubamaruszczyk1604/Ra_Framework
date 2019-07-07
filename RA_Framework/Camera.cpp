@@ -57,11 +57,11 @@ namespace RA_FRAMEWORK
 		p_RenderTarget = target;
 	}
 
-
 	RenderTarget* Camera::GetRenderTarget()
 	{
 		return p_RenderTarget;
 	}
+
 	bool Camera::OnRender()
 	{
 		if (m_RenderCallback)

@@ -23,6 +23,18 @@ namespace RA_FRAMEWORK
 		vec.erase(std::remove(vec.begin(), vec.end(), value), vec.end());
 	}
 
+	inline void RemoveFromString(String& sttr, const String& toErase)
+	{
+		size_t pos = std::string::npos;
+
+		// Search for the substring in string in a loop until nothing is found
+		while ((pos = sttr.find(toErase)) != std::string::npos)
+		{
+			// If found then erase it from string
+			sttr.erase(pos, toErase.length());
+		}
+	}
+
 	inline float RandomRange(float low, float high)
 	{
 		return  low + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (high - low)));

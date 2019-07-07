@@ -6,6 +6,7 @@
 #include "GLRenderer.h"
 #include "ImageLoader.h"
 #include "GeometryGenerator.h"
+#include "SkyBox.h"
 using namespace RA_FRAMEWORK;
 
 struct AtExit
@@ -78,6 +79,8 @@ public:
 	void OnStart()
 	{
 
+		SkyBoxDesc skb;
+		SkyBox::ReadDesc("Skyboxes/TestSkybox/skybox.rasky", skb);
 		//m_pBlitMat = new Material()
 		PRINTL("OnStart()");
 		m_pImageLoader = new ImageLoader();

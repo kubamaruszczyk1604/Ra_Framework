@@ -1,0 +1,8 @@
+*** This is RA_SKYBOX file ***
+
+RIGHT   met_rt.jpg
+LEFT    met_lf.jpg
+TOP     met_up.jpg
+BOTTOM  met_dn.jpg
+FRONT   met_ft.jpg
+BACK    met_bk.jpg
