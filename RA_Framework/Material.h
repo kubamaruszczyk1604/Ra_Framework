@@ -46,7 +46,13 @@ namespace RA_FRAMEWORK
 		bool AddShaderVariable(const String& name, Texture* value)		
 		{ 
 			if (value == nullptr) return false;
-			value->SetSlot(m_TextureCounter);
+			value->SetSlot(m_TextureCounter); // NEEDS FIXING - SHADER SLOT BUG.
+			/////////////////// At the momment texture slot is changed by the last material that it is added to.
+			// This means that if the texture is added to material1 as first and material2 as second it will have slot = 1
+			// For material1 this will be an incorrect value (as it should be 0). 
+			// To fix it, texture should store not one slot number, bo separate slots for each material.
+			// Alrernatively Material can store correct slot values for textures
+
 			m_Texture2DList.Add(new ShaderVariable<Texture*>(name, value));
 			m_TextureCounter++;
 			return true;

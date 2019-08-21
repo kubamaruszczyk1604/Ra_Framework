@@ -6,7 +6,7 @@
 #include "GLRenderer.h"
 #include "ImageLoader.h"
 #include "GeometryGenerator.h"
-#include "SkyBox.h"
+#include "GLSkyBox.h"
 using namespace RA_FRAMEWORK;
 
 struct AtExit
@@ -79,8 +79,14 @@ public:
 	void OnStart()
 	{
 
-		SkyBoxDesc skb;
-		SkyBox::ReadDesc("Skyboxes/TestSkybox/skybox.rasky", skb);
+		//SkyBoxDesc skb;
+		//SkyBox::ReadDesc("Skyboxes/TestSkybox/skybox.rasky", skb);
+		GLSkyBox box;
+		String skyStat;
+		if (!box.Load("Skyboxes/TestSkybox/skybox.rasky", skyStat))
+		{
+			std::cout << "Skybox ERROR: " << skyStat << std::endl;
+		}
 		//m_pBlitMat = new Material()
 		PRINTL("OnStart()");
 		m_pImageLoader = new ImageLoader();
@@ -126,6 +132,7 @@ public:
 
 		m_pMaterial2 = new Material(m_pShaderProg);
 		m_pMaterial2->AddShaderVariable("tex1", m_pRenderTexture1);
+		m_pMaterial2->AddShaderVariable("tex2", m_pTexture1);
 		//m_pMaterial2->AddShaderVariable("tex1", m_pTexture1);
 		ModelComponent* m_pModel2 = new ModelComponent("model2", m_pQuadMesh, m_pMaterial2);
 		Entity* e2 = new Entity("Test 2");

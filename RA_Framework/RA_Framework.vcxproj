@@ -186,6 +186,7 @@ xcopy "$(ProjectDir)Skyboxes\*.*" "$(TargetDir)Skyboxes" /e/y</Command>
     <ClCompile Include="GLRenderer.cpp" />
     <ClCompile Include="GLShader.cpp" />
     <ClCompile Include="GLShaderProgram.cpp" />
+    <ClCompile Include="GLSkyBox.cpp" />
     <ClCompile Include="GLTexture.cpp" />
     <ClCompile Include="GLVBO.cpp" />
     <ClCompile Include="ImageLoader.cpp" />
@@ -200,6 +201,7 @@ xcopy "$(ProjectDir)Skyboxes\*.*" "$(TargetDir)Skyboxes" /e/y</Command>
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
+    <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="Stopwatch.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Transform.cpp" />
@@ -220,6 +222,7 @@ xcopy "$(ProjectDir)Skyboxes\*.*" "$(TargetDir)Skyboxes" /e/y</Command>
     <ClInclude Include="GLRenderer.h" />
     <ClInclude Include="GLShader.h" />
     <ClInclude Include="GLShaderProgram.h" />
+    <ClInclude Include="GLSkyBox.h" />
     <ClInclude Include="GLTexture.h" />
     <ClInclude Include="GLVBO.h" />
     <ClInclude Include="GLTypeLUTs.h" />
