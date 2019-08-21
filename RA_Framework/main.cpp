@@ -84,7 +84,7 @@ public:
 		//m_pBlitMat = new Material()
 		PRINTL("OnStart()");
 		m_pImageLoader = new ImageLoader();
-		// Generate empty image
+		// Generate empty image 
 		Image image; 
 		// Load from file
 		std::cout << "Loading image1: " << m_pImageLoader->Load("Textures/test_texture1.png", image) << std::endl;
