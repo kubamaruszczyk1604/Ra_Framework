@@ -43,16 +43,31 @@ namespace RA_FRAMEWORK
 
 	class SkyBox
 	{
+	private:
+		int					m_Width;
+		int					m_Height;
+		GfxAPI				m_API;
+	protected:
+		SkyBox(GfxAPI api);
+	protected:
+		void				SetDimensions(int x, int y);
 	public:
-		static bool ReadDesc(const String& raskyFile, SkyBoxDesc& outDesc);
-		SkyBox() {}
+		static bool			ReadDesc(const String& raskyFile, SkyBoxDesc& outDesc);
+		virtual ~SkyBox()	{}
 	public:
-		
-		virtual ~SkyBox() {}
-
-		virtual bool Load(const String& raskyFile, String& outStatus) = 0;
-		virtual void Bind() = 0;
-		virtual void Unbind() = 0;
+		virtual bool		Load(const String& raskyFile, String& outStatus) = 0;
+		virtual void		Bind() = 0;
+		virtual void		Unbind() = 0;
+	    virtual void		GenerateMipmaps() = 0;
+		virtual void		SetWrapMode(TextureWrapMode mode) = 0;
+		virtual void		SetMinFilterMode(TextureFilterMode filterMode) = 0;
+		virtual void		SetMagFilterMode(TextureFilterMode filterMode) = 0;
+		virtual void		SetFilterMode(TextureFilterMode minMode, TextureFilterMode magMode) = 0;
+		virtual uint		GetMipmapLevel() = 0;
+	public:
+		int					Width()		{ return m_Width;	 }
+		int					Height()	{ return m_Height;	 }
+		GfxAPI				GetApi()	{ return m_API;		 }
 
 	};
 
