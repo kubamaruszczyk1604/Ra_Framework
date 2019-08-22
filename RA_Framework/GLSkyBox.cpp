@@ -16,13 +16,6 @@ namespace RA_FRAMEWORK
 			outStatus = "ERROR: Failed to read rasky file.";
 			return false;
 		}
-		//Loading files to RAM
-		/*Image right;
-		Image left;
-		Image top;
-		Image bottom;
-		Image front;
-		Image back;*/
 		bool status = true;
 		std::vector<String> names{ "right", "left", "top", "bottom", "front", "back" };
 		ImageLoader loader;
@@ -50,7 +43,7 @@ namespace RA_FRAMEWORK
 		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-
+		if (status) outStatus = "OK";
 		return status;
 	}
 

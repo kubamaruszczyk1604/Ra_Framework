@@ -79,8 +79,6 @@ public:
 	void OnStart()
 	{
 
-		//SkyBoxDesc skb;
-		//SkyBox::ReadDesc("Skyboxes/TestSkybox/skybox.rasky", skb);
 		GLSkyBox box;
 		String skyStat;
 		if (!box.Load("Skyboxes/TestSkybox/skybox.rasky", skyStat))
