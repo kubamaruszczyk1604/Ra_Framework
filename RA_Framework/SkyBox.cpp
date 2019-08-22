@@ -3,6 +3,13 @@
 namespace RA_FRAMEWORK
 {
 	const String SkyBoxDesc::s_ERROR = "ERROR: NO SUCH FACE";
+	SkyBox::SkyBox(GfxAPI api):m_API{api}
+	{}
+	void SkyBox::SetDimensions(int width, int height)
+	{
+		m_Width = width;
+		m_Height = height;
+	}
 	bool SkyBox::ReadDesc(const String& raskyFile, SkyBoxDesc& outDesc)
 	{
 		std::ifstream ifs(raskyFile);

@@ -78,7 +78,6 @@ public:
 
 	void OnStart()
 	{
-
 		GLSkyBox box;
 		String skyStat;
 		if (!box.Load("Skyboxes/TestSkybox/skybox.rasky", skyStat))
