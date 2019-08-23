@@ -290,8 +290,11 @@ namespace RA_FRAMEWORK
 		delete s_QuadMesh;
 		delete s_SkyboxCubeMesh;
 		delete s_TextureBlitMat;
+		delete s_ColGradientMat;
+		delete s_SkyboxMat;
 		delete s_TempTexture;
 		delete s_TextureShaderProgram;
+		delete s_SkyboxShaderProgram;
 		GLBuiltInShaders::FreeShaders();
 		s_CameraList.Free();
 		s_CameraList.Clear();
