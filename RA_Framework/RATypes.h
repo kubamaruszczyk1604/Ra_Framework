@@ -87,7 +87,8 @@ namespace RA_FRAMEWORK
 	{
 		DONT_CLEAR = 0,
 		COLOR = 1,
-		COLOR_GRADIENT =2
+		COLOR_GRADIENT = 2,
+		SKYBOX = 3
 	};
 
 #define PRINT(P) std::cout<<P<<std::endl;

@@ -62,6 +62,7 @@ namespace RA_FRAMEWORK
 		return p_RenderTarget;
 	}
 
+
 	bool Camera::OnRender()
 	{
 		if (m_RenderCallback)

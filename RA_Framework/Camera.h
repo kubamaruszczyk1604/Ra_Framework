@@ -2,6 +2,7 @@
 #include "RAUtils.h"
 #include "Component.h"
 #include "RenderTarget.h"
+#include "Skybox.h"
 namespace RA_FRAMEWORK
 {
 	class Scene;
@@ -33,6 +34,7 @@ namespace RA_FRAMEWORK
 		ColorRGB					m_ClearColor2;
 		bool						m_ClearDepthFlag;
 		Vec3						m_GradientInfo;
+		SkyBox*						m_Skybox;
 		RenderTarget*				p_RenderTarget;  
 		OnRenderCallback			m_RenderCallback;
 	public:
@@ -58,12 +60,14 @@ namespace RA_FRAMEWORK
 		void			SetClearDepthFlag(bool clearDepth)		{ m_ClearDepthFlag = clearDepth; }
 		void			SetColorGradientParams(const Vec2& direction, float exp)
 																{m_GradientInfo = Vec3(direction.x, direction.y, exp);}
+		void			SetSkybox(SkyBox* skybox)				{ m_Skybox = skybox; }
 		ClearMode		GetClearMode()							{ return m_ClearMode; }
 		bool			GetClearDepthFlag()						{ return m_ClearDepthFlag; }
 		const ColorRGB& GetClearColor()							{ return m_ClearColor; }
 		const ColorRGB& GetClearColor2()						{ return m_ClearColor2; }
 		Vec2			GetColorGradientDirection()				{ return Vec2(m_GradientInfo.x, m_GradientInfo.y); }
 		float			GetColorGradientExponent()				{ return m_GradientInfo.z; }
+		SkyBox*			GetSkybox()								{ return m_Skybox; }
 	public:
 		void SetRenderCallback(const OnRenderCallback caallback)	{ m_RenderCallback = caallback; }
 	public:

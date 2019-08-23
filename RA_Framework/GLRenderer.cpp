@@ -26,11 +26,14 @@ namespace RA_FRAMEWORK
 	GLuint GLRenderer::s_BlitFrameBuffer;
 	GLTexture* GLRenderer::s_TempTexture;
 	Mesh* GLRenderer::s_QuadMesh;
+	Mesh* GLRenderer::s_SkyboxCubeMesh;
 	//vector<B> A::vector_of_B;
 	GLShaderProgram* GLRenderer::s_TextureShaderProgram{ nullptr };
 	GLShaderProgram* GLRenderer::s_ColGradientShaderProgram{ nullptr };
+	GLShaderProgram* GLRenderer::s_SkyboxShaderProgram{nullptr};
 	Material* GLRenderer::s_TextureBlitMat{ nullptr };
 	Material* GLRenderer::s_ColGradientMat{ nullptr };
+	Material* GLRenderer::s_SkyboxMat{ nullptr };
 	bool GLRenderer::KLMSetPixelFormat(HDC hdc)
 	{
 		PIXELFORMATDESCRIPTOR pfd;
@@ -76,6 +79,13 @@ namespace RA_FRAMEWORK
 		std::cout << "Shader Program linking status: " << progOK << std::endl;
 		if (!progOK) return false;
 		s_ColGradientMat = new Material(s_ColGradientShaderProgram);
+
+
+		s_SkyboxShaderProgram = new GLShaderProgram(GLBuiltInShaders::VERTEX_SKYBOX, GLBuiltInShaders::FRAGMENT_SKYBOX);
+		progOK = s_SkyboxShaderProgram->Created();
+		std::cout << "Shader Program linking status: " << progOK << std::endl;
+		if (!progOK) return false;
+		s_SkyboxMat = new Material(s_SkyboxShaderProgram);
 		return true;
 	}
 
@@ -101,6 +111,7 @@ namespace RA_FRAMEWORK
 	//	glHint(GL_MULTISAMPLE_FILTER_HINT_NV, GL_NICEST);
 		glViewport(0, 0, width, height);
 		s_QuadMesh = GeometryGenerator::GenerateQuad(2.0, 2.0);
+		s_SkyboxCubeMesh = GeometryGenerator::GenerateCubeMap();
 		SetUpShaders();
 		glGenFramebuffers(1, &s_BlitFrameBuffer) ;
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -168,6 +179,10 @@ namespace RA_FRAMEWORK
 			{
 				ClearScreenWithGradient(camera->GetClearColor(), camera->GetClearColor2(), camera->GetClearDepthFlag(),
 					camera->GetColorGradientDirection(),camera->GetColorGradientExponent());
+			}
+			else if (camera->GetClearMode() == ClearMode::SKYBOX)
+			{
+				ClearScreen(camera->GetClearColor(), camera->GetClearDepthFlag());
 			}
 
 			for (int i = 0; i < entities->size(); ++i)
@@ -273,6 +288,7 @@ namespace RA_FRAMEWORK
 		//s_RenderPassList.Clear();
 		// release device context
 		delete s_QuadMesh;
+		delete s_SkyboxCubeMesh;
 		delete s_TextureBlitMat;
 		delete s_TempTexture;
 		delete s_TextureShaderProgram;

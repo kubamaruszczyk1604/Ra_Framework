@@ -31,10 +31,13 @@ namespace RA_FRAMEWORK
 		static GLTexture*								s_TempTexture;
 	private:
 		static Mesh*									s_QuadMesh;
+		static Mesh*									s_SkyboxCubeMesh;
 		static GLShaderProgram*							s_TextureShaderProgram;
 		static GLShaderProgram*							s_ColGradientShaderProgram;
+		static GLShaderProgram*							s_SkyboxShaderProgram;
 		static Material*								s_TextureBlitMat;
 		static Material*								s_ColGradientMat;
+		static Material*								s_SkyboxMat;
 	private:
 		static bool KLMSetPixelFormat(HDC hdc);
 		static bool SetUpShaders();
