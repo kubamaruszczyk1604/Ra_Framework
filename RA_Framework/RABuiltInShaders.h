@@ -2,7 +2,7 @@
 #include"RATypes.h"
 namespace RA_FRAMEWORK
 {
-	class RA_BUILT_IN_SHADERS
+	/*class RA_BUILT_IN_SHADERS
 	{
 
 	public:
@@ -101,6 +101,6 @@ namespace RA_FRAMEWORK
 			"	 gl_Position = uMVP * vec4(vertex_position, 1.0);\n"
 			" }";
 	};
-	
+	*/
 
 }

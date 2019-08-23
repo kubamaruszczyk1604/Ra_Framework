@@ -53,7 +53,6 @@ public:
 		delete m_pVertexShader;
 		delete m_pFragmentShader;
 		delete m_pShaderProg;		
-		delete m_pImageLoader;
 		delete m_pTexture1;
 		delete m_pRenderTexture1;
 		delete m_pRenderTexture2;
@@ -68,13 +67,11 @@ public:
 	GLShader*			m_pFragmentShader;
 	GLShaderProgram*	m_pShaderProg;
 	Entity*				e1;
-	ImageLoader*        m_pImageLoader;
 	Texture*			m_pTexture1;
 	Texture*			m_pRenderTexture1;
 	Texture*			m_pRenderTexture2;
 	GLRenderTarget*		m_pRenderTarget;
 
-	
 
 	void OnStart()
 	{
@@ -86,15 +83,15 @@ public:
 		}
 		//m_pBlitMat = new Material()
 		PRINTL("OnStart()");
-		m_pImageLoader = new ImageLoader();
+		ImageLoader imageLoader;
 		// Generate empty image 
 		Image image; 
 		// Load from file
-		std::cout << "Loading image1: " << m_pImageLoader->Load("Textures/test_texture1.png", image) << std::endl;
+		std::cout << "Loading image1: " << imageLoader.Load("Textures/test_texture1.png", image) << std::endl;
 		// Push to GPU
 		m_pTexture1 = new GLTexture(image);
 		// Delete from RAM - we won't need it since the GPU has its own copy now
-		m_pImageLoader->Free(image);
+		imageLoader.Free(image);
 
 		// Create render textures for cameras
 		TextureFormatDescriptor desc;
@@ -104,6 +101,7 @@ public:
 		// MESH generation
 		//m_pQuadMesh = GeometryGenerator::GenerateSphere(1.0, 15, 15);
 		m_pQuadMesh = GeometryGenerator::GenerateQuad(2.0, 2.0, true);
+		//m_pQuadMesh = GeometryGenerator::GenerateCubeMap();
 		// Create and compile shaders
 		m_pVertexShader = new GLShader(ShaderType::VERTEX);
 		m_pVertexShader->LoadFromFile("GLShaders/glVert.txt");
@@ -116,7 +114,6 @@ public:
 		std::cout << "  Status: " << status << std::endl;
 		m_pShaderProg = new GLShaderProgram(m_pVertexShader, m_pFragmentShader);
 		std::cout << "Shader Program linking status: " << m_pShaderProg->Created() << std::endl;
-
 	
 		m_pMaterial1 = new Material(m_pShaderProg);
 		m_pMaterial1->AddShaderVariable("tex1", m_pTexture1);

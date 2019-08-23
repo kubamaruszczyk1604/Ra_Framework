@@ -3,11 +3,13 @@
 namespace RA_FRAMEWORK
 {
 	GLShader* GLBuiltInShaders::VERTEX_PASSTROUGH;
+	GLShader* GLBuiltInShaders::VERTEX_SKYBOX;
 	GLShader* GLBuiltInShaders::FRAGMENT_TEXTURE;
 	GLShader* GLBuiltInShaders::FRAGMENT_TEXTURE_ALPHA;
 	GLShader* GLBuiltInShaders::FRAGMENT_TEXTURE_TINT_AND_ALPHA;
 	GLShader* GLBuiltInShaders::FRAGMENT_DIRECTED_GRADIENT_COLOR;
 	GLShader* GLBuiltInShaders::FRAGMENT_DIRECTED_GRADIENT_TEXTURE_AND_COLOR;
+	GLShader* GLBuiltInShaders::FRAGMENT_SKYBOX;
 
 	void RA_FRAMEWORK::GLBuiltInShaders::Initiate()
 	{
@@ -35,6 +37,28 @@ namespace RA_FRAMEWORK
 			compileOK = true;
 			status = "";
 		}
+
+
+
+		//VERTEX SKYBOX
+		shaderString = "#version 330 core\n";
+		shaderString += "layout(location = 0) in vec3 vertex_position;\n";
+		shaderString += "out vec3 oTextcoords;\n";
+		shaderString += "uniform mat4 ViewPorojection;\n";
+		shaderString += "void main() { oTextcoords = vertex_position; gl_Position = vec4(vertex_position, 1.0) * ViewPorojection;}";
+		VERTEX_SKYBOX = new GLShader(ShaderType::VERTEX);
+		VERTEX_SKYBOX->LoadFromString(shaderString);
+		compileOK = VERTEX_SKYBOX->Compile(status);
+		std::cout << "Compile VERTEX SKYBOX Shader: " << compileOK;
+		std::cout << "  Status: " << status << std::endl;
+		if (!compileOK)
+		{
+			delete VERTEX_SKYBOX;
+			VERTEX_SKYBOX = nullptr;
+			compileOK = true;
+			status = "";
+		}
+
 
 
 		//FRAGMENT TEXTURE
@@ -162,12 +186,34 @@ namespace RA_FRAMEWORK
 			compileOK = true;
 			status = "";
 		}
+
+
+		//FRAGMENT SKYBOX
+		shaderString = "#version 330 core\n in vec3 oTextcoords;\n uniform sampler3D _sourceTex;\n";
+		shaderString += "out vec4 colorOut;\n";
+		shaderString += "void main() { colorOut = texture(_sourceTex,oTextcoords);}\n";
+
+		FRAGMENT_SKYBOX = new GLShader(ShaderType::FRAGMENT);
+		FRAGMENT_SKYBOX->LoadFromString(shaderString);
+		compileOK = FRAGMENT_SKYBOX->Compile(status);
+		std::cout << "Compile FRAGMENT_SKYBOX Shader: " << compileOK;
+		std::cout << "  Status: " << status << std::endl;
+		if (!compileOK)
+		{
+			delete FRAGMENT_SKYBOX;
+			FRAGMENT_SKYBOX = nullptr;
+			compileOK = true;
+			status = "";
+		}
+
 	}
 
 	void GLBuiltInShaders::FreeShaders()
 	{
 		delete VERTEX_PASSTROUGH;
 		VERTEX_PASSTROUGH = nullptr;
+		delete VERTEX_SKYBOX;
+		VERTEX_SKYBOX = nullptr;
 		delete FRAGMENT_TEXTURE;
 		FRAGMENT_TEXTURE = nullptr;
 		delete FRAGMENT_TEXTURE_ALPHA;
@@ -178,6 +224,9 @@ namespace RA_FRAMEWORK
 		FRAGMENT_DIRECTED_GRADIENT_TEXTURE_AND_COLOR = nullptr;
 		delete FRAGMENT_DIRECTED_GRADIENT_COLOR;
 		FRAGMENT_DIRECTED_GRADIENT_COLOR = nullptr;
+		delete FRAGMENT_SKYBOX;
+		FRAGMENT_SKYBOX = nullptr;
+
 	}
 
 	GLBuiltInShaders::~GLBuiltInShaders()

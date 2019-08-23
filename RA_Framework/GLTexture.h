@@ -34,8 +34,7 @@ namespace RA_FRAMEWORK
 		void			SetMinFilterMode(TextureFilterMode filterMode)override;
 		void			SetMagFilterMode(TextureFilterMode filterMode)override;
 		void			SetFilterMode(TextureFilterMode minMode, TextureFilterMode magMode)override;
-		uint			GetMipmapLevel()override;
-		
+		uint			GetMipmapLevel()override;	
 	public:
 		int				GetLastErrorCode()	{ return m_ErrorCode; }
 		void			ClearErrors()		{ m_ErrorCode = 0; }
