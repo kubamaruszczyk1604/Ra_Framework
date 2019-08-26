@@ -153,7 +153,7 @@ public:
 		//m_pMaterial2->AddShaderVariable("tex1", m_pRenderTarget->GetPostProcessTexture());
 
 		Entity* EntityCamera2 = new Entity("Camera2");
-		Camera* camera2 = new Camera(ProjectionType::PERSPECTIVE, 60.0f, 0.9f, 1000.0f);
+		Camera* camera2 = new Camera(ProjectionType::PERSPECTIVE, 80.0f, 0.9f, 1000.0f);
 		//camera2->SetClearColor(ColorRGB(0.15, 0.19, 0.94));
 		camera2->SetClearMode(ClearMode::SKYBOX);
 		camera2->SetSkybox(m_Box);

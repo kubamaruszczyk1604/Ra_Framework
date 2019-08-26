@@ -73,7 +73,7 @@ namespace RA_FRAMEWORK
 		mesh->AddVertex(Vertex(-width, height, fbDist, 0, 0, normZ, 0, 0));		//7
 
 		std::vector<unsigned> indices{/* front face  */ 0, 1, 2, 0, 2, 3,   
-									  /* back face   */ 5, 4, 7, 5, 7, 6,
+									  /* back face   */ 4, 5, 6, 4, 6, 7,
 									  /* right face  */ 1, 5, 6, 1, 6, 2,
 									  /* left face   */ 4, 0, 3, 4, 3, 7,
 									  /* top face    */ 3, 2, 6, 3, 6, 7,
