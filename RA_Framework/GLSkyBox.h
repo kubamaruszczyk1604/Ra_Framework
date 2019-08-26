@@ -6,11 +6,11 @@ namespace RA_FRAMEWORK
 	{
 	private:
 		GLuint		m_ID;
+		String		m_ErrorCode;
 	public:
 		GLSkyBox();
 		virtual ~GLSkyBox();
-	public:
-		
+	public:	
 		bool		Load(const String& raskyFile, String& outStatus);
 		void		Bind()override;
 		void		Unbind()override;
@@ -20,6 +20,8 @@ namespace RA_FRAMEWORK
 		void		SetMagFilterMode(TextureFilterMode filterMode)override;
 		void		SetFilterMode(TextureFilterMode minMode, TextureFilterMode magMode)override;
 		uint		GetMipmapLevel()override;
+	public:
+		bool		Bind(const String& uniformName, uint shaderProgID);
 	};
 
 }

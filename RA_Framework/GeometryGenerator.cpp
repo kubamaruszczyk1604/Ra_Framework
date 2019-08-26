@@ -60,17 +60,17 @@ namespace RA_FRAMEWORK
 		Mesh* mesh = new Mesh();
 		float width = 1.0; float height = 1.0f;
 		float fbDist = -width;
-		float normZ = 1.0f;// -(2.0f*static_cast<float>(skybox));
+		float normZ = 0.0f;// -(2.0f*static_cast<float>(skybox));
 		//front culling - anticlocwise
 		mesh->AddVertex(Vertex(-width, -height, fbDist, 0, 0, normZ, 0, 0));	//0
-		mesh->AddVertex(Vertex(width, -height, fbDist, 0, 0, normZ, 1, 0));		//1
-		mesh->AddVertex(Vertex(width, height, fbDist, 0, 0, normZ, 1, 1));		//2
-		mesh->AddVertex(Vertex(-width, height, fbDist, 0, 0, normZ, 0, 1));		//3
+		mesh->AddVertex(Vertex(width, -height, fbDist, 0, 0, normZ, 0, 0));		//1
+		mesh->AddVertex(Vertex(width, height, fbDist, 0, 0, normZ, 0, 0));		//2
+		mesh->AddVertex(Vertex(-width, height, fbDist, 0, 0, normZ, 0, 0));		//3
 		fbDist = width;
-		mesh->AddVertex(Vertex(-width, -height, fbDist, 0, 0, normZ, 1, 0));	//4
+		mesh->AddVertex(Vertex(-width, -height, fbDist, 0, 0, normZ, 0, 0));	//4
 		mesh->AddVertex(Vertex(width, -height, fbDist, 0, 0, normZ, 0, 0));		//5
-		mesh->AddVertex(Vertex(width, height, fbDist, 0, 0, normZ, 0, 1));		//6
-		mesh->AddVertex(Vertex(-width, height, fbDist, 0, 0, normZ, 1, 1));		//7
+		mesh->AddVertex(Vertex(width, height, fbDist, 0, 0, normZ, 0, 0));		//6
+		mesh->AddVertex(Vertex(-width, height, fbDist, 0, 0, normZ, 0, 0));		//7
 
 		std::vector<unsigned> indices{/* front face  */ 0, 1, 2, 0, 2, 3,   
 									  /* back face   */ 5, 4, 7, 5, 7, 6,

@@ -8,6 +8,7 @@
 #include "RenderPass.h"
 #include "GLShaderProgram.h"
 #include "GLBuiltInShaders.h"
+#include "GLSkyBox.h"
 namespace RA_FRAMEWORK
 {
 	class Transform;
@@ -60,6 +61,7 @@ namespace RA_FRAMEWORK
 		static void		ClearScreenWithGradient(const ColorRGB& col1, const ColorRGB& col2, bool clearDepth = true, const Vec2& dir = Vec2(1.0, 0.0), float exp = 1.0f);
 		static void		ClearScreenWithGradient(GLTexture* tex1, GLTexture* tex2, float exp);
 		static void		ClearScreenWithGradient(const ColorRGBA& col1, const ColorRGBA& col2, GLTexture* tex1, GLTexture* tex2, float exp);
+		static bool		RenderSkybox(Camera* camera);
 		static void		SwapBuffers();
 		static void		SetCullMode(const CullMode mode);
 		static void		SetFillMode(const FillMode mode);

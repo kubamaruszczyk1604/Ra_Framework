@@ -41,11 +41,15 @@ namespace RA_FRAMEWORK
 
 
 		//VERTEX SKYBOX
-		shaderString = "#version 330 core\n";
+		shaderString = "#version 330\n";
 		shaderString += "layout(location = 0) in vec3 vertex_position;\n";
-		shaderString += "out vec3 oTextcoords;\n";
-		shaderString += "uniform mat4 ViewPorojection;\n";
-		shaderString += "void main() { oTextcoords = vertex_position; gl_Position = vec4(vertex_position, 1.0) * ViewPorojection;}";
+		shaderString += "out vec3 oTexcoords;\n";
+		shaderString += "uniform mat4 uProjection;\n";
+		shaderString += "uniform mat4 uView;\n";
+		shaderString += "void main() { oTexcoords = vec3(vertex_position.x, -vertex_position.y, vertex_position.z);\n";
+		shaderString += "gl_Position = uProjection*uView*vec4(vertex_position, 1.0);}";
+	
+		//* ViewPorojection
 		VERTEX_SKYBOX = new GLShader(ShaderType::VERTEX);
 		VERTEX_SKYBOX->LoadFromString(shaderString);
 		compileOK = VERTEX_SKYBOX->Compile(status);
@@ -189,10 +193,10 @@ namespace RA_FRAMEWORK
 
 
 		//FRAGMENT SKYBOX
-		shaderString = "#version 330 core\n in vec3 oTextcoords;\n uniform sampler3D _sourceTex;\n";
+		shaderString = "#version 330 \n in vec3 oTexcoords;\n uniform samplerCube _sourceTex;\n";
 		shaderString += "out vec4 colorOut;\n";
-		shaderString += "void main() { colorOut = texture(_sourceTex,oTextcoords);}\n";
-
+		shaderString += "void main() { colorOut =  texture(_sourceTex,oTexcoords);\n}\n";
+		/*vec4(normalize(oTexcoords),1.0);*/
 		FRAGMENT_SKYBOX = new GLShader(ShaderType::FRAGMENT);
 		FRAGMENT_SKYBOX->LoadFromString(shaderString);
 		compileOK = FRAGMENT_SKYBOX->Compile(status);

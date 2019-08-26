@@ -1,6 +1,7 @@
 #pragma once
 #include "ShaderProgram.h"
 #include "GLShader.h"
+#include "GLSkyBox.h"
 namespace RA_FRAMEWORK
 {
 	class GLShaderProgram: public ShaderProgram
@@ -34,5 +35,6 @@ namespace RA_FRAMEWORK
 		void		SetMat3x3(const String& varname, const Mat3& value)override;
 		void		SetMat4x4(const String& varname, const Mat4& value)override;
 		void		SetTexture(const String& varname, Texture* texture)override;
+		void		SetCubeTexture(const String& varname, SkyBox* skybox)override;
 	};
 }

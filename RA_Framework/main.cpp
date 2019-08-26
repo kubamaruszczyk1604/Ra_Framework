@@ -57,6 +57,7 @@ public:
 		delete m_pRenderTexture1;
 		delete m_pRenderTexture2;
 		delete m_pRenderTarget;
+		delete m_Box;
 	}
 
 	Mesh*				m_pQuadMesh;
@@ -71,13 +72,13 @@ public:
 	Texture*			m_pRenderTexture1;
 	Texture*			m_pRenderTexture2;
 	GLRenderTarget*		m_pRenderTarget;
-
-
+	GLSkyBox*			m_Box;
+	Entity* tempE;
 	void OnStart()
 	{
-		GLSkyBox box;
+		m_Box = new GLSkyBox();
 		String skyStat;
-		if (!box.Load("Skyboxes/TestSkybox/skybox.rasky", skyStat))
+		if (!m_Box->Load("Skyboxes/TestSkybox2/skybox.rasky", skyStat))
 		{
 			std::cout << "Skybox ERROR: " << skyStat << std::endl;
 		}
@@ -152,16 +153,19 @@ public:
 		//m_pMaterial2->AddShaderVariable("tex1", m_pRenderTarget->GetPostProcessTexture());
 
 		Entity* EntityCamera2 = new Entity("Camera2");
-		Camera* camera2 = new Camera(ProjectionType::PERSPECTIVE, 80.0f, 0.91f, 1000.0f);
+		Camera* camera2 = new Camera(ProjectionType::PERSPECTIVE, 60.0f, 0.9f, 1000.0f);
 		//camera2->SetClearColor(ColorRGB(0.15, 0.19, 0.94));
-		camera2->SetClearMode(ClearMode::COLOR_GRADIENT);
+		camera2->SetClearMode(ClearMode::SKYBOX);
+		camera2->SetSkybox(m_Box);
 		EntityCamera2->AddComponent(std::unique_ptr<Camera>(camera2));
-		EntityCamera2->GetTransform()->SetPosition(Vec3(2.8f, 0.0f, -24.98f));
+		EntityCamera2->GetTransform()->SetPosition(Vec3(2.8f, 0.0f, -44.98f));
+		
+		//EntityCamera2->GetTransform()->SetPosition(Vec3(0.0f, 0.0f, 0.0f));
 		AddEntity(EntityCamera2);
 
 		GLRenderer::AddRenderPass(camera1);
 		GLRenderer::AddRenderPass(camera2);//renders to screen because camera2 has no render target
-
+		tempE = EntityCamera2;
 		//GLRenderer::SetFillMode(FillMode::WIREFRAME);
 		
 		/*RARenderPass* pass1 = new RARenderPass(m_pRenderTarget, 0);
@@ -175,7 +179,8 @@ public:
 	void Update(float deltaTime, float totalTime = 0)
 	{
 		e1->GetTransform()->SetRotationY(totalTime);
-	
+		tempE->GetTransform()->SetRotationY(sin(totalTime*0.2));
+		//tempE->GetTransform()->SetPositionZ(sin(totalTime*0.2)*20.0);
 		//GLRenderer::SwapBuffers();
 			//m_pTexture->Bind("tex", m_pShaderProg->GetID(), 0);
 	}

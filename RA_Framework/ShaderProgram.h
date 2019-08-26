@@ -1,6 +1,7 @@
 #pragma once
 #include "Shader.h"
 #include "Texture.h"
+#include "SkyBox.h"
 namespace RA_FRAMEWORK
 {
 	class ShaderProgram
@@ -30,5 +31,6 @@ namespace RA_FRAMEWORK
 		virtual void	SetMat3x3(const String& varname, const Mat3& value) = 0;
 		virtual void	SetMat4x4(const String& varname, const Mat4& value) = 0;
 		virtual void	SetTexture(const String& varname, Texture* texture) = 0;
+		virtual void	SetCubeTexture(const String& varname, SkyBox* skybox) = 0;
 	};
 }

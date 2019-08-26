@@ -11,8 +11,10 @@ namespace RA_FRAMEWORK
 		if (!image) return nullptr;
 
 		FIBITMAP* temp = image;
-		if (alphaChannel) { image = FreeImage_ConvertTo32Bits(image); }
-		else { image = FreeImage_ConvertTo24Bits(image); }
+		if (alphaChannel) 
+		{ image = FreeImage_ConvertTo32Bits(image); }
+		else 
+		{ image = FreeImage_ConvertTo24Bits(image); }
 		FreeImage_Unload(temp);
 		return image;
 	}

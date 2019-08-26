@@ -78,6 +78,7 @@ namespace RA_FRAMEWORK
 		const Mat4&		GetProjectionMatrix(const int& scrWidth, const int& scrHeight);
 		const Mat4&		SetTransformMatrix(const Vec3& translation, const Vec3& rotation);
 		void			SetTransformMatrix(const Mat4& mat);
+		void			GetProjectionForSkybox(const int & scrWidth, const int & scrHeight, Mat4& mat);
 	public:
 		void			SetRenderTarget(RenderTarget* target);
 		RenderTarget*	GetRenderTarget();

@@ -3,7 +3,7 @@
 namespace RA_FRAMEWORK
 {
 
-	GLSkyBox::GLSkyBox():SkyBox(GfxAPI::GL), m_ID{0}
+	GLSkyBox::GLSkyBox():SkyBox(GfxAPI::GL), m_ID{0}, m_ErrorCode{""}
 	{
 	}
 
@@ -18,18 +18,29 @@ namespace RA_FRAMEWORK
 		}
 		bool status = true;
 		std::vector<String> names{ "right", "left", "top", "bottom", "front", "back" };
+		std::vector<GLuint> faces
+		{ 
+			GL_TEXTURE_CUBE_MAP_POSITIVE_X, 
+			GL_TEXTURE_CUBE_MAP_NEGATIVE_X,
+			GL_TEXTURE_CUBE_MAP_NEGATIVE_Y,
+			GL_TEXTURE_CUBE_MAP_POSITIVE_Y, 
+			 
+			GL_TEXTURE_CUBE_MAP_POSITIVE_Z, 
+			GL_TEXTURE_CUBE_MAP_NEGATIVE_Z 
+		};
 		ImageLoader loader;
 		glGenTextures(1, &m_ID);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, m_ID);
-		for (int i = 0; i < 6; ++i)
+		for (GLuint i = 0; i < 6; ++i)
 		{
 			Image img;
 			String s = desc.GetFace(i);
 			if (loader.Load(s,img)) //Loading file to RAM
 			{
+				//bool t = img.HAS_TRANSPARENCY;
 				// if loaded, push file onto the GPU
-				glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
-					0, GL_RGB, img.GetWidth(), img.GetHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, img.GetPixels());
+				glTexImage2D(faces[i],
+					0, GL_RGBA, img.GetWidth(), img.GetHeight(), 0, GL_BGRA, GL_UNSIGNED_BYTE, (void*)img.GetPixels());
 			}
 			else
 			{
@@ -84,6 +95,25 @@ namespace RA_FRAMEWORK
 	uint GLSkyBox::GetMipmapLevel()
 	{
 		return uint();
+	}
+
+	bool GLSkyBox::Bind(const String& uniformName, uint shaderProgID)
+	{
+		// This function:
+		//1 binds shader sampler to texture unit of index "slot"
+		//2 binds textureID to texture unit of index "slot"
+
+		int samplerID = glGetUniformLocation(shaderProgID, uniformName.c_str());
+		if (samplerID == -1)
+		{
+			m_ErrorCode = 1;
+			return false;
+		}
+		int slot = 0;
+		glUniform1i(samplerID, slot); // assign sampler to texture unit index
+		//glActiveTexture(GL_TEXTURE0 + slot);// make current texture unit active (i.e. GL_TEXTURE_2D  will refer to it)
+		glBindTexture(GL_TEXTURE_CUBE_MAP, m_ID);//bind texture
+		return true;
 	}
 
 	GLSkyBox::~GLSkyBox()

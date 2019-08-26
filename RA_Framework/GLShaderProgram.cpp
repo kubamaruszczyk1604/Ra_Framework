@@ -112,4 +112,10 @@ namespace RA_FRAMEWORK
 		auto gltex = (GLTexture*)texture;
 		gltex->Bind(varname, m_ProgId);
 	}
+	void GLShaderProgram::SetCubeTexture(const String& varname, SkyBox* skybox)
+	{
+		GLSkyBox* glSkybox = (GLSkyBox*)skybox;
+		glSkybox->Bind(varname, m_ProgId);
+
+	}
 }

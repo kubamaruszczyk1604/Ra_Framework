@@ -52,6 +52,15 @@ namespace RA_FRAMEWORK
 		m_ViewMat = glm::inverse(m_TransformMat);
 	}
 
+	void Camera::GetProjectionForSkybox(const int & scrWidth, const int & scrHeight, Mat4 & mat)
+	{
+		mat = glm::perspectiveFovLH(glm::radians(m_FOV),
+			static_cast<float>(scrWidth),
+			static_cast<float>(scrHeight),
+			0.01f,
+			2.0f);
+	}
+
 	void Camera::SetRenderTarget(RenderTarget* target)
 	{
 		p_RenderTarget = target;

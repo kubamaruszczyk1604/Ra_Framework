@@ -183,6 +183,7 @@ namespace RA_FRAMEWORK
 			else if (camera->GetClearMode() == ClearMode::SKYBOX)
 			{
 				ClearScreen(camera->GetClearColor(), camera->GetClearDepthFlag());
+				RenderSkybox(camera);
 			}
 
 			for (int i = 0; i < entities->size(); ++i)
@@ -207,6 +208,11 @@ namespace RA_FRAMEWORK
 		{
 			ClearScreenWithGradient(camera->GetClearColor(), camera->GetClearColor2(), camera->GetClearDepthFlag(),
 				camera->GetColorGradientDirection(), camera->GetColorGradientExponent());
+		}
+		else if (camera->GetClearMode() == ClearMode::SKYBOX)
+		{
+			ClearScreen(camera->GetClearColor(), camera->GetClearDepthFlag());
+			RenderSkybox(camera);
 		}
 
 		for (int i = 0; i < entities->size(); ++i)
@@ -330,12 +336,36 @@ namespace RA_FRAMEWORK
 		GLRenderer::EnableDepthTest(depthTestState);
 	}
 	
-	void GLRenderer::ClearScreenWithGradient(GLTexture * tex1, GLTexture * tex2, float exp)
+	void GLRenderer::ClearScreenWithGradient(GLTexture* tex1, GLTexture* tex2, float exp)
 	{
 	}
 
-	void GLRenderer::ClearScreenWithGradient(const ColorRGBA & col1, const ColorRGBA & col2, GLTexture * tex1, GLTexture * tex2, float exp)
+	void GLRenderer::ClearScreenWithGradient(const ColorRGBA& col1, const ColorRGBA& col2, GLTexture* tex1, GLTexture* tex2, float exp)
 	{
+	}
+
+	bool GLRenderer::RenderSkybox(Camera* camera)
+	{
+		GLSkyBox* skybox = static_cast<GLSkyBox*>(camera->GetSkybox());
+		if (!skybox) return false;
+	    
+		Entity* parent = camera->GetParent();
+		parent->CalculateTransform();
+		camera->SetTransformMatrix(parent->GetTransform()->GetWorldMat());
+		Mat4 Projection;
+		camera->GetProjectionForSkybox(s_ScreenWidth, s_ScreenHeight, Projection);
+		const Mat4 View = Mat4(Mat3(camera->GetViewMatrix()));
+
+
+		s_SkyboxMat->Use();
+		s_SkyboxMat->GetShaderProgram()->SetMat4x4("uProjection", Projection);
+		s_SkyboxMat->GetShaderProgram()->SetMat4x4("uView", View);
+		s_SkyboxMat->GetShaderProgram()->SetCubeTexture("_sourceTex", skybox);
+		glDepthMask(GL_FALSE);
+		//SetCullMode(CullMode::BACK);
+		s_SkyboxCubeMesh->GetVBO()->Draw(PrimitiveType::TRIANGLES);
+		glDepthMask(GL_TRUE);
+		return true;
 	}
 
 	void GLRenderer::SwapBuffers()
