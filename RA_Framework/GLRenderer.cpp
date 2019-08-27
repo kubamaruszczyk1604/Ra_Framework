@@ -66,24 +66,24 @@ namespace RA_FRAMEWORK
 	{
 		GLBuiltInShaders::Initiate();
 		
-
-		s_TextureShaderProgram = new GLShaderProgram(GLBuiltInShaders::VERTEX_PASSTROUGH,GLBuiltInShaders::FRAGMENT_TEXTURE_ALPHA );
+		std::cout << "\nLinking shader programs used by GLRenderer:"<< std::endl;
+		s_TextureShaderProgram = new GLShaderProgram(GLBuiltInShaders::VERTEX_PASSTROUGH, GLBuiltInShaders::FRAGMENT_TEXTURE_ALPHA );
 		bool progOK = s_TextureShaderProgram->Created();
-		std::cout << "Shader Program linking status: " << progOK << std::endl;
+		std::cout << "  -Texture mapping + alpha: " << Bool2Str(progOK) << std::endl;
 		if (!progOK) return false;
 		s_TextureBlitMat = new Material(s_TextureShaderProgram);
 
 
 		s_ColGradientShaderProgram = new GLShaderProgram(GLBuiltInShaders::VERTEX_PASSTROUGH, GLBuiltInShaders::FRAGMENT_DIRECTED_GRADIENT_COLOR);
 		progOK = s_ColGradientShaderProgram->Created();
-		std::cout << "Shader Program linking status: " << progOK << std::endl;
+		std::cout << "  -Color gradient: " << Bool2Str(progOK) << std::endl;
 		if (!progOK) return false;
 		s_ColGradientMat = new Material(s_ColGradientShaderProgram);
 
 
 		s_SkyboxShaderProgram = new GLShaderProgram(GLBuiltInShaders::VERTEX_SKYBOX, GLBuiltInShaders::FRAGMENT_SKYBOX);
 		progOK = s_SkyboxShaderProgram->Created();
-		std::cout << "Shader Program linking status: " << progOK << std::endl;
+		std::cout << "  -Skybox: " << Bool2Str(progOK) << std::endl;
 		if (!progOK) return false;
 		s_SkyboxMat = new Material(s_SkyboxShaderProgram);
 		return true;
@@ -91,18 +91,55 @@ namespace RA_FRAMEWORK
 
 	bool GLRenderer::Initialize(const int width, const int height, const HWND handle)
 	{
+		std::cout << "GLRenderer initialization:" << std::endl;
 		// WINDOWS-SPECIFIC PART
 		s_hWnd = handle;
-		if ((s_hDevCtx = GetDC(s_hWnd)) == NULL) return false;
-		if (!KLMSetPixelFormat(s_hDevCtx)) return false;
-		if ((s_hGLRC = wglCreateContext(s_hDevCtx)) == NULL) return false;
+		std::cout << "  -Acquiring device context: ";
+		if ((s_hDevCtx = GetDC(s_hWnd)) == NULL)
+		{
+			std::cout << "Failed!" << std::endl;
+			return false;
+		}
+		std::cout << "OK" << std::endl;
+		
+		std::cout << "  -Setting pixel format: ";
+		if (!KLMSetPixelFormat(s_hDevCtx))
+		{
+			std::cout << "Failed!" << std::endl;
+			ReleaseDC(s_hWnd, s_hDevCtx);
+			return false;
+		}
+		std::cout << "OK" << std::endl;
+
+
+		std::cout << "  -Creating GL context (WINDOWS wgl): ";
+		if ((s_hGLRC = wglCreateContext(s_hDevCtx)) == NULL)
+		{
+			std::cout << "Failed!" << std::endl;
+			ReleaseDC(s_hWnd, s_hDevCtx);
+			return false;
+		}
+		std::cout << "OK" << std::endl;
 		wglMakeCurrent(s_hDevCtx, s_hGLRC);
 		// \WINDOWS SPECIFIC PART
 
-		glewInit();
+		std::cout << "  -Initializing GLEW: ";
+		GLenum glewStatus = glewInit();
+		if (glewStatus != GLEW_OK)
+		{
+			std::cout << "Failed! Details:"<< glewGetErrorString(glewStatus)<< std::endl;
+			ReleaseDC(s_hWnd, s_hDevCtx);
+			wglMakeCurrent(0, 0);
+			wglDeleteContext(s_hGLRC);
+			DeleteDC(s_hDevCtx);
+			return false;
+		}
+		std::cout << "OK, GLEW version: " << glewGetString(GLEW_VERSION) << std::endl;
 		
+		std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
 		s_ScreenWidth = width;
 		s_ScreenHeight = height;
+		
 		// set defaults
 		EnableDepthTest();
 		SetCullMode(CullMode::NONE);
@@ -117,7 +154,7 @@ namespace RA_FRAMEWORK
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 		TextureFormatDescriptor desc;
-		s_TempTexture = new GLTexture(s_ScreenWidth, s_ScreenHeight,desc);
+		s_TempTexture = new GLTexture(s_ScreenWidth, s_ScreenHeight, desc);
 
 
 		s_IsRunning = true;
@@ -132,6 +169,7 @@ namespace RA_FRAMEWORK
 		s_ScreenWidth = width;
 		s_ScreenHeight = height;
 		glViewport(0, 0, width, height);
+		std::cout << "Viewport changed: " << width << "x" << height << std::endl;
 	}
 
 	void GLRenderer::RenderAllPasses(ListOfEntities* entities)

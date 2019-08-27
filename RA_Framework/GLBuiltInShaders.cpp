@@ -24,12 +24,12 @@ namespace RA_FRAMEWORK
 		shaderString += "void main() { oUVs = uvs; gl_Position = vec4(vertex_position, 1.0);}";
 
 		std::string status;
-		std::cout << "\nCOMPILING BUILT-IN GL SHADERS:" << std::endl;
+		std::cout << "\nCompiling built-in GL shaders:" << std::endl;
 		VERTEX_PASSTROUGH = new GLShader(ShaderType::VERTEX);
 		VERTEX_PASSTROUGH->LoadFromString(shaderString);
 		bool compileOK = VERTEX_PASSTROUGH->Compile(status);
-		std::cout << "Compile VERTEX_PASSTROUGH Shader: " << compileOK;
-		std::cout << "  Status: " << status << std::endl;
+		std::cout << "  -Compile VERTEX_PASSTROUGH Shader: " << Bool2Str(compileOK);
+		std::cout << " -> " << status << std::endl;
 		if (!compileOK)
 		{
 			delete VERTEX_PASSTROUGH;
@@ -53,8 +53,8 @@ namespace RA_FRAMEWORK
 		VERTEX_SKYBOX = new GLShader(ShaderType::VERTEX);
 		VERTEX_SKYBOX->LoadFromString(shaderString);
 		compileOK = VERTEX_SKYBOX->Compile(status);
-		std::cout << "Compile VERTEX SKYBOX Shader: " << compileOK;
-		std::cout << "  Status: " << status << std::endl;
+		std::cout << "  -Compile VERTEX SKYBOX Shader: " << Bool2Str(compileOK);
+		std::cout << " -> " << status << std::endl;
 		if (!compileOK)
 		{
 			delete VERTEX_SKYBOX;
@@ -73,8 +73,8 @@ namespace RA_FRAMEWORK
 		FRAGMENT_TEXTURE = new GLShader(ShaderType::FRAGMENT);
 		FRAGMENT_TEXTURE->LoadFromString(shaderString);
 		compileOK= FRAGMENT_TEXTURE->Compile(status);
-		std::cout << "Compile FRAGMENT_TEXTURE Shader: " << compileOK;
-		std::cout << "  Status: " << status << std::endl;
+		std::cout << "  -Compile FRAGMENT_TEXTURE Shader: " << Bool2Str(compileOK);
+		std::cout << " -> " << status << std::endl;
 		if (!compileOK)
 		{ 
 			delete FRAGMENT_TEXTURE;
@@ -92,8 +92,8 @@ namespace RA_FRAMEWORK
 		FRAGMENT_TEXTURE_ALPHA = new GLShader(ShaderType::FRAGMENT);
 		FRAGMENT_TEXTURE_ALPHA->LoadFromString(shaderString);
 		compileOK = FRAGMENT_TEXTURE_ALPHA->Compile(status);
-		std::cout << "Compile FRAGMENT_TEXTURE_ALPHA Shader: " << compileOK;
-		std::cout << "  Status: " << status << std::endl;
+		std::cout << "  -Compile FRAGMENT_TEXTURE_ALPHA Shader: " << Bool2Str(compileOK);
+		std::cout << " -> " << status << std::endl;
 		if (!compileOK)
 		{
 			delete FRAGMENT_TEXTURE_ALPHA;
@@ -112,8 +112,8 @@ namespace RA_FRAMEWORK
 		FRAGMENT_TEXTURE_TINT_AND_ALPHA = new GLShader(ShaderType::FRAGMENT);
 		FRAGMENT_TEXTURE_TINT_AND_ALPHA->LoadFromString(shaderString);
 		compileOK = FRAGMENT_TEXTURE_TINT_AND_ALPHA->Compile(status);
-		std::cout << "Compile FRAGMENT_TEXTURE_TINT_AND_ALPHA Shader: " << compileOK;
-		std::cout << "  Status: " << status << std::endl;
+		std::cout << "  -Compile FRAGMENT_TEXTURE_TINT_AND_ALPHA Shader: " << Bool2Str(compileOK);
+		std::cout << " -> " << status << std::endl;
 		if (!compileOK)
 		{
 			delete FRAGMENT_TEXTURE_TINT_AND_ALPHA;
@@ -147,8 +147,8 @@ namespace RA_FRAMEWORK
 		FRAGMENT_DIRECTED_GRADIENT_TEXTURE_AND_COLOR = new GLShader(ShaderType::FRAGMENT);
 		FRAGMENT_DIRECTED_GRADIENT_TEXTURE_AND_COLOR->LoadFromString(shaderString);
 		compileOK = FRAGMENT_DIRECTED_GRADIENT_TEXTURE_AND_COLOR->Compile(status);
-		std::cout << "Compile FRAGMENT_DIRECTED_GRADIENT_TEXTURE_AND_COLOR Shader: " << compileOK;
-		std::cout << "  Status: " << status << std::endl;
+		std::cout << "  -Compile FRAGMENT_DIRECTED_GRADIENT_TEXTURE_AND_COLOR Shader: " << Bool2Str(compileOK);
+		std::cout << " -> " << status << std::endl;
 		if (!compileOK)
 		{
 			delete FRAGMENT_DIRECTED_GRADIENT_TEXTURE_AND_COLOR;
@@ -181,8 +181,8 @@ namespace RA_FRAMEWORK
 		FRAGMENT_DIRECTED_GRADIENT_COLOR = new GLShader(ShaderType::FRAGMENT);
 		FRAGMENT_DIRECTED_GRADIENT_COLOR->LoadFromString(shaderString);
 		compileOK = FRAGMENT_DIRECTED_GRADIENT_COLOR->Compile(status);
-		std::cout << "Compile FRAGMENT_DIRECTED_GRADIENT_COLOR Shader: " << compileOK;
-		std::cout << "  Status: " << status << std::endl;
+		std::cout << "  -Compile FRAGMENT_DIRECTED_GRADIENT_COLOR Shader: " << Bool2Str(compileOK);
+		std::cout << " -> " << status << std::endl;
 		if (!compileOK)
 		{
 			delete FRAGMENT_DIRECTED_GRADIENT_COLOR;
@@ -200,8 +200,8 @@ namespace RA_FRAMEWORK
 		FRAGMENT_SKYBOX = new GLShader(ShaderType::FRAGMENT);
 		FRAGMENT_SKYBOX->LoadFromString(shaderString);
 		compileOK = FRAGMENT_SKYBOX->Compile(status);
-		std::cout << "Compile FRAGMENT_SKYBOX Shader: " << compileOK;
-		std::cout << "  Status: " << status << std::endl;
+		std::cout << "  -Compile FRAGMENT_SKYBOX Shader: " << Bool2Str(compileOK);
+		std::cout << " -> " << status << std::endl;
 		if (!compileOK)
 		{
 			delete FRAGMENT_SKYBOX;

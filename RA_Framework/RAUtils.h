@@ -197,6 +197,12 @@ namespace RA_FRAMEWORK
 		std::cout << std::endl;
 	}
 
+	inline String Bool2Str(bool val)
+	{
+		if (val) return "OK";
+		return "Failed!";
+	}
+
 	//same as print mask but impeleneted with logically -slower than PrintMask()
 	/*inline void Dec2Bin(unsigned mask, unsigned places)
 	{
