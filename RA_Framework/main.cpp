@@ -179,7 +179,7 @@ public:
 	void Update(float deltaTime, float totalTime = 0)
 	{
 		e1->GetTransform()->SetRotationY(totalTime);
-		tempE->GetTransform()->SetRotationY(sin(totalTime*0.2));
+		tempE->GetTransform()->SetRotationX(sin(totalTime*0.2));
 		//tempE->GetTransform()->SetPositionZ(sin(totalTime*0.2)*20.0);
 		//GLRenderer::SwapBuffers();
 			//m_pTexture->Bind("tex", m_pShaderProg->GetID(), 0);
