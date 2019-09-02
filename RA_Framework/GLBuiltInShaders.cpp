@@ -63,8 +63,6 @@ namespace RA_FRAMEWORK
 			status = "";
 		}
 
-
-
 		//FRAGMENT TEXTURE
 		shaderString = "#version 330\n in vec2 oUVs;\n uniform sampler2D _sourceTex;\n";
 		shaderString += "out vec4 colorOut;\n";
@@ -122,7 +120,6 @@ namespace RA_FRAMEWORK
 			status = "";
 		}
 
-
 		//FRAGMENT_DIRECTED_GRADIENT_TEXTURE_AND_COLOR
 		shaderString = "#version 330\n in vec2 oUVs;\n uniform sampler2D _sourceTex1;\n";
 		shaderString += "uniform sampler2D _sourceTex2;\n";
@@ -157,7 +154,6 @@ namespace RA_FRAMEWORK
 			status = "";
 		}
 
-
 		//FRAGMENT_DIRECTED_GRADIENT_COLOR
 		shaderString = "#version 330\n in vec2 oUVs;\n\n";
 		shaderString += "uniform vec4 _col1;\n";
@@ -177,7 +173,6 @@ namespace RA_FRAMEWORK
 		shaderString += "";
 		shaderString += "}\n";
 
-
 		FRAGMENT_DIRECTED_GRADIENT_COLOR = new GLShader(ShaderType::FRAGMENT);
 		FRAGMENT_DIRECTED_GRADIENT_COLOR->LoadFromString(shaderString);
 		compileOK = FRAGMENT_DIRECTED_GRADIENT_COLOR->Compile(status);
@@ -190,7 +185,6 @@ namespace RA_FRAMEWORK
 			compileOK = true;
 			status = "";
 		}
-
 
 		//FRAGMENT SKYBOX
 		shaderString = "#version 330 \n in vec3 oTexcoords;\n uniform samplerCube _sourceTex;\n";
@@ -209,7 +203,6 @@ namespace RA_FRAMEWORK
 			compileOK = true;
 			status = "";
 		}
-
 	}
 
 	void GLBuiltInShaders::FreeShaders()
