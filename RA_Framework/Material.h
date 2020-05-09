@@ -26,7 +26,7 @@ namespace RA_FRAMEWORK
 		Material(ShaderProgram* shaderProg);
 		Material(const Material&)					= delete;
 		Material& operator=(const Material&)		= delete;
-		virtual ~Material();
+		virtual ~Material(); 
 	public:
 		void			Use();
 		void			UnbindTextures();
