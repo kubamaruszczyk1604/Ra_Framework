@@ -108,7 +108,7 @@ namespace RA_FRAMEWORK
 			m_ErrorCode = 1; 
 			return false; 
 		}
-		glUniform1i(samplerID, m_Slot); // assign sampler to texture unit index
+		glUniform1i(samplerID, m_Slot); // assign samplerID to texture unit index
 		glActiveTexture(GL_TEXTURE0 + m_Slot);// make current texture unit active (i.e. GL_TEXTURE_2D  will refer to it)
 		glBindTexture(GL_TEXTURE_2D, m_ID);//bind texture
 		return true;

@@ -74,6 +74,7 @@ public:
 	GLRenderTarget*		m_pRenderTarget;
 	GLSkyBox*			m_Box;
 	Entity* tempE;
+
 	void OnStart()
 	{
 		m_Box = new GLSkyBox();
