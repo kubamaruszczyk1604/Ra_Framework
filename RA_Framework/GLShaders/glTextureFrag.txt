@@ -1,0 +1,3 @@
+in vec2 oUVs;
+out vec4 colorOut;
+void main() { colorOut = texture(tex1,oUVs);}

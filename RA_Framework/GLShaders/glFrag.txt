@@ -1,0 +1,43 @@
+#version 330
+uniform vec3 col;
+
+uniform sampler2D tex1; 
+//uniform sampler2D tex2;
+uniform sampler2D depthSampler;
+
+in vec3 oPosition_WorldSpace;
+in vec3 oPosition_ObjectSpace;
+in vec3 oPosition_EyeSpace;
+in vec3 oNormal_InvWorldSpace;
+in vec3 oNormal_ObjectScpace;
+in vec2 oUVs;
+
+in vec3 oCamera_WorldSpace;
+in float oTime;
+out vec4 colorOut;
+out vec4 colorOut1;
+ 
+float zfar = 1000.0f;
+float znear = 1.0f;
+ float linearize(float depth)
+{
+    return (-zfar * znear / (depth * (zfar - znear) - zfar)) / zfar;
+}
+
+
+
+float LinearizeDepth(vec2 uv)
+{
+  float n = 0.1; // camera z near
+  float f = 100.0; // camera z far
+  float z = texture2D(depthSampler, uv).x;
+  return (2.0 * n) / (f + n - z * (f - n));	
+}
+
+void main()
+{
+     //float ld = LinearizeDepth(oUVs);
+	 colorOut =   texture(tex1,oUVs);//vec4(ld,ld,ld,1.0);
+	 colorOut1 =   texture(tex1,oUVs);//vec4(ld,ld,ld,1.0);
+	 //colorOut1 += texture(tex2,oUVs)*0.5;
+}

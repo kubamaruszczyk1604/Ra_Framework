@@ -1,0 +1,8 @@
+*** This is RA_SKYBOX file ***
+
+RIGHT   met_rt.tga
+LEFT    met_lf.tga
+TOP     met_up.tga
+BOTTOM  met_dn.tga
+FRONT   met_ft.tga
+BACK    met_bk.tga

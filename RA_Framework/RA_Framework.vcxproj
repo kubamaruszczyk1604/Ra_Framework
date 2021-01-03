@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{388C06B6-EAAD-4489-9C3D-E1ECC18E3FCB}</ProjectGuid>
     <RootNamespace>RAFramework</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -69,7 +69,23 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LibraryPath>$(SolutionDir)FreeImg\w64;$(SolutionDir)\packages\nupengl.core.0.1.0.1\build\native\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)FreeImg\Include;$(SolutionDir)\packages\nupengl.core.0.1.0.1\build\native\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LibraryPath>$(SolutionDir)FreeImg\x32;$(SolutionDir)\packages\nupengl.core.0.1.0.1\build\native\lib\Win32;$(LibraryPath)</LibraryPath>
+    <Linkage-glew>ltcg</Linkage-glew>
+    <IncludePath>$(SolutionDir)FreeImg\Include;$(SolutionDir)\packages\nupengl.core.0.1.0.1\build\native\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(SolutionDir)FreeImg\Include;$(SolutionDir)\packages\nupengl.core.0.1.0.1\build\native\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)FreeImg\x32;$(SolutionDir)\packages\nupengl.core.0.1.0.1\build\native\lib\Win32;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(SolutionDir)FreeImg\Include;$(SolutionDir)\packages\nupengl.core.0.1.0.1\build\native\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)FreeImg\w64;$(SolutionDir)\packages\nupengl.core.0.1.0.1\build\native\lib\x64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -77,6 +93,18 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
+    <Link>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)FreeImg\x32\FreeImage.dll" "$(TargetDir)"
+md "$(TargetDir)GLShaders"
+copy "$(ProjectDir)GLShaders\*.*" "$(TargetDir)GLShaders"
+md "$(TargetDir)Textures"
+copy "$(ProjectDir)Textures\*.*" "$(TargetDir)Textures"
+md  "$(TargetDir)Skyboxes"
+xcopy "$(ProjectDir)Skyboxes\*.*" "$(TargetDir)Skyboxes" /e/y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -85,6 +113,19 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(SolutionDir)FreeImg\w64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)FreeImg\w64\FreeImage.dll" "$(TargetDir)"
+md "$(TargetDir)GLShaders"
+copy "$(ProjectDir)GLShaders\*.*" "$(TargetDir)GLShaders"
+md "$(TargetDir)Textures"
+copy "$(ProjectDir)Textures\*.*" "$(TargetDir)Textures"
+md  "$(TargetDir)Skyboxes"
+xcopy "$(ProjectDir)Skyboxes\*.*" "$(TargetDir)Skyboxes" /e/y
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -99,6 +140,15 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)FreeImg\x32\FreeImage.dll" "$(TargetDir)"
+md "$(TargetDir)GLShaders"
+copy "$(ProjectDir)GLShaders\*.*" "$(TargetDir)GLShaders"
+md "$(TargetDir)Textures"
+copy "$(ProjectDir)Textures\*.*" "$(TargetDir)Textures"
+md  "$(TargetDir)Skyboxes"
+xcopy "$(ProjectDir)Skyboxes\*.*" "$(TargetDir)Skyboxes" /e/y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -112,18 +162,48 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(SolutionDir)FreeImg\w64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)FreeImg\w64\FreeImage.dll" "$(TargetDir)"
+md "$(TargetDir)GLShaders"
+copy "$(ProjectDir)GLShaders\*.*" "$(TargetDir)GLShaders"
+md "$(TargetDir)Textures"
+copy "$(ProjectDir)Textures\*.*" "$(TargetDir)Textures"
+md  "$(TargetDir)Skyboxes"
+xcopy "$(ProjectDir)Skyboxes\*.*" "$(TargetDir)Skyboxes" /e/y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BehaviourComponent.cpp" />
+    <ClCompile Include="BehaviourManager.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityManager.cpp" />
+    <ClCompile Include="GeometryGenerator.cpp" />
+    <ClCompile Include="GLBuiltInShaders.cpp" />
+    <ClCompile Include="GLRenderer.cpp" />
+    <ClCompile Include="GLShader.cpp" />
+    <ClCompile Include="GLShaderProgram.cpp" />
+    <ClCompile Include="GLSkyBox.cpp" />
+    <ClCompile Include="GLTexture.cpp" />
+    <ClCompile Include="GLVBO.cpp" />
+    <ClCompile Include="ImageLoader.cpp" />
     <ClCompile Include="InputSystem.cpp" />
-    <ClCompile Include="KLMList.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Material.cpp" />
+    <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="ModelComponent.cpp" />
+    <ClCompile Include="GLRenderTarget.cpp" />
+    <ClCompile Include="RenderPass.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="ShaderProgram.cpp" />
+    <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="Stopwatch.cpp" />
+    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="WindowsApp.cpp" />
   </ItemGroup>
@@ -131,27 +211,65 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BehaviourComponent.h" />
+    <ClInclude Include="BehaviourManager.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityManager.h" />
+    <ClInclude Include="GeometryGenerator.h" />
+    <ClInclude Include="GLBuiltInShaders.h" />
+    <ClInclude Include="GLRenderer.h" />
+    <ClInclude Include="GLShader.h" />
+    <ClInclude Include="GLShaderProgram.h" />
+    <ClInclude Include="GLSkyBox.h" />
+    <ClInclude Include="GLTexture.h" />
+    <ClInclude Include="GLVBO.h" />
+    <ClInclude Include="GLTypeLUTs.h" />
+    <ClInclude Include="ImageLoader.h" />
+    <ClInclude Include="RABuiltInShaders.h" />
+    <ClInclude Include="RendererDirectives.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="KLMList.h" />
+    <ClInclude Include="Material.h" />
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="ModelComponent.h" />
     <ClInclude Include="RATypes.h" />
     <ClInclude Include="RAUtils.h" />
+    <ClInclude Include="RendererModes.h" />
+    <ClInclude Include="GLRenderTarget.h" />
+    <ClInclude Include="RenderPass.h" />
+    <ClInclude Include="RenderTarget.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="Shader.h" />
+    <ClInclude Include="ShaderProgram.h" />
+    <ClInclude Include="ShaderVariable.h" />
+    <ClInclude Include="SkyBox.h" />
     <ClInclude Include="Stopwatch.h" />
+    <ClInclude Include="Texture.h" />
+    <ClInclude Include="TextureModes.h" />
     <ClInclude Include="Transform.h" />
+    <ClInclude Include="VBO.h" />
+    <ClInclude Include="Vertex.h" />
     <ClInclude Include="WindowsApp.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="RA_Framework.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\glm.0.9.9\build\native\glm.targets" Condition="Exists('..\packages\glm.0.9.9\build\native\glm.targets')" />
+    <Import Project="..\packages\nupengl.core.redist.0.1.0.1\build\native\nupengl.core.redist.targets" Condition="Exists('..\packages\nupengl.core.redist.0.1.0.1\build\native\nupengl.core.redist.targets')" />
+    <Import Project="..\packages\nupengl.core.0.1.0.1\build\native\nupengl.core.targets" Condition="Exists('..\packages\nupengl.core.0.1.0.1\build\native\nupengl.core.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\glm.0.9.9\build\native\glm.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\glm.0.9.9\build\native\glm.targets'))" />
+    <Error Condition="!Exists('..\packages\nupengl.core.redist.0.1.0.1\build\native\nupengl.core.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\nupengl.core.redist.0.1.0.1\build\native\nupengl.core.redist.targets'))" />
+    <Error Condition="!Exists('..\packages\nupengl.core.0.1.0.1\build\native\nupengl.core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\nupengl.core.0.1.0.1\build\native\nupengl.core.targets'))" />
   </Target>
 </Project>

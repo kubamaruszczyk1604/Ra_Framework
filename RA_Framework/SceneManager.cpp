@@ -1,9 +1,8 @@
 #include "SceneManager.h"
 #include "InputSystem.h"
 #include "EntityManager.h"
-
-//#include "ResourceManager.h"
-
+#include "BehaviourManager.h"
+#include "GLRenderer.h"
 namespace RA_FRAMEWORK
 {
 	SceneUniquePtr SceneManager::m_upCurrentScene;
@@ -19,11 +18,14 @@ namespace RA_FRAMEWORK
 	{
 		if (m_upCurrentScene)
 		{
+			ListOfEntities* list = m_upCurrentScene->GetEntityManager()->GetListOfEntities();
+			BehaviourManager::TerminateAllBehaviours(list);
 			m_upCurrentScene.get()->OnExit();
+			m_upCurrentScene->GetEntityManager()->RemoveAllEntities();
+			GLRenderer::ClearRenderPassList();
 		}
 		m_upCurrentScene = std::unique_ptr<Scene>(scene);
 		m_upCurrentScene->OnStart();
-
 	}
 
 	void SceneManager::Update(const float deltaTime, const float totalTime)
@@ -32,17 +34,15 @@ namespace RA_FRAMEWORK
 		{
 			m_upCurrentScene->Update(deltaTime, totalTime);
 			m_upCurrentScene->GetEntityManager()->Update(deltaTime, totalTime);
-
 			ListOfEntities* list = m_upCurrentScene->GetEntityManager()->GetListOfEntities();
+			BehaviourManager::Update(list, deltaTime, totalTime);
 
-			for (int i = 0; i < list->size(); ++i)
-			{
-				//Entity* e = (*list)[i].get();
-				//PRINTL("ENTITY: " + e->GetName() + " is at position: " + ToString(e->GetTransform()->GetWorldPosition()));
-			}
-			//TODO: SYSTEMS ACT ON ENTITIES HERE
-			//DXRenderer::Update(deltaTime, totalTime);
+			//GLRenderer::ClearScreen(ColorRGB(0,0,1));	
+			GLRenderer::RenderAllPasses(list);
+			GLRenderer::Update(deltaTime, totalTime);
 			m_upCurrentScene->PostUpdate();
+			GLRenderer::SwapBuffers();
+			
 		}
 	}
 
@@ -50,7 +50,10 @@ namespace RA_FRAMEWORK
 	{
 		if (m_upCurrentScene)
 		{
+			ListOfEntities* list = m_upCurrentScene->GetEntityManager()->GetListOfEntities();
+			BehaviourManager::TerminateAllBehaviours(list);
 			m_upCurrentScene->OnExit();
+			GLRenderer::ShutDown();
 		}
 		//ResourceManager::ReleaseResources();
 	}

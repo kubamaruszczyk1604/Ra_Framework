@@ -1,18 +1,14 @@
 #include "Entity.h"
-
-
 namespace RA_FRAMEWORK
 {
-
+	Mat4 Entity::s_Identity{ Mat4(1.0) };
 	Entity::Entity(const std::string& ID) :
 		m_ID{ ID },
-		m_pParent{ nullptr }
-	{
-	}
+		m_pParent{ nullptr },
+		m_ComponentMask{0},
+		m_pCachedComponent_Model{nullptr}{}
 
-	Entity::~Entity()
-	{
-	}
+	Entity::~Entity(){}
 
 	void Entity::Delete()
 	{
@@ -66,32 +62,44 @@ namespace RA_FRAMEWORK
 			Entity* foundInChildreen = child->FindInChildreen(name);
 			if (foundInChildreen) return foundInChildreen;
 		}
-
 		return nullptr;
 	}
 
 	void Entity::AddComponent(ComponentUnique component)
 	{
 		component.get()->SetParent(this);
-
+		m_ComponentMask |= (int)component.get()->GetType();
+		if (component.get()->GetType() == ComponentType::MODEL_COMPONENT)
+		{
+			m_pCachedComponent_Model = component.get();
+		}
 		m_pComponents.GetStdVectorRef().push_back(std::move(component));
 	}
 
-	Component* Entity::GetComponentFirst(ComponentType const type)
+	Component* Entity::GetFirstComponentOfType(ComponentType const type)
 	{
 		for (int i = 0; i < m_pComponents.Count(); ++i)
 		{
-			if (m_pComponents[i]->GetType() == type) return m_pComponents[i].get();
+			if (m_pComponents[i]->GetType() == type)
+			{
+				return m_pComponents[i].get();
+			}
 		}
-
 		return nullptr;
+	}
+
+	bool Entity::TryGetCachedModel(Component *& outModel)const
+	{
+		if (!m_pCachedComponent_Model) { return false; }
+		outModel = m_pCachedComponent_Model;
+		return true;
 	}
 
 	void Entity::CalculateTransform()
 	{
 		//WORLD TRANSFORM CALCULATION
 		m_Transform.SetWorld(m_Transform.GetParentTransformStack() *
-			glm::translate(m_Identity, m_Transform.GetPosition()));
+			glm::translate(s_Identity, m_Transform.GetLocalPosition()));
 
 		const Vec3& rotation = m_Transform.GetRotation();
 		m_Transform.SetWorld(glm::rotate(m_Transform.GetWorldMat(), rotation.x, glm::vec3(1, 0, 0)));
@@ -103,6 +111,5 @@ namespace RA_FRAMEWORK
 		{
 			m_pChildren[i]->GetTransform()->SetParentTransformStack(m_Transform.GetWorldMat());
 		}
-
 	}
 }

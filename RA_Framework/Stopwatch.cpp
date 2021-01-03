@@ -2,19 +2,11 @@
 using namespace std::chrono;
 namespace RA_FRAMEWORK
 {
-
 	Stopwatch::Stopwatch() :isRunning(0), isPaused(0),
 		m_Elapsed_seconds(std::chrono::duration<double>(0)),
-		m_Paused_seconds(std::chrono::duration<double>(0))
-	{
+		m_Paused_seconds(std::chrono::duration<double>(0)){}
 
-	}
-
-
-	Stopwatch::~Stopwatch()
-	{
-
-	}
+	Stopwatch::~Stopwatch(){}
 
 	void Stopwatch::Start()
 	{
@@ -34,32 +26,26 @@ namespace RA_FRAMEWORK
 		m_End = high_resolution_clock::now();
 		this->UnPause();
 		isRunning = false;
-
 	}
 
 	void Stopwatch::UnPause()
 	{
 		if (!isPaused) return;
 		if (!isRunning) return;
-
 		isPaused = false;
 		m_Paused_seconds += duration<double>(high_resolution_clock::now() - m_PauseStart);
-
 	}
+
 	void Stopwatch::Pause()
 	{
 		if (isPaused) return;
 		if (!isRunning) return;
 		isPaused = true;
 		m_PauseStart = high_resolution_clock::now();
-
-
 	}
-
 
 	double Stopwatch::ElapsedTime()const
 	{
-
 		if (isRunning)
 		{
 			if (isPaused)

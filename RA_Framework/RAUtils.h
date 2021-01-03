@@ -1,33 +1,10 @@
 #pragma once
-#define WIN32_LEAN_AND_MEAN
-
-#define _CRTDBG_MAP_ALLOC
-#include <stdlib.h>
-#include <crtdbg.h>
-
-#include "GLM\GLM.hpp"
-#include "GLM\GTC\matrix_transform.hpp"
-#include "GLM\GTC\type_ptr.hpp"
-#include <GLM\GTC\matrix_transform.hpp>
-
-
-#include <unordered_map>
-#include <algorithm>
-#include <memory>
-#include <iostream>
-#include <string>
-#include <vector>
-#include <conio.h>
 #include "RATypes.h"
 #include "Stopwatch.h"
-
-
+#include "KLMList.h"
+#include "RABuiltInShaders.h"
 namespace RA_FRAMEWORK
 {
-
-
-
-
 	template<class T_KEY, class T_VAL>
 	bool QueryMap(T_KEY key, T_VAL& output, const std::unordered_map<T_KEY, T_VAL>& map)
 	{
@@ -37,7 +14,6 @@ namespace RA_FRAMEWORK
 			output = itemPair->second;
 			return true;
 		}
-
 		return false;
 	};
 
@@ -47,12 +23,22 @@ namespace RA_FRAMEWORK
 		vec.erase(std::remove(vec.begin(), vec.end(), value), vec.end());
 	}
 
+	inline void RemoveFromString(String& sttr, const String& toErase)
+	{
+		size_t pos = std::string::npos;
+
+		// Search for the substring in string in a loop until nothing is found
+		while ((pos = sttr.find(toErase)) != std::string::npos)
+		{
+			// If found then erase it from string
+			sttr.erase(pos, toErase.length());
+		}
+	}
 
 	inline float RandomRange(float low, float high)
 	{
 		return  low + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (high - low)));
 	}
-
 
 	inline bool IsApproxEqual(const float& a, const float& b, float epsilon)
 	{
@@ -64,18 +50,15 @@ namespace RA_FRAMEWORK
 		return (fabs(b - a) < epsilon);
 	};
 
-
 	inline void PrintVec(const Vec3& vec)
 	{
 		std::cout << "x=" << vec.x << "  y=" << vec.y << "  z=" << vec.z << std::endl;
 	}
 
-
-	/*inline void PrintCol(const Colour& col)
+	inline void PrintCol(const ColorRGBA& col)
 	{
 		std::cout << "r=" << col.r << "  g=" << col.g << "  b=" << col.b << "  a=" << col.a << std::endl;
-	}*/
-
+	}
 
 	inline void DEBUG(const std::string& line)
 	{
@@ -104,7 +87,6 @@ namespace RA_FRAMEWORK
 
 	inline std::string ToString(const Vec3& vec)
 	{
-
 		return   "x=" + std::to_string(vec.x) +
 			"  y=" + std::to_string(vec.y) +
 			"  z=" + std::to_string(vec.z);
@@ -112,16 +94,14 @@ namespace RA_FRAMEWORK
 
 	inline std::string ToString(const Vec4& vec)
 	{
-
 		return   "x=" + std::to_string(vec.x) +
 			"  y=" + std::to_string(vec.y) +
 			"  z=" + std::to_string(vec.z) +
 			"  w=" + std::to_string(vec.w);
 	}
 
-	inline std::string ColourToString(const Colour& colour)
+	inline std::string ColourToString(const ColorRGBA& colour)
 	{
-
 		return   "r=" + std::to_string(colour.r) +
 			"  g=" + std::to_string(colour.g) +
 			"  b=" + std::to_string(colour.b) +
@@ -158,14 +138,82 @@ namespace RA_FRAMEWORK
 		return glm::rotate(matrix, degrees, Vec3(0, 0, 1));
 	}
 
-	inline Vec3 LerpVector(const Vec3& a, const Vec3& b, float speed)
+	inline float Lerp(const float a, const float b, const float t)
 	{
-		Vec3 vec = (b - a);
-		glm::normalize(vec);
-		return (a + (vec*speed));
+		return a * (1.0f - t) + b * t;
 	}
 
+	inline Vec2 Lerp(const Vec2& a, const Vec2& b, const float t)
+	{
+		return a * (1.0f - t) + b * t;
+	}
 
-	
+	inline Vec3 Lerp(const Vec3& a, const Vec3& b,const float t)
+	{
+		return a * (1.0f - t) + b * t;
+	}
 
+	inline Vec4 Lerp(const Vec4& a, const Vec4& b, float t)
+	{
+		return a * (1.0f - t) + b * t;
+	}
+
+	inline void AddToMask(RENDER_MASK& mask, RENDER_MASK_ELEMENT element)
+	{
+		mask |= element;
+	}
+
+	inline void RemoveFromMask(RENDER_MASK& mask, RENDER_MASK_ELEMENT element)
+	{
+		mask &= (~element);
+	}
+
+	inline bool CheckMask(RENDER_MASK& mask, RENDER_MASK_ELEMENT element)
+	{
+		return (bool)(mask&element);
+	}
+
+	inline void Dec2Bin(unsigned mask)
+	{
+		String s;
+		while (mask > 0)
+		{
+			s += " " + std::to_string(mask % 2);
+			mask /= 2;
+		}
+		std::reverse(s.begin(), s.end());
+		std::cout << s << std::endl;
+	}
+
+	inline void PrintMask(unsigned mask, unsigned places)
+	{
+		while (places>0)
+		{
+			const bool on = (bool)(mask & (1 << (places-1)));
+			std::cout << on << " ";
+
+			places--;
+		}
+		std::cout << std::endl;
+	}
+
+	inline String Bool2Str(bool val)
+	{
+		if (val) return "OK";
+		return "Failed!";
+	}
+
+	//same as print mask but impeleneted with logically -slower than PrintMask()
+	/*inline void Dec2Bin(unsigned mask, unsigned places)
+	{
+		int div = pow(2, places);
+		while (div > 0)
+		{
+			int r = mask / div;
+			std::cout << r << " ";
+			if (r > 0) mask -= div;
+			div /= 2;
+		}
+		std::cout << std::endl;
+	}*/
 }
